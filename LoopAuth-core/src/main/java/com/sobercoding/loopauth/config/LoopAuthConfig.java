@@ -95,10 +95,26 @@ public class LoopAuthConfig implements Serializable{
         this.accessModes = builder.accessModes;
     }
 
+    /**
+     * @Method: builder
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 返回构造器
+     * @param null
+     * @Return:
+     * @Exception:
+     * @Date: 2022/7/21 0:54
+     */
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * @program: LoopAuth
+     * @author: Sober
+     * @Description: LoopAuthConfig构造器
+     * @create: 2022/07/20 20:13
+     */
     public static class Builder {
 
         private String tokenName = "looptoken";
@@ -150,6 +166,16 @@ public class LoopAuthConfig implements Serializable{
             return this;
         }
 
+        /**
+         * @Method: build
+         * @Author: Sober
+         * @Version: 0.0.1
+         * @Description: 构建结束创建LoopAuthConfig写入并返回
+         * @param null
+         * @Return:
+         * @Exception:
+         * @Date: 2022/7/21 0:55
+         */
         public LoopAuthConfig build(){
             return new LoopAuthConfig(this);
         }
