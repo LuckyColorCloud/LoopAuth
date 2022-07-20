@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.model.type.AccessMode;
+import com.sobercoding.loopauth.model.constant.AccessMode;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 

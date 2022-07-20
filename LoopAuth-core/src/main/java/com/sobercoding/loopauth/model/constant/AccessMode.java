@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.model.type;
+package com.sobercoding.loopauth.model.constant;
 
 /**
  * @program: LoopAuth
