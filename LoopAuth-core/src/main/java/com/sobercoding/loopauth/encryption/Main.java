@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.dao;
+package com.sobercoding.loopauth.encryption;
 
 /**
  * @program: LoopAuth
@@ -6,5 +6,5 @@ package com.sobercoding.loopauth.dao;
  * @Description:
  * @create: 2022/07/20 00:52
  */
-public class main {
+public class Main {
 }
