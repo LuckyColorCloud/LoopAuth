@@ -4,7 +4,7 @@ package com.sobercoding.loopauth.dao;
  * @program: LoopAuth
  * @author: Sober
  * @Description:
- * @create: 2022/07/20 00:52
+ * @create: 2022/07/20 23:35
  */
-public class Main {
+public interface LoopAuthDao {
 }
