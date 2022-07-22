@@ -5,10 +5,12 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
- * @author Sober
- * @date 2022-07-22 17:41
+ * @program: LoopAuth
+ * @author: Sober
+ * @Description: 用户会话模型
+ * @create: 2022/07/20 19:38
  */
-public class TokenSession implements Serializable {
+public class UserSession implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

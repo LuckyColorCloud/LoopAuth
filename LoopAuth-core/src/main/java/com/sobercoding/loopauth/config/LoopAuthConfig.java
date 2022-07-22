@@ -22,7 +22,7 @@ public class LoopAuthConfig implements Serializable{
     private final String tokenName;
 
     /**
-     * token有效期(单位秒) 默认7天、-1永久
+     * token有效期(单位毫秒) 默认7天、-1永久
      */
     private final long timeOut;
 
@@ -99,7 +99,7 @@ public class LoopAuthConfig implements Serializable{
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 返回构造器
-     * @param null
+     * @param
      * @Return:
      * @Exception:
      * @Date: 2022/7/21 0:54
@@ -118,7 +118,7 @@ public class LoopAuthConfig implements Serializable{
 
         private String tokenName = "looptoken";
 
-        private long timeOut = 60 * 60 * 24 * 7;
+        private long timeOut = 60 * 60 * 24 * 7 * 1000;
 
         private Boolean isMutualism = false;
 
@@ -135,8 +135,19 @@ public class LoopAuthConfig implements Serializable{
             return this;
         }
 
+        /**
+         * @Method: timeOut
+         * @Author: Sober
+         * @Version: 0.0.1
+         * @Description: timeOut采用long格式记录时间，
+         * 单位为毫秒，客户端输入单位为秒，因此 * 1000
+         * @param timeOut
+         * @Return: com.sobercoding.loopauth.config.LoopAuthConfig.Builder
+         * @Exception:
+         * @Date: 2022/7/22 20:18
+         */
         public Builder timeOut(long timeOut) {
-            this.timeOut = timeOut;
+            this.timeOut = timeOut * 1000;
             return this;
         }
 
@@ -170,7 +181,7 @@ public class LoopAuthConfig implements Serializable{
          * @Author: Sober
          * @Version: 0.0.1
          * @Description: 构建结束创建LoopAuthConfig写入并返回
-         * @param null
+         * @param
          * @Return:
          * @Exception:
          * @Date: 2022/7/21 0:55
