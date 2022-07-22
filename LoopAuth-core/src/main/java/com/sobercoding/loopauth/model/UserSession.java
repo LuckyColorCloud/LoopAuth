@@ -1,7 +1,9 @@
 package com.sobercoding.loopauth.model;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
@@ -22,6 +24,6 @@ public class UserSession implements Serializable {
     /**
      * token列表
      */
-    private Set<String> tokens = new ConcurrentSkipListSet<>();
+    private Map<String,TokenModel> tokens = new ConcurrentHashMap<>();
 
 }
