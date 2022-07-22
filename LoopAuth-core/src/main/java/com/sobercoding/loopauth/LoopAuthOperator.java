@@ -2,6 +2,8 @@ package com.sobercoding.loopauth;
 
 
 import com.sobercoding.loopauth.config.LoopAuthConfig;
+import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.dao.LoopAuthDao;
 
 /**
  * @program: LoopAuth
@@ -18,5 +20,15 @@ public class LoopAuthOperator {
      * 配置文件
      */
     private volatile static LoopAuthConfig loopAuthConfig;
+
+    /**
+     * Dao
+     */
+    private volatile static LoopAuthDao loopAuthDao;
+
+    /**
+     * 上下文管理
+     */
+    private volatile static LoopAuthContext loopAuthContext;
 
 }
