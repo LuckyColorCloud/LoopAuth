@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  */
 public class LoopAuthConfig implements Serializable{
 
-    private static final long serialVersionUID = -6541180061782004705L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * token名称 默认looptoken
@@ -53,9 +53,8 @@ public class LoopAuthConfig implements Serializable{
     /**
      * token获取方式 默认[AccessMode.COOKIE,AccessMode.HEADER]顺序获取
      * 即使COOKIE中获取到鉴权成功，则不前往HEADER获取
-     * 原子类保证可见性
      */
-    private final AtomicReferenceArray<AccessMode> accessModes;
+    private final AccessMode[] accessModes;
 
     public String getTokenName() {
         return tokenName;
@@ -81,7 +80,7 @@ public class LoopAuthConfig implements Serializable{
         return maxLoginCount;
     }
 
-    public AtomicReferenceArray<AccessMode> getAccessModes() {
+    public AccessMode[] getAccessModes() {
         return accessModes;
     }
 
@@ -129,7 +128,7 @@ public class LoopAuthConfig implements Serializable{
 
         private int maxLoginCount = 1;
 
-        private AtomicReferenceArray<AccessMode> accessModes = new AtomicReferenceArray<>(new AccessMode[] {AccessMode.COOKIE,AccessMode.HEADER});
+        private AccessMode[] accessModes = new AccessMode[] {AccessMode.COOKIE,AccessMode.HEADER};
 
         public Builder tokenName(String tokenName) {
             this.tokenName = tokenName;
@@ -161,7 +160,7 @@ public class LoopAuthConfig implements Serializable{
             return this;
         }
 
-        public Builder accessModes(AtomicReferenceArray<AccessMode> accessModes) {
+        public Builder accessModes(AccessMode[] accessModes) {
             this.accessModes = accessModes;
             return this;
         }
