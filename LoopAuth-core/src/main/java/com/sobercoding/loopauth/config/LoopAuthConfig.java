@@ -181,7 +181,7 @@ public class LoopAuthConfig implements Serializable{
          * @Author: Sober
          * @Version: 0.0.1
          * @Description: 构建结束创建LoopAuthConfig写入并返回
-         * @param
+         * @param:
          * @Return:
          * @Exception:
          * @Date: 2022/7/21 0:55

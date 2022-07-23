@@ -1,6 +1,5 @@
 package com.sobercoding.loopauth.action;
 
-import cn.hutool.core.codec.Base64;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
@@ -30,7 +29,7 @@ public class LoopAuthImpl implements LoopAuth{
                 .withClaim("id", id)//id
                 .withIssuedAt(new Date()) //签发时间
                 .sign(Algorithm.HMAC256(SECRET)); //SECRET加密
-        return Base64.encode(token);
+        return token;
     }
 
 }

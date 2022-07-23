@@ -1,6 +1,8 @@
 package com.sobercoding.loopauth.model;
 
+import javax.security.auth.login.CredentialNotFoundException;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,6 +26,51 @@ public class UserSession implements Serializable {
     /**
      * token列表
      */
-    private Map<String,TokenModel> tokens = new ConcurrentHashMap<>();
+    private Set<TokenModel> tokens;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public Set<TokenModel> getTokens() {
+        return tokens;
+    }
+
+    public UserSession (Builder builder){
+        this.userId = builder.userId;
+        this.tokens = builder.tokens;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private String userId;
+
+        private Set<TokenModel> tokens = new ConcurrentSkipListSet<>();
+
+        public Builder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder tokenModel(TokenModel tokenModel) {
+            this.tokens.add(tokenModel);
+            return this;
+        }
+
+        public UserSession build(){
+            return new UserSession(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "UserSession{" +
+                "userId='" + userId + '\'' +
+                ", tokens=" + tokens +
+                '}';
+    }
 }
