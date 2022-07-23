@@ -2,6 +2,7 @@ package com.sobercoding.loopauth.model;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.runtime.ListAdapter;
 
 import java.io.IOException;
 import java.util.*;
@@ -55,11 +56,16 @@ public class ModelTest {
 
         //将JSON串 转为 Object 对象
         Map resultMap = objectMapper.readValue(jsonString, HashMap.class);
-        Set<TokenModel> tokenModels = new ConcurrentSkipListSet<>();
-        for (TokenModel tokenModel1 : (List<TokenModel>) resultMap.get("tokens")){
-            tokenModels.add(tokenModel1);
-        }
-        System.out.println(tokenModels);
+        List<TokenModel> tokenModels = new ArrayList<>();
+        tokenModels.addAll((List<TokenModel>) resultMap.get("tokens"));
+        Set<TokenModel> tokenModels1 = new ConcurrentSkipListSet<>();
+
+        System.out.println(tokenModels.get(0).getTimeOut());
+        tokenModels.stream().peek(tokenModel1 -> {
+           tokenModels1.add(tokenModel1);
+            System.out.println(tokenModel1);
+        });
+        System.out.println(tokenModels1);
 //        Set<TokenModel> tokenModels =
     }
 }
