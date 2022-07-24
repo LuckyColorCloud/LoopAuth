@@ -14,7 +14,7 @@ import com.sobercoding.loopauth.dao.LoopAuthDao;
  * @create: 2022/07/20 19:43
  */
 
-public class LoopAuthOperator {
+public class LoopAuthStrategy {
 
     /**
      * 配置文件
@@ -30,5 +30,9 @@ public class LoopAuthOperator {
      * 上下文管理
      */
     private volatile static LoopAuthContext loopAuthContext;
+
+    /**
+     * Token授权生成器
+     */
 
 }

@@ -16,22 +16,41 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
     /**
      * token值
      */
-    private final String value;
+    private String value;
 
     /**
      * 设备值
      */
-    private final String facility;
+    private String facility;
 
     /**
      * 创建时间
      */
-    private final long createTime;
+    private long createTime;
 
     /**
      * token有效期(单位毫秒)
      */
-    private final long timeOut;
+    private long timeOut;
+
+    public TokenModel() {
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setTimeOut(long timeOut) {
+        this.timeOut = timeOut;
+    }
 
     public String getValue() {
         return value;
@@ -48,6 +67,8 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
     public long getTimeOut() {
         return timeOut;
     }
+
+
 
     private TokenModel(Builder builder) {
         this.value = builder.value;
@@ -116,7 +137,7 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
     @Override
     public int hashCode() {
 
-        return Objects.hash(timeOut, value, createTime, facility);
+        return Objects.hash(value);
     }
 
     @Override
@@ -129,10 +150,7 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
         }
         TokenModel tokenModel = (TokenModel) obj;
 
-        return Objects.equals(this.value, tokenModel.value)
-                && Objects.equals(this.createTime, tokenModel.createTime)
-                && Objects.equals(this.timeOut, tokenModel.timeOut)
-                && Objects.equals(this.facility, tokenModel.facility);
+        return Objects.equals(this.value, tokenModel.value);
     }
 
     @Override

@@ -49,7 +49,7 @@ public class UserSession implements Serializable {
 
         private String userId;
 
-        private Set<TokenModel> tokens = new ConcurrentSkipListSet<>();
+        private Set<TokenModel> tokens = new HashSet<>();
 
         public Builder userId(String userId) {
             this.userId = userId;
@@ -66,11 +66,4 @@ public class UserSession implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "UserSession{" +
-                "userId='" + userId + '\'' +
-                ", tokens=" + tokens +
-                '}';
-    }
 }
