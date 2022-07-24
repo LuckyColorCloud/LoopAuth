@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.strategy;
+package com.sobercoding.loopauth.certificate;
 
 import com.sobercoding.loopauth.util.HexUtil;
 
