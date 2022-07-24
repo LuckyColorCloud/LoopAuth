@@ -19,59 +19,18 @@ import java.security.SecureRandom;
  * @Version 1.0
  */
 
-public class CreateTokenByAes {
-
-    /**
-     * 秘钥
-     */
-    private String key;
+public class TokenAes implements TokenBehavior{
 
     /**
      * 加密算法
      */
     private static final String ALGORITHM = "AES";
 
+    /**
+     * 编码类型
+     */
     private static final String UTF8 = StandardCharsets.UTF_8.name();
 
-
-    public CreateTokenByAes(String key) {
-        this.key = key;
-    }
-
-    public  String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-    /**
-     * @param id:
-     * @Author gezi
-     * @Description: 根据ID加密
-     * @Since 2022/7/23 20:30
-     * @return java.lang.String
-     */
-    public String encrypt(String id) throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        Cipher cipher = getCipher(Cipher.ENCRYPT_MODE, key);
-        byte[] encodedBytes = cipher.doFinal(id.getBytes(UTF8));
-        //转十六进制
-        return HexUtil.encodeHexStr(encodedBytes);
-    }
-    /**
-     * @param encodedText: 加密后的字符串
-     * @Author gezi
-     * @Description: 解密
-     * @Since 2022/7/23 20:47
-     * @return java.lang.String
-     */
-    public String decrypt(String encodedText) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
-        //转二进制
-        byte[] bytes = HexUtil.decodeHex(encodedText);
-        Cipher cipher = getCipher(Cipher.DECRYPT_MODE, key);
-        byte[] decryptedBytes = cipher.doFinal(bytes);
-        return new String(decryptedBytes,UTF8);
-    }
     /**
      * @param type:
      * @param seed:
@@ -99,4 +58,34 @@ public class CreateTokenByAes {
         return cipher;
     }
 
+    @Override
+    public String createToken(String userId, String secretKey){
+        byte[] encodedBytes;
+        try {
+            Cipher cipher = getCipher(Cipher.ENCRYPT_MODE, secretKey);
+            encodedBytes = cipher.doFinal(userId.getBytes(UTF8));
+        } catch (NoSuchPaddingException | UnsupportedEncodingException | IllegalBlockSizeException |
+                 NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
+            throw new RuntimeException(e);
+        }
+        //转十六进制
+        return HexUtil.encodeHexStr(encodedBytes);
+    }
+
+    @Override
+    public String decodeToken(String token, String secretKey){
+        byte[] decryptedBytes;
+        String userId;
+        try {
+            byte[] bytes = HexUtil.decodeHex(token);
+            Cipher cipher = getCipher(Cipher.DECRYPT_MODE, secretKey);
+            decryptedBytes = cipher.doFinal(bytes);
+            userId = new String(decryptedBytes,UTF8);
+        } catch (NoSuchPaddingException | UnsupportedEncodingException | IllegalBlockSizeException |
+                 NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
+            throw new RuntimeException(e);
+        }
+        //转二进制
+        return userId;
+    }
 }

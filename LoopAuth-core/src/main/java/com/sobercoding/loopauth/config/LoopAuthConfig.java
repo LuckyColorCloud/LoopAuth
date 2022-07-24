@@ -1,8 +1,13 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.model.constant.AccessMode;
+import com.sobercoding.loopauth.model.constant.TokenAccess;
+import com.sobercoding.loopauth.model.constant.TokenStyle;
+
 import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicReferenceArray;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * @program: LoopAuth
@@ -54,7 +59,25 @@ public class LoopAuthConfig implements Serializable{
      * token获取方式 默认[AccessMode.COOKIE,AccessMode.HEADER]顺序获取
      * 即使COOKIE中获取到鉴权成功，则不前往HEADER获取
      */
-    private final AccessMode[] accessModes;
+    private final Set<TokenAccess> accessModes;
+
+    /**
+     * Token生成密钥
+     */
+    private final String secretKey;
+
+    /**
+     * Token风格
+     */
+    private final TokenStyle tokenStyle;
+
+    public TokenStyle getTokenStyle() {
+        return tokenStyle;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
 
     public String getTokenName() {
         return tokenName;
@@ -80,11 +103,11 @@ public class LoopAuthConfig implements Serializable{
         return maxLoginCount;
     }
 
-    public AccessMode[] getAccessModes() {
+    public Set<TokenAccess> getAccessModes() {
         return accessModes;
     }
 
-    private LoopAuthConfig(Builder builder) {
+    public LoopAuthConfig(Builder builder, TokenStyle tokenStyle) {
         this.tokenName = builder.tokenName;
         this.timeOut = builder.timeOut;
         this.isMutualism = builder.isMutualism;
@@ -92,6 +115,8 @@ public class LoopAuthConfig implements Serializable{
         this.isRenew = builder.isRenew;
         this.maxLoginCount = builder.maxLoginCount;
         this.accessModes = builder.accessModes;
+        this.secretKey = builder.secretKey;
+        this.tokenStyle = builder.tokenStyle;
     }
 
     /**
@@ -116,7 +141,7 @@ public class LoopAuthConfig implements Serializable{
      */
     public static class Builder {
 
-        private String tokenName = "looptoken";
+        private String tokenName = "LoopAuth";
 
         private long timeOut = 60 * 60 * 24 * 7 * 1000;
 
@@ -128,10 +153,24 @@ public class LoopAuthConfig implements Serializable{
 
         private int maxLoginCount = 1;
 
-        private AccessMode[] accessModes = new AccessMode[] {AccessMode.COOKIE,AccessMode.HEADER};
+        private Set<TokenAccess> accessModes = new ConcurrentSkipListSet<>(Arrays.asList(TokenAccess.COOKIE, TokenAccess.HEADER));
+
+        private String secretKey = "LoopAuth";
+
+        private TokenStyle tokenStyle = TokenStyle.JWT;
+
+        public Builder secretKey(String secretKey){
+            this.secretKey = secretKey;
+            return this;
+        }
 
         public Builder tokenName(String tokenName) {
             this.tokenName = tokenName;
+            return this;
+        }
+
+        public Builder tokenStyle(TokenStyle tokenStyle){
+            this.tokenStyle = tokenStyle;
             return this;
         }
 
@@ -171,8 +210,8 @@ public class LoopAuthConfig implements Serializable{
             return this;
         }
 
-        public Builder accessModes(AccessMode[] accessModes) {
-            this.accessModes = accessModes;
+        public Builder accessModes(List<TokenAccess> accessModes) {
+            this.accessModes = new ConcurrentSkipListSet<>(accessModes);
             return this;
         }
 
@@ -187,7 +226,7 @@ public class LoopAuthConfig implements Serializable{
          * @Date: 2022/7/21 0:55
          */
         public LoopAuthConfig build(){
-            return new LoopAuthConfig(this);
+            return new LoopAuthConfig(this, tokenStyle);
         }
     }
 
@@ -202,8 +241,8 @@ public class LoopAuthConfig implements Serializable{
                 ", isRenew=" + isRenew +
                 ", maxLoginCount=" + maxLoginCount +
                 ", accessModes=" + accessModes +
+                ", secretKey='" + secretKey + '\'' +
+                ", tokenStyle=" + tokenStyle +
                 '}';
     }
-
-
 }

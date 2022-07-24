@@ -13,30 +13,26 @@ import java.util.Map;
  * @author XHao
  * @date 2022年07月22日 0:02
  */
-public class CreateTokenByJwt {
+public class TokenJwt implements TokenBehavior{
 
-    /**
-     * 密钥
-     */
-    private static final String SECRET = "LoopAuth";
-
-    public static String createToken(Long id) {
+    @Override
+    public String createToken(String userId, String secretKey) {
         Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
         String token = JWT.create()
                 .withHeader(map)// 添加头部
                 //可以将基本信息放到claims中
-                .withClaim("id", id)//id
+                .withClaim("id", userId)//id
                 .withIssuedAt(new Date()) //签发时间
-                .sign(Algorithm.HMAC256(SECRET)); //SECRET加密
+                .sign(Algorithm.HMAC256(secretKey)); //SECRET加密
         return token;
     }
 
-    public static String decodeToken(String token){
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        return decodedJWT.getClaims().get("id").toString();
+    @Override
+    public String decodeToken(String token, String secretKey) {
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
+        DecodedJWT decodedJwt = jwtVerifier.verify(token);
+        return decodedJwt.getClaim("id").asString();
     }
-
 }
