@@ -2,7 +2,6 @@ package com.sobercoding.loopauth.model;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.internal.runtime.ListAdapter;
 
 import java.io.IOException;
 import java.util.*;

@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.action;
 
-import cn.hutool.core.util.HexUtil;
+import com.sobercoding.loopauth.util.HexUtil;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -12,7 +12,7 @@ import java.security.SecureRandom;
 
 /**
  * @ClassName CreateTokenByAes
- * @Description
+ * @Description AES生成token
  * @Author gezi
  * @Email a1151575020@163.com
  * @Since 2022/7/23 19:54
@@ -24,7 +24,7 @@ public class CreateTokenByAes {
     /**
      * 秘钥
      */
-    private String key = null;
+    private String key;
 
     /**
      * 加密算法
