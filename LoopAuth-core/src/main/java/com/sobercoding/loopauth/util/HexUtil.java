@@ -13,6 +13,8 @@ public class HexUtil {
             '0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'
     };
 
+    private static final int TWOSING = 2;
+
     /**
      * @param bytes: 二进制数组
      * @Author gezi
@@ -40,7 +42,7 @@ public class HexUtil {
         if (hexStr == null || hexStr.length() == 0){
             return null;
         }
-        if (hexStr.length() % 2 != 0){
+        if (hexStr.length() % TWOSING != 0){
             hexStr = "0" + hexStr;
         }
         char[] chars = hexStr.toCharArray();
