@@ -33,23 +33,24 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
      */
     private long timeOut;
 
-    public TokenModel() {
-    }
-
-    public void setValue(String value) {
+    public TokenModel setValue(String value) {
         this.value = value;
+        return this;
     }
 
-    public void setFacility(String facility) {
+    public TokenModel setFacility(String facility) {
         this.facility = facility;
+        return this;
     }
 
-    public void setCreateTime(long createTime) {
+    public TokenModel setCreateTime(long createTime) {
         this.createTime = createTime;
+        return this;
     }
 
-    public void setTimeOut(long timeOut) {
+    public TokenModel setTimeOut(long timeOut) {
         this.timeOut = timeOut;
+        return this;
     }
 
     public String getValue() {

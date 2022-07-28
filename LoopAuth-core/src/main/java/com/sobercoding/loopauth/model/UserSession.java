@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.function.Function;
 
 /**
  * @program: LoopAuth
@@ -28,6 +29,16 @@ public class UserSession implements Serializable {
      */
     private Set<TokenModel> tokens;
 
+    public UserSession setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public UserSession setTokens(Set<TokenModel> tokens) {
+        this.tokens = tokens;
+        return this;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -35,6 +46,7 @@ public class UserSession implements Serializable {
     public Set<TokenModel> getTokens() {
         return tokens;
     }
+
 
     public UserSession (Builder builder){
         this.userId = builder.userId;

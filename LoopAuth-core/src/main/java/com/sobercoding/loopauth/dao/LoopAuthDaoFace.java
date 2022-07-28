@@ -24,13 +24,13 @@ public class LoopAuthDaoFace implements LoopAuthDao{
     private Map<String, String> userSessions = new ConcurrentHashMap<>();
 
 
-//    public UserSession getUserSession(System userId) {
-//        String tokens = userSessions.get(userId);
+    public UserSession getUserSession(System userId) {
+        String tokens = userSessions.get(userId);
 //        Set<TokenModel> tokenModels =
-//        UserSession userSession = UserSession.builder()
-//                .build();
-//        return userSession;
-//    }
+        UserSession userSession = UserSession.builder()
+                .build();
+        return userSession;
+    }
 
     public void setUserSession(UserSession userSession) {
         this.userSessions.put(
