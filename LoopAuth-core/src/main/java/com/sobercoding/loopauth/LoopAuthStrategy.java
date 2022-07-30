@@ -29,7 +29,7 @@ public class LoopAuthStrategy {
         if (LoopAuthStrategy.loopAuthConfig == null){
             synchronized(LoopAuthStrategy.class){
                 if (LoopAuthStrategy.loopAuthConfig == null){
-                    LoopAuthStrategy.loopAuthConfig = LoopAuthConfig.builder().build();
+                    LoopAuthStrategy.loopAuthConfig = new LoopAuthConfig();
                 }
             }
         }

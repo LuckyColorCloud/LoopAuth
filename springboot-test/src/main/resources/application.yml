@@ -1,0 +1,10 @@
+
+server:
+  port: 8080
+
+loop-auth:
+  secret-key: sober
+  access-modes:
+    - HEADER
+    - COOKIE
+

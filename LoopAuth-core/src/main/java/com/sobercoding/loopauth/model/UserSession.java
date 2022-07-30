@@ -48,34 +48,4 @@ public class UserSession implements Serializable {
     }
 
 
-    public UserSession (Builder builder){
-        this.userId = builder.userId;
-        this.tokens = builder.tokens;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder {
-
-        private String userId;
-
-        private Set<TokenModel> tokens = new HashSet<>();
-
-        public Builder userId(String userId) {
-            this.userId = userId;
-            return this;
-        }
-
-        public Builder tokenModel(TokenModel tokenModel) {
-            this.tokens.add(tokenModel);
-            return this;
-        }
-
-        public UserSession build(){
-            return new UserSession(this);
-        }
-    }
-
 }
