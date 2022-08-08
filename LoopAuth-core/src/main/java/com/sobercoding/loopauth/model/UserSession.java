@@ -27,7 +27,7 @@ public class UserSession implements Serializable {
     /**
      * token列表
      */
-    private Set<TokenModel> tokens;
+    private Set<TokenModel> tokens = new HashSet<>();
 
     public UserSession setUserId(String userId) {
         this.userId = userId;
@@ -47,5 +47,11 @@ public class UserSession implements Serializable {
         return tokens;
     }
 
-
+    @Override
+    public String toString() {
+        return "UserSession{" +
+                "userId='" + userId + '\'' +
+                ", tokens=" + tokens +
+                '}';
+    }
 }

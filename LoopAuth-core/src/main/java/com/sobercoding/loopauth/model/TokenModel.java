@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.model;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -32,6 +34,18 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
      * token有效期(单位毫秒)
      */
     private long timeOut;
+
+    public TokenModel() {
+    }
+
+
+    public TokenModel(String token, String facility) {
+        this.value = token;
+        this.facility = facility;
+        this.createTime = System.nanoTime();
+        this.timeOut = LoopAuthStrategy.getLoopAuthConfig().getTimeOut();
+    }
+
 
     public TokenModel setValue(String value) {
         this.value = value;
@@ -72,8 +86,7 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(value);
+        return Objects.hash(value,createTime,timeOut,facility);
     }
 
     @Override

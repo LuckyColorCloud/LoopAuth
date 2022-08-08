@@ -7,4 +7,5 @@ loop-auth:
   access-modes:
     - HEADER
     - COOKIE
+  token-style: JWT
 

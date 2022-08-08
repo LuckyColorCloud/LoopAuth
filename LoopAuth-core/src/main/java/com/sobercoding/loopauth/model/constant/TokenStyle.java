@@ -1,8 +1,8 @@
 package com.sobercoding.loopauth.model.constant;
 
-import com.sobercoding.loopauth.certificate.TokenAes;
-import com.sobercoding.loopauth.certificate.TokenBehavior;
-import com.sobercoding.loopauth.certificate.TokenJwt;
+import com.sobercoding.loopauth.fabricate.certificate.TokenAes;
+import com.sobercoding.loopauth.fabricate.TokenBehavior;
+import com.sobercoding.loopauth.fabricate.certificate.TokenJwt;
 
 /**
  * @program: LoopAuth

@@ -1,11 +1,10 @@
 package com.sobercoding.loopauth;
 
 
-import com.sobercoding.loopauth.certificate.TokenBehavior;
+import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
+import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.config.LoopAuthConfig;
-import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
-import com.sobercoding.loopauth.dao.LoopAuthDaoFace;
 
 /**
  * @program: LoopAuth
@@ -37,30 +36,13 @@ public class LoopAuthStrategy {
     }
 
     /**
-     * Token会话操作
-     */
-    private volatile static LoopAuthDao loopAuthDao;
-
-    public static LoopAuthDao getLoopAuthDao() {
-        if (LoopAuthStrategy.loopAuthDao == null){
-            synchronized(LoopAuthStrategy.class){
-                if (LoopAuthStrategy.loopAuthDao == null){
-                    LoopAuthStrategy.loopAuthDao = new LoopAuthDaoFace();
-                }
-            }
-        }
-        return LoopAuthStrategy.loopAuthDao;
-    }
-
-    /**
-     * 上下文管理
-     */
-    private volatile static LoopAuthContext loopAuthContext;
-
-    /**
      * Token风格
      */
     private volatile static TokenBehavior tokenBehavior;
+
+    public static void setLoopAuthDao(TokenBehavior tokenBehavior) {
+        LoopAuthStrategy.tokenBehavior = tokenBehavior;
+    }
 
     public static TokenBehavior getTokenBehavior() {
         if (LoopAuthStrategy.tokenBehavior == null){
@@ -72,6 +54,27 @@ public class LoopAuthStrategy {
         }
         return LoopAuthStrategy.tokenBehavior;
     }
+
+    /**
+     * 会话缓存操作
+     */
+    private volatile static LoopAuthDao loopAuthDao;
+
+    public static void setLoopAuthDao(LoopAuthDao loopAuthDao) {
+        LoopAuthStrategy.loopAuthDao = loopAuthDao;
+    }
+
+    public static LoopAuthDao getLoopAuthDao() {
+        if (LoopAuthStrategy.loopAuthDao == null){
+            synchronized(LoopAuthStrategy.class){
+                if (LoopAuthStrategy.loopAuthDao == null){
+                    LoopAuthStrategy.loopAuthDao = new LoopAuthDaoImpl();
+                }
+            }
+        }
+        return LoopAuthStrategy.loopAuthDao;
+    }
+
 
 
 }

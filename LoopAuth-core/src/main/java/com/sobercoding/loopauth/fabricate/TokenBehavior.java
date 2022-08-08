@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.certificate;
+package com.sobercoding.loopauth.fabricate;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

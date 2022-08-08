@@ -1,5 +1,6 @@
-package com.sobercoding.loopauth.certificate;
+package com.sobercoding.loopauth.fabricate.certificate;
 
+import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.util.HexUtil;
 
 import javax.crypto.*;
@@ -19,7 +20,7 @@ import java.security.SecureRandom;
  * @Version 1.0
  */
 
-public class TokenAes implements TokenBehavior{
+public class TokenAes implements TokenBehavior {
 
     /**
      * 加密算法
