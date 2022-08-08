@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Description:
  * @create: 2022/07/20 23:35
  */
-public class LoopAuthDaoFace implements LoopAuthDao{
+public class LoopAuthDaoFace implements LoopAuthDao {
 
 
     /**
@@ -24,12 +24,10 @@ public class LoopAuthDaoFace implements LoopAuthDao{
     private Map<String, String> userSessions = new ConcurrentHashMap<>();
 
 
-    public UserSession getUserSession(System userId) {
+    public UserSession getUserSession(String userId) {
         String tokens = userSessions.get(userId);
 //        Set<TokenModel> tokenModels =
-        UserSession userSession = UserSession.builder()
-                .build();
-        return userSession;
+        return new UserSession();
     }
 
     public void setUserSession(UserSession userSession) {
