@@ -36,8 +36,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * @Date: 2022/8/8 17:16
      */
     public UserSession getUserSession(String userId) {
-        String tokens = LoopAuthLoginException.notLogin(this.userSessions.get(userId));
-        Set<TokenModel> tokenModelSet = JsonUtil.jsonToList(tokens,TokenModel.class);
+        Set<TokenModel> tokenModelSet = LoopAuthLoginException.isSessionLegality(this.userSessions.get(userId));
         return new UserSession()
                 .setUserId(userId)
                 .setTokens(tokenModelSet);

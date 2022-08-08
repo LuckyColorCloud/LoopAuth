@@ -1,6 +1,10 @@
 package com.sobercoding.loopauth.exception;
 
+import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.util.JsonUtil;
+
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @program: LoopAuth
@@ -18,8 +22,21 @@ public class LoopAuthLoginException extends LoopAuthException{
 
 
 
-    public static String notLogin(String loginObj){
-        return Optional.ofNullable(loginObj)
-                .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
+    /**
+     * @Method: isNotLogin
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 判断会话是否合规，
+     * 合规则返回TokenModelSet，不合规则抛出异常
+     * @param tokens 会话的tokens
+     * @Return: Set<TokenModel>
+     * @Exception:
+     * @Date: 2022/8/8 23:42
+     */
+    public static Set<TokenModel> isSessionLegality(String tokens){
+        return JsonUtil.jsonToList(
+                Optional.ofNullable(tokens)
+                        .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST)),
+                TokenModel.class);
     }
 }

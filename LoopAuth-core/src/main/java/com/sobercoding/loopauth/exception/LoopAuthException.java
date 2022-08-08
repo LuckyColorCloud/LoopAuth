@@ -1,6 +1,5 @@
 package com.sobercoding.loopauth.exception;
 
-import java.util.function.Supplier;
 
 /**
  * @program: LoopAuth

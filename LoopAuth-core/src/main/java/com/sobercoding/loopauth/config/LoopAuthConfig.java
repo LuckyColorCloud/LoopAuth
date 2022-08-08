@@ -42,16 +42,16 @@ public class LoopAuthConfig implements Serializable{
     private Boolean isExclusion = false;
 
     /**
-     * 自动续签 默认打开
-     * 每次操作，会自动刷新token有效期
-     */
-    private Boolean isRenew = true;
-
-    /**
      * 同一账号最大登录数量 默认1
      * -1代表不限 （只有在 isMutualism=true 时此配置才有效）
      */
     private int maxLoginCount = 1;
+
+    /**
+     * 自动续签 默认打开
+     * 每次操作，会自动刷新token有效期
+     */
+    private Boolean isRenew = true;
 
     /**
      * token获取方式 默认[AccessMode.COOKIE,AccessMode.HEADER]顺序获取
