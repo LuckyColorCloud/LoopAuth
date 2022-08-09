@@ -14,11 +14,11 @@ import javax.annotation.Resource;
 public class LoopAuthInject {
 
     /**
+     * @param
      * @Method: setLoopAuthConfig
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 注入loopAuthConfig到core
-     * @param
      * @Return:
      * @Exception:
      * @Date: 2022/7/31 0:00

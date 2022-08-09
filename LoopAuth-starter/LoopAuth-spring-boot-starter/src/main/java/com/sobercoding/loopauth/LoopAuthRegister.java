@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Bean;
 public class LoopAuthRegister {
 
     /**
+     * @param
      * @Method: getLoopAuthConfig
      * @Author: Sober
      * @Version: 0.0.1
      * @Description:
-     * @param
      * @Return:
      * @Exception:
      * @Date: 2022/7/30 23:58
