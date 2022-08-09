@@ -6,6 +6,8 @@ import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 
+import java.util.function.Function;
+
 /**
  * @program: LoopAuth
  * @author: Sober
@@ -40,7 +42,7 @@ public class LoopAuthStrategy {
      */
     private volatile static TokenBehavior tokenBehavior;
 
-    public static void setLoopAuthDao(TokenBehavior tokenBehavior) {
+    public static void setTokenBehavior(TokenBehavior tokenBehavior) {
         LoopAuthStrategy.tokenBehavior = tokenBehavior;
     }
 
@@ -75,6 +77,18 @@ public class LoopAuthStrategy {
         return LoopAuthStrategy.loopAuthDao;
     }
 
+    /**
+     * @Method:
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 获取盐默认方法
+     * @param: userId 用户id
+     * @Return:
+     * @Exception: 
+     * @Date: 2022/8/9 15:21
+     */
+    public static Function<String,String> getSecretKey = userId -> LoopAuthStrategy
+            .getLoopAuthConfig().getSecretKey();
 
 
 }

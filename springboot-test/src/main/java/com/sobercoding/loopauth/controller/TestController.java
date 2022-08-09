@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.controller;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
 import com.sobercoding.loopauth.model.UserSession;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class TestController {
     public UserSession register(){
         LoopAuthFaceImpl.login("1","PHONE");
         LoopAuthFaceImpl.login("1","PC");
+        System.out.println(LoopAuthStrategy.getSecretKey.apply("1"));
         return LoopAuthFaceImpl.getUserSession("1");
     }
 

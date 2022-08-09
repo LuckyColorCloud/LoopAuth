@@ -2,8 +2,20 @@
 server:
   port: 8080
 
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Sober@@199
+    #serverTimezone=UTC 配置时区
+    url: jdbc:mysql://101.35.147.40:3306/loop_auth_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+
+
+#自己写的mapper路径
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+
 loop-auth:
-  secret-key: sober
   access-modes:
     - HEADER
     - COOKIE

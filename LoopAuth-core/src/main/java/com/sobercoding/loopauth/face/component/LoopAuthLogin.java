@@ -34,7 +34,7 @@ public class LoopAuthLogin {
                 .getTokenBehavior()
                 .createToken(
                         userId,
-                        LoopAuthStrategy.getLoopAuthConfig().getSecretKey()
+                        LoopAuthStrategy.getSecretKey.apply(userId)
                 );
         System.out.println(token);
         // 会话对象
