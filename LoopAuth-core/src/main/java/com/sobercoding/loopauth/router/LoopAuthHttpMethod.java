@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Http 请求各种请求类型的枚举表示
@@ -34,14 +35,11 @@ public enum LoopAuthHttpMethod {
 	 * @return ReqMethod 对象 
 	 */
 	public static LoopAuthHttpMethod toEnum(String method) {
-		if(method == null) {
-			throw new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR);
-		}
-		LoopAuthHttpMethod reqMethod = map.get(method.toUpperCase());
-		if(reqMethod == null) {
-			throw new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR);
-		}
-		return reqMethod;
+		return Optional.ofNullable(
+				Optional.ofNullable(method)
+						.map(str -> map.get(method.toUpperCase()))
+						.orElseThrow(() -> new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR))
+		).get();
 	}
 
 	/**
