@@ -29,12 +29,10 @@
             <version>2.5.3</version>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-core</artifactId>
+            <artifactId>LoopAuth-servlet</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

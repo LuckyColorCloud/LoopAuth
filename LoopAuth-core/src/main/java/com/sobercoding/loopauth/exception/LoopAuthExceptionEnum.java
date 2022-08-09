@@ -8,11 +8,13 @@ package com.sobercoding.loopauth.exception;
  */
 public enum LoopAuthExceptionEnum {
     // 未知错误
-    ERROR(500,"未知错误"),
+    ERROR(500, "未知错误"),
     // HTTP请求方式不对
-    HTTP_MODULE_ERROR(415,"HTTP请求方式不对"),
+    HTTP_MODULE_ERROR(415, "HTTP请求方式不对"),
+    //请求参数 不能为 必须有值
+    PARAM_IS_NULL(100001, "必要请求参数不存在:"),
     // 账户未登录
-    LOGIN_NOT_EXIST(401,"会话不存在");
+    LOGIN_NOT_EXIST(401, "会话不存在");
 
     /**
      * 异常状态码
@@ -31,6 +33,11 @@ public enum LoopAuthExceptionEnum {
 
     public String getMsg() {
         return msg;
+    }
+
+    public LoopAuthExceptionEnum setMsg(String msg) {
+        this.msg = this.msg + msg;
+        return this;
     }
 
     public int getCode() {

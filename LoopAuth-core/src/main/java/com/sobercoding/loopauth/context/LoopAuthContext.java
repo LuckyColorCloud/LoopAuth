@@ -7,4 +7,24 @@ package com.sobercoding.loopauth.context;
  * @create: 2022/07/20 23:29
  */
 public interface LoopAuthContext {
+    /**
+     * 获取当前请求的 [Request] 对象
+     *
+     * @return see note
+     */
+    public LoopAuthRequest getRequest();
+
+    /**
+     * 获取当前请求的 [Response] 对象
+     *
+     * @return see note
+     */
+    public LoopAuthResponse getResponse();
+
+    /**
+     * 获取当前请求的 [存储器] 对象
+     *
+     * @return see note
+     */
+    public LoopAuthStorage getStorage();
 }
