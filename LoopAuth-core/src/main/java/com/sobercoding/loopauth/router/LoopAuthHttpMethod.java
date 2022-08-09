@@ -3,6 +3,7 @@ package com.sobercoding.loopauth.router;
 import com.sobercoding.loopauth.exception.LoopAuthException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public enum LoopAuthHttpMethod {
 	 * @return ReqMethod 对象 
 	 */
 	public static LoopAuthHttpMethod[] toEnumArray(String... methods) {
-		LoopAuthHttpMethod [] arr = new LoopAuthHttpMethod[methods.length];
+		LoopAuthHttpMethod[] arr = new LoopAuthHttpMethod[methods.length];
 		for (int i = 0; i < methods.length; i++) {
 			arr[i] = LoopAuthHttpMethod.toEnum(methods[i]);
 		}
