@@ -1,9 +1,8 @@
 package com.sobercoding.loopauth;
 
 import com.sobercoding.loopauth.config.LoopAuthConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.Resource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @program: LoopAuth
@@ -14,17 +13,18 @@ import javax.annotation.Resource;
 public class LoopAuthRegister {
 
     /**
-     * @Method: setLoopAuthConfig
+     * @Method: getLoopAuthConfig
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 注入loopAuthConfig到core
+     * @Description:
      * @param
      * @Return:
      * @Exception:
-     * @Date: 2022/7/31 0:00
+     * @Date: 2022/7/30 23:58
      */
-    @Resource
-    public void setLoopAuthConfig(LoopAuthConfig loopAuthConfig) {
-        LoopAuthStrategy.setLoopAuthConfig(loopAuthConfig);
+    @Bean
+    @ConfigurationProperties(prefix = "loop-auth")
+    public LoopAuthConfig getLoopAuthConfig() {
+        return new LoopAuthConfig();
     }
 }
