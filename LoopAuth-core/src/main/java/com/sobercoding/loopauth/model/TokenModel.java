@@ -38,9 +38,7 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
     public TokenModel() {
     }
 
-
-    public TokenModel(String token, String facility) {
-        this.value = token;
+    public TokenModel(String facility) {
         this.facility = facility;
         this.createTime = System.nanoTime();
         this.timeOut = LoopAuthStrategy.getLoopAuthConfig().getTimeOut();

@@ -2,6 +2,7 @@ package com.sobercoding.loopauth.router;
 
 import com.sobercoding.loopauth.exception.LoopAuthException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ public enum LoopAuthHttpMethod {
 	 */
 	public static LoopAuthHttpMethod toEnum(String method) {
 		return Optional.ofNullable(method)
+				.filter(LoopAuthUtil::isNotEmpty)
 				.map(str -> map.get(method.toUpperCase()))
 				.orElseThrow(() -> new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR));
 	}

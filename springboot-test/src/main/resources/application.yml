@@ -7,7 +7,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: Sober@@199
-    #serverTimezone=UTC 配置时区
     url: jdbc:mysql://101.35.147.40:3306/loop_auth_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
 
 

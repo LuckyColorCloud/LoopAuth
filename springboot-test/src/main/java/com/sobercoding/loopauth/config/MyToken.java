@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
+import com.sobercoding.loopauth.model.TokenModel;
 
 /**
  * @program: LoopAuth
@@ -10,12 +11,12 @@ import com.sobercoding.loopauth.fabricate.TokenBehavior;
  */
 public class MyToken implements TokenBehavior {
     @Override
-    public String createToken(String userId, String secretKey) {
+    public String createToken(String userId, String secretKey, TokenModel tokenModel) {
         return "sober";
     }
 
     @Override
-    public String decodeToken(String token, String secretKey) {
+    public String decodeToken(String token, String secretKey, TokenModel tokenModel) {
         return "sober";
     }
 }

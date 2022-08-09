@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.fabricate.certificate;
 
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
+import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.util.HexUtil;
 
 import javax.crypto.*;
@@ -60,7 +61,7 @@ public class TokenAes implements TokenBehavior {
     }
 
     @Override
-    public String createToken(String userId, String secretKey){
+    public String createToken(String userId, String secretKey, TokenModel tokenModel){
         byte[] encodedBytes;
         try {
             Cipher cipher = getCipher(Cipher.ENCRYPT_MODE, secretKey);
@@ -74,7 +75,7 @@ public class TokenAes implements TokenBehavior {
     }
 
     @Override
-    public String decodeToken(String token, String secretKey){
+    public String decodeToken(String token, String secretKey, TokenModel tokenModel){
         byte[] decryptedBytes;
         String userId;
         try {

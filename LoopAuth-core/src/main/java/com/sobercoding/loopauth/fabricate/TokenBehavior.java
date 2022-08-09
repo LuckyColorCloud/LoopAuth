@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.fabricate;
 
+import com.sobercoding.loopauth.model.TokenModel;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -24,7 +26,7 @@ public interface TokenBehavior {
      * @return String
      * @Date: 2022/7/24 23:43
      */
-    String createToken(String userId, String secretKey);
+    String createToken(String userId, String secretKey, TokenModel tokenModel);
 
     /**
      * 解析Token内userId
@@ -35,6 +37,6 @@ public interface TokenBehavior {
      * @return String
      * @Date: 2022/7/24 23:46
      */
-    String decodeToken(String token, String secretKey);
+    String decodeToken(String token, String secretKey, TokenModel tokenModel);
 
 }

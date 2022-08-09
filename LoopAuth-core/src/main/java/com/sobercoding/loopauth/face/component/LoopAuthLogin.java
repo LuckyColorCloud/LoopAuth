@@ -30,11 +30,13 @@ public class LoopAuthLogin {
      */
     public String login(String userId,String facility) {
         // 生成token
+        TokenModel tokenModel = new TokenModel(facility);
         String token = LoopAuthStrategy
                 .getTokenBehavior()
                 .createToken(
                         userId,
-                        LoopAuthStrategy.getSecretKey.apply(userId)
+                        LoopAuthStrategy.getSecretKey.apply(userId),
+                        tokenModel
                 );
         System.out.println(token);
         // 会话对象
@@ -48,7 +50,6 @@ public class LoopAuthLogin {
                     .setUserId(userId);
         }
         // 增加会话token
-        TokenModel tokenModel = new TokenModel(token,facility);
         userSession.getTokens().add(tokenModel);
         // 持久化
         LoopAuthStrategy.getLoopAuthDao().setUserSession(userSession);
