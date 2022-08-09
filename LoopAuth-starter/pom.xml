@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>LoopAuth-spring-boot-starter</module>
+        <module>LoopAuth-servlet</module>
     </modules>
     <artifactId>LoopAuth-starter</artifactId>
 
