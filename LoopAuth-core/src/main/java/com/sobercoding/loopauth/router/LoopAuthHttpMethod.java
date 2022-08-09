@@ -36,11 +36,9 @@ public enum LoopAuthHttpMethod {
 	 * @return ReqMethod 对象 
 	 */
 	public static LoopAuthHttpMethod toEnum(String method) {
-		return Optional.ofNullable(
-				Optional.ofNullable(method)
-						.map(str -> map.get(method.toUpperCase()))
-						.orElseThrow(() -> new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR))
-		).get();
+		return Optional.ofNullable(method)
+				.map(str -> map.get(method.toUpperCase()))
+				.orElseThrow(() -> new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR));
 	}
 
 	/**
