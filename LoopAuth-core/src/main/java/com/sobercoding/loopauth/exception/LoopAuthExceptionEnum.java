@@ -9,8 +9,8 @@ package com.sobercoding.loopauth.exception;
 public enum LoopAuthExceptionEnum {
     // 未知错误
     ERROR(500,"未知错误"),
-    // 未知错误
-    HTTP_MODULE_ERROR(415,"HTTP请求方式不对1"),
+    // HTTP请求方式不对
+    HTTP_MODULE_ERROR(415,"HTTP请求方式不对"),
     // 账户未登录
     LOGIN_NOT_EXIST(401,"会话不存在");
 
