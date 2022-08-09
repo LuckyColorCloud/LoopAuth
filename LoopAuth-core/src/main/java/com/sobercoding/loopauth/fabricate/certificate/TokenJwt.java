@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.fabricate.certificate;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
@@ -18,23 +19,32 @@ import java.util.Map;
 public class TokenJwt implements TokenBehavior {
 
     @Override
-    public String createToken(String userId, String secretKey, TokenModel tokenModel) {
-        Map<String, Object> map = new HashMap<>();
+    public void createToken(String userId, String secretKey, TokenModel tokenModel) {
+        Map<String, Object> map = new HashMap<>(3);
         map.put("alg", "HS256");
         map.put("typ", "JWT");
         String token = JWT.create()
-                .withHeader(map)// 添加头部
-                //可以将基本信息放到claims中
-                .withClaim("id", userId)//id
-                .withIssuedAt(new Date()) //签发时间
-                .sign(Algorithm.HMAC256(secretKey)); //SECRET加密
-        return token;
+                // 添加头部信息
+                .withHeader(map)
+                // 用户id
+                .withClaim("id", userId)
+                // 设备
+                .withClaim("facility", tokenModel.getFacility())
+                // 签发时间
+                .withIssuedAt(new Date(tokenModel.getCreateTime()))
+                // 有效期
+                .withExpiresAt(new Date(tokenModel.getCreateTime() + tokenModel.getTimeOut()))
+                // SECRET加密
+                .sign(Algorithm.HMAC256(secretKey));
+        // 写入token
+        tokenModel.setValue(token);
     }
 
     @Override
-    public String decodeToken(String token, String secretKey, TokenModel tokenModel) {
+    public boolean decodeToken(String token, String secretKey) {
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
         DecodedJWT decodedJwt = jwtVerifier.verify(token);
-        return decodedJwt.getClaim("id").asString();
+        decodedJwt.getClaim("id").asString();
+        return true;
     }
 }

@@ -3,6 +3,7 @@ package com.sobercoding.loopauth.exception;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.util.JsonUtil;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -33,10 +34,11 @@ public class LoopAuthLoginException extends LoopAuthException{
      * @Exception:
      * @Date: 2022/8/8 23:42
      */
-    public static Set<TokenModel> isSessionLegality(String tokens){
+    public static List<TokenModel> isSessionLegality(String tokens){
         return JsonUtil.jsonToList(
                 Optional.ofNullable(tokens)
-                        .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST)),
+                        .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST)
+                ),
                 TokenModel.class);
     }
 }

@@ -26,7 +26,7 @@ public interface TokenBehavior {
      * @return String
      * @Date: 2022/7/24 23:43
      */
-    String createToken(String userId, String secretKey, TokenModel tokenModel);
+    void createToken(String userId, String secretKey, TokenModel tokenModel);
 
     /**
      * 解析Token内userId
@@ -37,6 +37,6 @@ public interface TokenBehavior {
      * @return String
      * @Date: 2022/7/24 23:46
      */
-    String decodeToken(String token, String secretKey, TokenModel tokenModel);
+    boolean decodeToken(String token, String secretKey);
 
 }

@@ -37,10 +37,10 @@ public class JsonUtil {
         return json;
     }
 
-    public static <T> Set<T> jsonToList(String jsonStr,Class<?> clazz) {
-        Set<T> userList = null;
+    public static <T> List<T> jsonToList(String jsonStr,Class<?> clazz) {
+        List<T> userList = null;
         try {
-            CollectionType listType = MAPPER.getTypeFactory().constructCollectionType(Set.class, clazz);
+            CollectionType listType = MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
             userList = MAPPER.readValue(jsonStr, listType);
         } catch (IOException e) {
             e.printStackTrace();

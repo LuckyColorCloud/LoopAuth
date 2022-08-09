@@ -21,8 +21,12 @@ public class TestController {
     @GetMapping("/login")
     public UserSession register(){
         LoopAuthFaceImpl.login("1","PHONE");
+        return LoopAuthFaceImpl.getUserSession("1");
+    }
+
+    @GetMapping("/login1")
+    public UserSession register2(){
         LoopAuthFaceImpl.login("1","PC");
-        System.out.println(LoopAuthStrategy.getSecretKey.apply("1"));
         return LoopAuthFaceImpl.getUserSession("1");
     }
 

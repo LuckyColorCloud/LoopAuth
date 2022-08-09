@@ -1,13 +1,14 @@
 package com.sobercoding.loopauth.model;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+
 import javax.security.auth.login.CredentialNotFoundException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @program: LoopAuth
@@ -27,14 +28,14 @@ public class UserSession implements Serializable {
     /**
      * token列表
      */
-    private Set<TokenModel> tokens = new HashSet<>();
+    private List<TokenModel> tokens = new ArrayList<>();
 
     public UserSession setUserId(String userId) {
         this.userId = userId;
         return this;
     }
 
-    public UserSession setTokens(Set<TokenModel> tokens) {
+    public UserSession setTokens(List<TokenModel> tokens) {
         this.tokens = tokens;
         return this;
     }
@@ -43,8 +44,41 @@ public class UserSession implements Serializable {
         return userId;
     }
 
-    public Set<TokenModel> getTokens() {
+    public List<TokenModel> getTokens() {
         return tokens;
+    }
+
+    public UserSession setToken(TokenModel tokenModel) {
+        // 登录规则检测
+        this.tokens = LoopAuthStrategy.loginRulesMatching.exe(this.tokens,tokenModel);
+        return this;
+    }
+
+    public UserSession removeTokens(String... facilitys) {
+        // 删除所选的会话  并 刷新会话
+        this.setTokens(
+                this.tokens.stream().filter(
+                        tokenModel -> !Arrays.asList(facilitys)
+                                .contains(tokenModel.getFacility())
+                ).collect(Collectors.toList())
+        );
+        return this;
+    }
+
+    public UserSession removeToken(String token) {
+        // 删除当前token
+        // TODO: 2022/8/10
+        return this;
+    }
+
+    public void setUserSession(){
+        // 如果已经不存在会话则删除用户所有会话存储
+        if (this.tokens.size() <= 0){
+            // 删除会话
+            LoopAuthStrategy.getLoopAuthDao().removeUserSession(userId);
+        }else {
+            LoopAuthStrategy.getLoopAuthDao().setUserSession(this);
+        }
     }
 
     @Override

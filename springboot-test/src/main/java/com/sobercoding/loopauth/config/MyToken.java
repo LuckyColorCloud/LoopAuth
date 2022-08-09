@@ -11,12 +11,12 @@ import com.sobercoding.loopauth.model.TokenModel;
  */
 public class MyToken implements TokenBehavior {
     @Override
-    public String createToken(String userId, String secretKey, TokenModel tokenModel) {
-        return "sober";
+    public void createToken(String userId, String secretKey, TokenModel tokenModel) {
+        tokenModel.setValue("sober");
     }
 
     @Override
-    public String decodeToken(String token, String secretKey, TokenModel tokenModel) {
-        return "sober";
+    public boolean decodeToken(String token, String secretKey) {
+        return true;
     }
 }

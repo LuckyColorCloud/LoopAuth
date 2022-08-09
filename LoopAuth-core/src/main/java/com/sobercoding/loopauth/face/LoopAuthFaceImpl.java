@@ -2,12 +2,13 @@ package com.sobercoding.loopauth.face;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.face.component.LoopAuthLogin;
+import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.model.UserSession;
 
 /**
  * @program: LoopAuth
  * @author: Sober
- * @Description:
+ * @Description: 开放接口
  * @create: 2022/07/30 23:46
  */
 public class LoopAuthFaceImpl {
@@ -24,8 +25,14 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static String login(String userId) {
-        return LOOP_AUTH_LOGIN.login(userId,"DEFAULT");
+    public static TokenModel login(String userId) {
+        return LOOP_AUTH_LOGIN.login(
+                userId,
+                new TokenModel()
+                        .setFacility("LoopAuth"))
+                        .setCreateTime(System.nanoTime())
+                        .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut()
+        );
     }
 
     /**
@@ -39,8 +46,14 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static String login(String userId,String facility) {
-        return LOOP_AUTH_LOGIN.login(userId,facility);
+    public static TokenModel login(String userId, String facility) {
+        return LOOP_AUTH_LOGIN.login(
+                userId,
+                new TokenModel()
+                        .setFacility(facility)
+                        .setCreateTime(System.nanoTime())
+                        .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
+        );
     }
 
     /**

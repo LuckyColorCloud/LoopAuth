@@ -37,7 +37,7 @@ public class LoopAuthConfig implements Serializable{
 
     /**
      * 互斥登录， 默认不开启
-     * 开启则 多人操作相同设备登录 会互相挤掉线
+     * 开启则 多人操作相同设备登录 会互相挤掉线（只有在 isMutualism=true 时此配置才有效）
      */
     private Boolean isExclusion = false;
 

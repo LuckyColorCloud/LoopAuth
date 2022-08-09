@@ -4,6 +4,8 @@ import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.model.UserSession;
 import com.sobercoding.loopauth.util.JsonUtil;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @program: LoopAuth
  * @author: Sober
- * @Description:
+ * @Description: 缓存实现
  * @create: 2022/07/20 23:35
  */
 public class LoopAuthDaoImpl implements LoopAuthDao {
@@ -35,8 +37,9 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
+    @Override
     public UserSession getUserSession(String userId) {
-        Set<TokenModel> tokenModelSet = LoopAuthLoginException.isSessionLegality(this.userSessions.get(userId));
+        List<TokenModel> tokenModelSet = LoopAuthLoginException.isSessionLegality(this.userSessions.get(userId));
         return new UserSession()
                 .setUserId(userId)
                 .setTokens(tokenModelSet);
@@ -52,6 +55,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
+    @Override
     public void setUserSession(UserSession userSession) {
         String json = JsonUtil.objToJson(userSession.getTokens());
         this.userSessions.put(
@@ -61,7 +65,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * @Method: setUserSession
+     * @Method: removeUserSession
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 清空登录状态

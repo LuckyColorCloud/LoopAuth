@@ -35,16 +35,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
      */
     private long timeOut;
 
-    public TokenModel() {
-    }
-
-    public TokenModel(String facility) {
-        this.facility = facility;
-        this.createTime = System.nanoTime();
-        this.timeOut = LoopAuthStrategy.getLoopAuthConfig().getTimeOut();
-    }
-
-
     public TokenModel setValue(String value) {
         this.value = value;
         return this;

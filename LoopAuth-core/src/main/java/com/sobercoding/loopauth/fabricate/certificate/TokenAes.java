@@ -61,7 +61,7 @@ public class TokenAes implements TokenBehavior {
     }
 
     @Override
-    public String createToken(String userId, String secretKey, TokenModel tokenModel){
+    public void createToken(String userId, String secretKey, TokenModel tokenModel){
         byte[] encodedBytes;
         try {
             Cipher cipher = getCipher(Cipher.ENCRYPT_MODE, secretKey);
@@ -70,12 +70,12 @@ public class TokenAes implements TokenBehavior {
                  NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             throw new RuntimeException(e);
         }
-        //转十六进制
-        return HexUtil.encodeHexStr(encodedBytes);
+        //转十六进制 写入token
+        tokenModel.setValue(HexUtil.encodeHexStr(encodedBytes));
     }
 
     @Override
-    public String decodeToken(String token, String secretKey, TokenModel tokenModel){
+    public boolean decodeToken(String token, String secretKey){
         byte[] decryptedBytes;
         String userId;
         try {
@@ -87,7 +87,6 @@ public class TokenAes implements TokenBehavior {
                  NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             throw new RuntimeException(e);
         }
-        //转二进制
-        return userId;
+        return true;
     }
 }
