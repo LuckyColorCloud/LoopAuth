@@ -17,7 +17,7 @@ public enum LoopAuthExceptionEnum {
     NO_ROLE(500002, "本账户无此角色:"),
     //无权限
     NO_PERMISSION(500003, "无权限访问本路径"),
-    // 账户未登录
+    // 非法请求
     LOGIN_NOT_EXIST(401, "非法请求");
 
     /**

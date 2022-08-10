@@ -1,8 +1,6 @@
 package com.sobercoding.loopauth.controller;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import com.sobercoding.loopauth.model.UserSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,16 +22,18 @@ public class TestController {
         return "登录成功";
     }
 
-    @GetMapping("/login1")
-    public String register2(){
-        LoopAuthFaceImpl.login("1","PC");
-        return "登录成功";
+    @GetMapping("/islogin")
+    public String islogin(){
+        if (LoopAuthFaceImpl.isLoginNow()){
+            return "登录了";
+        }
+        return "000";
     }
 
 
     @GetMapping("/out")
-    public UserSession register1(){
-        LoopAuthFaceImpl.logout("1");
-        return LoopAuthFaceImpl.getUserSessionAll();
+    public String register1(){
+        LoopAuthFaceImpl.logout();
+        return "注销成功";
     }
 }

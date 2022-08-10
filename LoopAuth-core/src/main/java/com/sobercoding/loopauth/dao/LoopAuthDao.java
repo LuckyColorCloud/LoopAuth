@@ -2,6 +2,8 @@ package com.sobercoding.loopauth.dao;
 
 import com.sobercoding.loopauth.model.UserSession;
 
+import java.util.Map;
+
 /**
  * @program: LoopAuth
  * @author: Sober
@@ -15,35 +17,71 @@ public interface LoopAuthDao {
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 获取用户会话
-     * @param userId 用户id
+     * @param key 字典
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
-    UserSession getUserSession(String userId);
+    String get(String key);
+
+
+    /**
+     * @Method: containsKey
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 获取指定缓存
+     * @param key 字典
+     * @Return: boolean
+     * @Exception:
+     * @Date: 2022/8/8 17:16
+     */
+    boolean containsKey(String key);
+
+    /**
+     * @Method: getAll
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 获取全部缓存
+     * @Return:
+     * @Exception:
+     * @Date: 2022/8/10 23:11
+     */
+    Map<String, String> getAll();
 
     /**
      * @Method: setUserSession
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 写入用户会话
-     * @param userSession 会话模型
+     * @param key 字典
+     * @param value 值
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
-    void setUserSession(UserSession userSession);
+    void set(String key, String value);
 
     /**
      * @Method: setUserSession
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 清空登录状态
-     * @param userId 用户id
+     * @param key 字典
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
-    void removeUserSession(String userId);
+    void remove(String key);
+
+    /**
+     * @Method: removeAll
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 清空登录态
+     * @Return:
+     * @Exception:
+     * @Date: 2022/8/8 17:16
+     */
+    void removeAll();
 
 }

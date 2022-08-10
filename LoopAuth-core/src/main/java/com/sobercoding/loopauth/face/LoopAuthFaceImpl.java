@@ -1,14 +1,8 @@
 package com.sobercoding.loopauth.face;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.model.TokenModel;
-import com.sobercoding.loopauth.model.UserSession;
-import com.sobercoding.loopauth.util.JsonUtil;
-
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @program: LoopAuth
@@ -90,67 +84,6 @@ public class LoopAuthFaceImpl {
     }
 
     /**
-     * @Method: logout
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 注销所有登录状态
-     * @param userId 用户id
-     * @Return: boolean 操作是否成功
-     * @Exception:
-     * @Date: 2022/8/8 17:05
-     */
-    public static boolean logoutAll(String userId) {
-        return LOOP_AUTH_LOGIN.logoutAll(userId);
-    }
-
-    /**
-     * @Method: getUserSessionByUserId
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取某用户所有会话
-     * @param userId 用户id
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/8 23:14
-     */
-    public static UserSession getUserSessionAllByUserId(String userId) {
-        return LoopAuthStrategy.getLoopAuthDao().getUserSession(userId);
-    }
-
-    /**
-     * @Method: getUserSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取当前用户所有会话
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/8 23:14
-     */
-    public static UserSession getUserSessionAll() {
-        String userId = getUserId();
-        return getUserSessionAllByUserId(userId);
-    }
-
-    /**
-     * @Method: getUserSessionNow
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取当前会话
-     * @param
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/10 16:33
-     */
-    public static UserSession getUserSessionNow() {
-        UserSession userSession = getUserSessionAll();
-        return userSession.setTokens(
-                userSession.getTokens().stream()
-                        .filter(tokenModel -> getTokenNow().equals(tokenModel.getValue()))
-                        .collect(Collectors.toList())
-        );
-    }
-
-    /**
      * @Method: getUserId
      * @Author: Sober
      * @Version: 0.0.1
@@ -161,11 +94,7 @@ public class LoopAuthFaceImpl {
      * @Date: 2022/8/10 16:33
      */
     public static String getUserId(){
-        String token = getTokenNow();
-        Map<String,String> info = JsonUtil.jsonToMap(
-                LoopAuthStrategy.getTokenBehavior().getInfo(token)
-        );
-        return info.get("userId");
+        return LOOP_AUTH_LOGIN.getUserId();
     }
 
     /**
@@ -178,26 +107,22 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public static String getTokenNow(){
-        return LoopAuthStrategy.getLoopAuthContext()
-                .getRequest()
-                .getHeader(
-                        LoopAuthStrategy.getLoopAuthConfig().getTokenName()
-                );
+    public static TokenModel getTokenNow(){
+        return LOOP_AUTH_LOGIN.getTokenNow();
     }
 
     /**
      * @Method: isLoginNow
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 判断当前是否登录，否则直接抛出异常
+     * @Description: 判断当前是否登录
      * @param
      * @Return: java.lang.String
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public static void isLoginNow(){
-        LoopAuthLoginException.isLegality(getTokenNow());
+    public static boolean isLoginNow(){
+        return LOOP_AUTH_LOGIN.isLoginNow();
     }
 
 }

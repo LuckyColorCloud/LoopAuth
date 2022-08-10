@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth;
 
 import com.sobercoding.loopauth.config.LoopAuthConfig;
+import com.sobercoding.loopauth.context.LoopAuthContext;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -26,5 +27,10 @@ public class LoopAuthRegister {
     @ConfigurationProperties(prefix = "loop-auth")
     public LoopAuthConfig getLoopAuthConfig() {
         return new LoopAuthConfig();
+    }
+
+    @Bean
+    public LoopAuthContext getLoopAuthContext(){
+        return new LoopAuthContextForSpring();
     }
 }

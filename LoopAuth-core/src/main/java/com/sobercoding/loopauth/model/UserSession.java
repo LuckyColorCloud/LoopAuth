@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.util.JsonUtil;
 
 import javax.security.auth.login.CredentialNotFoundException;
 import java.io.Serializable;
@@ -48,36 +49,79 @@ public class UserSession implements Serializable {
         return tokens;
     }
 
+
+    /**
+     * @Method: setToken
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 建立会话
+     * @param tokenModel
+     * @Return: com.sobercoding.loopauth.model.UserSession
+     * @Exception:
+     * @Date: 2022/8/10 23:51
+     */
     public UserSession setToken(TokenModel tokenModel) {
         // 登录规则检测
-        this.tokens = LoopAuthStrategy.loginRulesMatching.exe(this.tokens,tokenModel);
-        return this;
+        return this.setTokens(LoopAuthStrategy.loginRulesMatching.exe(this.getTokens(),tokenModel));
     }
 
-    public UserSession removeTokens(String... facilitys) {
-        // 删除所选的会话  并 刷新会话
-        this.setTokens(
-                this.tokens.stream().filter(
+    /**
+     * @Method: removeByFacility
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 根据设备删除会话
+     * @param facilitys
+     * @Return: com.sobercoding.loopauth.model.UserSession
+     * @Exception:
+     * @Date: 2022/8/11 0:46
+     */
+    public UserSession removeByFacility(String... facilitys) {
+        return this.setTokens(
+                this.getTokens().stream().filter(
                         tokenModel -> !Arrays.asList(facilitys)
                                 .contains(tokenModel.getFacility())
                 ).collect(Collectors.toList())
         );
-        return this;
     }
 
-    public UserSession removeToken(String token) {
-        // 删除当前token
-        // TODO: 2022/8/10
-        return this;
+
+
+    /**
+     * @Method: removeToken
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 根据Token删除会话
+     * @param tokens
+     * @Return: com.sobercoding.loopauth.model.UserSession
+     * @Exception:
+     * @Date: 2022/8/11 0:44
+     */
+    public UserSession removeByToken(String... tokens) {
+        return this.setTokens(
+                this.getTokens().stream().filter(
+                        tokenModel -> !Arrays.asList(tokens)
+                                .contains(tokenModel.getValue())
+                ).collect(Collectors.toList())
+        );
     }
 
+    /**
+     * @Method: setUserSession
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 存储会话到缓存
+     * @param
+     * @Return: void
+     * @Exception:
+     * @Date: 2022/8/11 0:42
+     */
     public void setUserSession(){
         // 如果已经不存在会话则删除用户所有会话存储
-        if (this.tokens.size() <= 0){
+        if (getTokens().size() <= 0){
             // 删除会话
-            LoopAuthStrategy.getLoopAuthDao().removeUserSession(userId);
+            LoopAuthStrategy.getLoopAuthDao().remove(this.getUserId());
         }else {
-            LoopAuthStrategy.getLoopAuthDao().setUserSession(this);
+            LoopAuthStrategy.getLoopAuthDao().set(this.getUserId(), JsonUtil.objToJson(this.getTokens()));
         }
     }
 

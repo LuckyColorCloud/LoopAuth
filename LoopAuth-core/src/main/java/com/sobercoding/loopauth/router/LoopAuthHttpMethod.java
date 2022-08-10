@@ -39,7 +39,7 @@ public enum LoopAuthHttpMethod {
 	public static LoopAuthHttpMethod toEnum(String method) {
 		return Optional.ofNullable(method)
 				.filter(LoopAuthUtil::isNotEmpty)
-				.map(str -> map.get(method.toUpperCase()))
+				.map(str -> map.get(str.toUpperCase()))
 				.orElseThrow(() -> new LoopAuthException(LoopAuthExceptionEnum.HTTP_MODULE_ERROR));
 	}
 

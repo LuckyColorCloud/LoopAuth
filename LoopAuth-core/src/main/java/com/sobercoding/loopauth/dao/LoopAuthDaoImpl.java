@@ -23,59 +23,87 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * 用户id 和 Token模型 键值对应
      * 等于缓存UserSession类数据 但是都序列化成String了
      */
-    private Map<String, String> userSessions = new ConcurrentHashMap<>();
+    private Map<String, String> LOOP_AUTH_DATA_PERSISTENCE  = new ConcurrentHashMap<>();
 
 
     /**
-     * @Method: getUserSession
+     * @Method: get
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 获取指定用户会话
-     * @param userId 用户id
+     * @Description: 获取指定缓存
+     * @param key 字典
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
     @Override
-    public UserSession getUserSession(String userId) {
-        List<TokenModel> tokenModelSet = LoopAuthLoginException.isSessionLegality(this.userSessions.get(userId));
-        return new UserSession()
-                .setUserId(userId)
-                .setTokens(tokenModelSet);
+    public String get(String key) {
+        return this.LOOP_AUTH_DATA_PERSISTENCE.get(key);
     }
 
     /**
-     * @Method: setUserSession
+     * @Method: containsKey
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 写入用户会话
-     * @param userSession 会话模型
-     * @Return:
+     * @Description: 获取指定缓存
+     * @param key 字典
+     * @Return: boolean
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
     @Override
-    public void setUserSession(UserSession userSession) {
-        String json = JsonUtil.objToJson(userSession.getTokens());
-        this.userSessions.put(
-                userSession.getUserId(),
-                json
-        );
+    public boolean containsKey(String key) {
+        return this.LOOP_AUTH_DATA_PERSISTENCE.containsKey(key);
+    }
+
+    @Override
+    public Map<String, String> getAll() {
+        return this.LOOP_AUTH_DATA_PERSISTENCE;
     }
 
     /**
-     * @Method: removeUserSession
+     * @Method: set
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 清空登录状态
-     * @param userId 用户id
+     * @Description: 写入缓存
+     * @param key 会话模型
+     * @param value 值
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
     @Override
-    public void removeUserSession(String userId) {
-        this.userSessions.remove(userId);
+    public void set(String key, String value) {
+        this.LOOP_AUTH_DATA_PERSISTENCE.put(key, value);
+    }
+
+    /**
+     * @Method: remove
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 清除指定信息
+     * @param key 字典
+     * @Return:
+     * @Exception:
+     * @Date: 2022/8/8 17:16
+     */
+    @Override
+    public void remove(String key) {
+        this.LOOP_AUTH_DATA_PERSISTENCE.remove(key);
+    }
+
+    /**
+     * @Method: removeAll
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 清空缓存
+     * @Return:
+     * @Exception:
+     * @Date: 2022/8/8 17:16
+     */
+    @Override
+    public void removeAll() {
+        this.LOOP_AUTH_DATA_PERSISTENCE.clear();
     }
 
 }
