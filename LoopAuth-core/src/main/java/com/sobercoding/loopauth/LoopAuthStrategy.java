@@ -1,12 +1,16 @@
 package com.sobercoding.loopauth;
 
 
+import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
+import com.sobercoding.loopauth.filter.LoopAuthFilter;
 import com.sobercoding.loopauth.function.LrFunction;
 import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.permission.PermissionInterface;
+import com.sobercoding.loopauth.permission.PermissionInterfaceDefImpl;
 
 import java.util.Comparator;
 import java.util.List;
@@ -84,7 +88,34 @@ public class LoopAuthStrategy {
         }
         return LoopAuthStrategy.loopAuthDao;
     }
+    /**
+     * 上下文Context Bean
+     */
+    private volatile static LoopAuthContext loopAuthContext;
+    public static void setLoopAuthContext(LoopAuthContext loopAuthContext) {
+        LoopAuthStrategy.loopAuthContext = loopAuthContext;
+    }
+    public static LoopAuthContext getLoopAuthContext() {
+        return loopAuthContext;
+    }
 
+    /**
+     * 权限认证 Bean
+     */
+    private volatile static PermissionInterface permissionInterface;
+    public static void setPermissionInterface(PermissionInterface permissionInterface) {
+        LoopAuthStrategy.permissionInterface = permissionInterface;
+    }
+    public static PermissionInterface getPermissionInterface() {
+        if (permissionInterface == null) {
+            synchronized (LoopAuthStrategy.class) {
+                if (permissionInterface == null) {
+                    setPermissionInterface(new PermissionInterfaceDefImpl());
+                }
+            }
+        }
+        return permissionInterface;
+    }
     /**
      * @Method:
      * @Author: Sober

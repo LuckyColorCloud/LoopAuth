@@ -5,7 +5,7 @@ import com.sobercoding.loopauth.context.LoopAuthResponse;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Response for Servlet
+ * 对 Servlet 的响应
  *
  * @author Yun
  */
@@ -15,15 +15,14 @@ public class LoopAuthResponseForServlet implements LoopAuthResponse {
 	 * 底层Request对象
 	 */
 	protected HttpServletResponse response;
-	
 	/**
 	 * 实例化
 	 * @param response response对象
 	 */
-	public void LoopAuthResponseForServlet(HttpServletResponse response) {
+	public LoopAuthResponseForServlet(HttpServletResponse response) {
 		this.response = response;
 	}
-	
+
 	/**
 	 * 获取底层源对象 
 	 */

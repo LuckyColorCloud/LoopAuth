@@ -13,6 +13,10 @@ public enum LoopAuthExceptionEnum {
     HTTP_MODULE_ERROR(415, "HTTP请求方式不对"),
     //请求参数 不能为 必须有值
     PARAM_IS_NULL(100001, "必要请求参数不存在:"),
+    //无此角色权限
+    NO_ROLE(100002, "本账户无此角色:"),
+    //无权限
+    NO_PERMISSION(100002, "无权限访问本路径"),
     // 账户未登录
     LOGIN_NOT_EXIST(401, "会话不存在");
 

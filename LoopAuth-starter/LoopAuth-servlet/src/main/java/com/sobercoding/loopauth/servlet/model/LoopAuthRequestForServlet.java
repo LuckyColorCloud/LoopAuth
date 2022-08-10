@@ -6,8 +6,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Request for Servlet 
- * @author kong
+ *  Servlet 请求
+ * @author Yun
  *
  */
 public class LoopAuthRequestForServlet implements LoopAuthRequest {

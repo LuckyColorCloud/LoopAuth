@@ -3,6 +3,7 @@ package com.sobercoding.loopauth.annotation;
 /**
  * 注解鉴权的验证模式
  *  且 或 非
+ * @author Yun
  */
 public enum LoopAuthMode {
 
@@ -18,6 +19,6 @@ public enum LoopAuthMode {
 	/**
 	 * 不是该权限的 即可访问
 	 */
-	non
+	NON
 	
 }

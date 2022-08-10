@@ -5,8 +5,8 @@ import com.sobercoding.loopauth.context.LoopAuthStorage;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Storage for Servlet 
- * @author kong
+ * Servlet 的存储
+ * @author Yun
  *
  */
 public class LoopAuthStorageForServlet implements LoopAuthStorage {
