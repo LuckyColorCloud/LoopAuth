@@ -31,9 +31,13 @@ public class LoopAuthLogin {
         // 创建会话
         creationSession(userId,tokenModel);
         // 根据accessModes配置项，写入上下文
-        // TODO: 2022/8/9
-
-
+        // TODO: 2022/8/10 还有cookie没做处理 
+        LoopAuthStrategy.getLoopAuthContext()
+                .getStorage()
+                .set(
+                        LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
+                        tokenModel.getValue()
+                );
         // 返回token
         return tokenModel;
     }

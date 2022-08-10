@@ -19,21 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/login")
-    public UserSession register(){
+    public String register(){
         LoopAuthFaceImpl.login("1","PHONE");
-        return LoopAuthFaceImpl.getUserSession("1");
+        return "登录成功";
     }
 
     @GetMapping("/login1")
-    public UserSession register2(){
+    public String register2(){
         LoopAuthFaceImpl.login("1","PC");
-        return LoopAuthFaceImpl.getUserSession("1");
+        return "登录成功";
     }
 
 
     @GetMapping("/out")
     public UserSession register1(){
         LoopAuthFaceImpl.logout("1");
-        return LoopAuthFaceImpl.getUserSession("1");
+        return LoopAuthFaceImpl.getUserSessionAll();
     }
 }

@@ -39,4 +39,12 @@ public interface TokenBehavior {
      */
     boolean decodeToken(String token, String secretKey);
 
+    /**
+     * 获取token中可直接解码的信息
+     * @Author: Sober
+     * @Method: getInfo
+     * @return String
+     * @Date: 2022/7/24 23:46
+     */
+    String getInfo(String token);
 }

@@ -19,4 +19,9 @@ public class MyToken implements TokenBehavior {
     public boolean decodeToken(String token, String secretKey) {
         return true;
     }
+
+    @Override
+    public String getInfo(String token) {
+        return null;
+    }
 }

@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.model.TokenModel;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class TokenJwt implements TokenBehavior {
                 // 添加头部信息
                 .withHeader(map)
                 // 用户id
-                .withClaim("id", userId)
+                .withClaim("userId", userId)
                 // 设备
                 .withClaim("facility", tokenModel.getFacility())
                 // 签发时间
@@ -44,7 +45,14 @@ public class TokenJwt implements TokenBehavior {
     public boolean decodeToken(String token, String secretKey) {
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
         DecodedJWT decodedJwt = jwtVerifier.verify(token);
-        decodedJwt.getClaim("id").asString();
+        decodedJwt.getClaim("userId").asString();
         return true;
+    }
+
+    @Override
+    public String getInfo(String token) {
+        String[] tokens = token.split("\\.");
+        byte[] infoBytes = java.util.Base64.getDecoder().decode(tokens[1]);
+        return new String(infoBytes);
     }
 }

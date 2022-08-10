@@ -18,7 +18,7 @@ public enum LoopAuthExceptionEnum {
     //无权限
     NO_PERMISSION(100002, "无权限访问本路径"),
     // 账户未登录
-    LOGIN_NOT_EXIST(401, "会话不存在");
+    LOGIN_NOT_EXIST(401, "非法请求");
 
     /**
      * 异常状态码

@@ -89,4 +89,9 @@ public class TokenAes implements TokenBehavior {
         }
         return true;
     }
+
+    @Override
+    public String getInfo(String token) {
+        return null;
+    }
 }

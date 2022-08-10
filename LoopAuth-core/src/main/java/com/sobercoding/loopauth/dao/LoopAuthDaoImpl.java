@@ -7,7 +7,6 @@ import com.sobercoding.loopauth.util.JsonUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -31,7 +30,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * @Method: getUserSession
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 获取用户会话
+     * @Description: 获取指定用户会话
      * @param userId 用户id
      * @Return:
      * @Exception:
@@ -78,4 +77,5 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     public void removeUserSession(String userId) {
         this.userSessions.remove(userId);
     }
+
 }

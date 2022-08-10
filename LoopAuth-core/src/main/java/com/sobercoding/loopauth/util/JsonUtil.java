@@ -1,8 +1,11 @@
 package com.sobercoding.loopauth.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.sobercoding.loopauth.exception.LoopAuthException;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 
 import java.io.IOException;
 import java.util.*;
@@ -46,6 +49,15 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return userList;
+    }
+
+    public static Map<String,String> jsonToMap(String jsonStr) {
+        try {
+            return MAPPER.readValue(jsonStr, new TypeReference<Map<String, String>>() {});
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new LoopAuthException(LoopAuthExceptionEnum.ERROR);
+        }
     }
 
 }
