@@ -2,6 +2,8 @@ package com.sobercoding.loopauth;
 
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.permission.PermissionInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 
@@ -44,5 +46,13 @@ public class LoopAuthInject {
         LoopAuthStrategy.setLoopAuthContext(loopAuthContext);
     }
 
+    /**
+     * 注入权限认证Bean
+     *
+     */
+    @Resource
+    public void setPermissionInterface(PermissionInterface permissionInterface) {
+        LoopAuthStrategy.setPermissionInterface(permissionInterface);
+    }
 
 }

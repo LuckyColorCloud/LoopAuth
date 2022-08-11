@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * sa-token基于路由的拦截式鉴权 
+ * Loop-Auth基于路由的拦截式鉴权
  * @author Yun
  */
 public class LoopAuthRouteInterceptor implements HandlerInterceptor {
