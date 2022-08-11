@@ -28,13 +28,17 @@ public class LoopAuthConfigure implements WebMvcConfigurer {
     public LoopAuthServletFilter getSaServletFilter() {
         return new LoopAuthServletFilter()
                 .addInclude("/**")
+                .addExclude("/test/login")
                 // 认证函数: 每次请求执行
                 .setLoopAuthFilter(obj -> {
+                    System.out.println(obj);
                     System.out.println("=======================>个人业务 认证处理");
+                    throw new RuntimeException("测试");
                 })
                 // 异常处理函数：每次认证函数发生异常时执行此函数
                 .setLoopAuthErrorFilter(e -> {
                     System.out.println("=======================>全局异常 ");
+                    e.printStackTrace();
                     return "";
                 });
     }
