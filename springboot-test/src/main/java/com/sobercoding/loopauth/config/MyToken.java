@@ -3,6 +3,8 @@ package com.sobercoding.loopauth.config;
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.model.TokenModel;
 
+import java.util.Map;
+
 /**
  * @program: LoopAuth
  * @author: Sober
@@ -21,7 +23,7 @@ public class MyToken implements TokenBehavior {
     }
 
     @Override
-    public String getInfo(String token) {
+    public Map<String, String> getInfo(String token) {
         return null;
     }
 }

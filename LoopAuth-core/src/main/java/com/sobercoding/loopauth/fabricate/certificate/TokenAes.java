@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Map;
 
 /**
  * @ClassName CreateTokenByAes
@@ -91,7 +92,7 @@ public class TokenAes implements TokenBehavior {
     }
 
     @Override
-    public String getInfo(String token) {
+    public Map<String, String> getInfo(String token) {
         return null;
     }
 }

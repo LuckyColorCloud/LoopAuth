@@ -21,5 +21,17 @@ public class LoopAuthLoginException extends LoopAuthException{
         super(loopAuthExceptionEnum);
     }
 
+    public static void isEmpty(Object obj, LoopAuthExceptionEnum loopAuthExceptionEnum){
+        Optional.ofNullable(obj)
+                .filter(LoopAuthUtil::isNotEmpty)
+                .orElseThrow(() -> new LoopAuthLoginException(loopAuthExceptionEnum));
+    }
+
+    public static void isTrue(boolean obj, LoopAuthExceptionEnum loopAuthExceptionEnum){
+        if (!obj){
+            throw new LoopAuthLoginException(loopAuthExceptionEnum);
+        }
+    }
+
 
 }

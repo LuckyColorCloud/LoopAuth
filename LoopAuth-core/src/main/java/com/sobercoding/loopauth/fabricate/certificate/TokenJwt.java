@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.util.JsonUtil;
 
 import java.util.Base64;
 import java.util.Date;
@@ -43,6 +44,8 @@ public class TokenJwt implements TokenBehavior {
 
     @Override
     public boolean decodeToken(String token, String secretKey) {
+        // TODO: 2022/8/11
+//        需要处理异常
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
         DecodedJWT decodedJwt = jwtVerifier.verify(token);
         decodedJwt.getClaim("userId").asString();
@@ -50,9 +53,12 @@ public class TokenJwt implements TokenBehavior {
     }
 
     @Override
-    public String getInfo(String token) {
+    public Map<String, String> getInfo(String token) {
+        // TODO: 2022/8/11
+//        需要处理异常
         String[] tokens = token.split("\\.");
         byte[] infoBytes = java.util.Base64.getDecoder().decode(tokens[1]);
-        return new String(infoBytes);
+        String infoStr = new String(infoBytes);
+        return JsonUtil.jsonToMap(infoStr);
     }
 }

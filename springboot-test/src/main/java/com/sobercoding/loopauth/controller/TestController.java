@@ -40,7 +40,7 @@ public class TestController {
 
     @GetMapping("/out")
     public String register1(){
-        LoopAuthFaceImpl.logout();
+        LoopAuthFaceImpl.logoutNow();
         return "注销成功";
     }
 

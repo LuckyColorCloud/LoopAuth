@@ -59,29 +59,17 @@ public class LoopAuthFaceImpl {
      * @Method: logout
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 注销某账号的某个终端登录
-     * @param userId 用户id
-     * @param facilitys 终端类型 可多输入
+     * @Description: 注销当前会话账号的某个终端登录
+     * @param facilitys 终端类型 可多输入Or留空
      * @Return: boolean 操作是否成功
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static boolean logout(String userId,String... facilitys) {
-        return LOOP_AUTH_LOGIN.logout(userId,facilitys);
+    public static void logoutNow(String... facilitys) {
+        LOOP_AUTH_LOGIN.logoutNow(facilitys);
     }
 
-    /**
-     * @Method: logout
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 注销当前会话
-     * @Return: boolean 操作是否成功
-     * @Exception:
-     * @Date: 2022/8/8 17:05
-     */
-    public static boolean logout() {
-        return LOOP_AUTH_LOGIN.logout(getUserId());
-    }
+
 
     /**
      * @Method: getUserId
@@ -101,7 +89,7 @@ public class LoopAuthFaceImpl {
      * @Method: getTokenNow
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 获取当前token
+     * @Description: 获取当前token模型
      * @param
      * @Return: java.lang.String
      * @Exception:

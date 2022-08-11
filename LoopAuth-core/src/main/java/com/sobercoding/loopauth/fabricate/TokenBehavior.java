@@ -8,6 +8,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 /**
  * @program: LoopAuth
@@ -46,5 +47,5 @@ public interface TokenBehavior {
      * @return String
      * @Date: 2022/7/24 23:46
      */
-    String getInfo(String token);
+    Map<String, String> getInfo(String token);
 }
