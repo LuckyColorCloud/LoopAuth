@@ -6,6 +6,8 @@ import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
 import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
+import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
+import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.filter.LoopAuthFilter;
 import com.sobercoding.loopauth.function.LrFunction;
 import com.sobercoding.loopauth.model.TokenModel;
@@ -98,7 +100,16 @@ public class LoopAuthStrategy {
     public static LoopAuthContext getLoopAuthContext() {
         return loopAuthContext;
     }
-
+    /**
+     * 用户信息 Bean
+     */
+    private volatile static LoopAuthFaceImpl loopAuthFaceImpl;
+    public static void setLoopAuthFaceImpl(LoopAuthFaceImpl loopAuthFaceImpl) {
+        LoopAuthStrategy.loopAuthFaceImpl = loopAuthFaceImpl;
+    }
+    public static LoopAuthFaceImpl getLoopAuthFaceImpl() {
+        return loopAuthFaceImpl;
+    }
     /**
      * 权限认证 Bean
      */

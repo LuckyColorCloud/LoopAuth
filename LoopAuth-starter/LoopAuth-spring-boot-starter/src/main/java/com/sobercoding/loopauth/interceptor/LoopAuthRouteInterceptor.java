@@ -1,7 +1,8 @@
 package com.sobercoding.loopauth.interceptor;
 
 
-
+import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
 import com.sobercoding.loopauth.router.LoopAuthRouteFunction;
 import com.sobercoding.loopauth.servlet.model.LoopAuthRequestForServlet;
 import com.sobercoding.loopauth.servlet.model.LoopAuthResponseForServlet;
@@ -19,8 +20,7 @@ public class LoopAuthRouteInterceptor implements HandlerInterceptor {
 	/**
 	 * 每次进入拦截器的[执行函数]，默认为登录校验
 	 */
-	//TODO 这里还缺少 登入校验
-	public LoopAuthRouteFunction function = (req, res, handler) -> {};
+	public LoopAuthRouteFunction function = (req, res, handler) -> LoopAuthFaceImpl.isLoginNow();
 
 	/**
 	 * 创建一个路由拦截器

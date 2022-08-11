@@ -7,6 +7,7 @@ import com.sobercoding.loopauth.annotation.LoopAuthRole;
 import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.NotRoleException;
+import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -62,68 +63,72 @@ public class PermissionUtil {
 
     /**
      * 登录认证
+     *
      * @param loopAutoCheckLogin
      */
     private static void checkByAnnotation(LoopAutoCheckLogin loopAutoCheckLogin) {
-            //TODO 调用 用户端接口  检查是否登入  checkLogin();
+//        LoopAuthStrategy.getLoopAuthLogin().isLoginNow();
+        LoopAuthFaceImpl.isLoginNow();
     }
 
     /**
      * 权限认证
+     *
      * @param loopAuthPermission
      */
     private static void checkByAnnotation(LoopAuthPermission loopAuthPermission) {
         String[] roleArray = loopAuthPermission.value();
-        //TODO 获取USERID
-        String loginId = "";
+        //TODO  缺少登入类型 暂做扩展
+        String loginId = LoopAuthFaceImpl.getUserId();
         String loginType = "";
         if (loopAuthPermission.mode() == LoopAuthMode.AND) {
             checkAnd(roleArray, LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType));
         } else if (loopAuthPermission.mode() == LoopAuthMode.OR) {
-            checkOr(roleArray,LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType));
+            checkOr(roleArray, LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType));
         } else {
-            checkNon(roleArray,LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType));
+            checkNon(roleArray, LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType));
         }
     }
 
     /**
      * 角色认证
+     *
      * @param loopAuthRole
      */
     private static void checkByAnnotation(LoopAuthRole loopAuthRole) {
         String[] roleArray = loopAuthRole.value();
-        //TODO 获取USERID
-        String loginId = "";
+        //TODO  缺少登入类型 暂做扩展
+        String loginId = LoopAuthFaceImpl.getUserId();
         String loginType = "";
         if (loopAuthRole.mode() == LoopAuthMode.AND) {
             checkAnd(roleArray, LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType));
         } else if (loopAuthRole.mode() == LoopAuthMode.OR) {
-            checkOr(roleArray,LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType));
+            checkOr(roleArray, LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType));
         } else {
-            checkNon(roleArray,LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType));
+            checkNon(roleArray, LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType));
         }
     }
 
-    private static void checkNon(String[] roleSet,Set<String> roles) {
+    private static void checkNon(String[] roleSet, Set<String> roles) {
         for (String role : roleSet) {
-            if(hasElement(roles, role)) {
+            if (hasElement(roles, role)) {
                 throw new NotRoleException(LoopAuthExceptionEnum.NO_PERMISSION);
             }
         }
     }
 
-    private static void checkOr(String[] roleSet,Set<String> roles) {
+    private static void checkOr(String[] roleSet, Set<String> roles) {
         for (String role : roleSet) {
-            if(hasElement(roles, role)) {
+            if (hasElement(roles, role)) {
                 return;
             }
         }
         throw new NotRoleException(LoopAuthExceptionEnum.NO_PERMISSION);
     }
 
-    private static void checkAnd(String[] roleSet,Set<String> roles) {
+    private static void checkAnd(String[] roleSet, Set<String> roles) {
         for (String role : roleSet) {
-            if(!hasElement(roles, role)) {
+            if (!hasElement(roles, role)) {
                 throw new NotRoleException(LoopAuthExceptionEnum.NO_ROLE.setMsg(role));
             }
         }
@@ -134,7 +139,7 @@ public class PermissionUtil {
      */
     private static boolean hasElement(Set<String> roleSet, String role) {
         // 空集合直接返回false
-        if(LoopAuthUtil.isEmpty(roleSet)) {
+        if (LoopAuthUtil.isEmpty(roleSet)) {
             return false;
         }
         // 先尝试一下简单匹配，如果可以匹配成功则无需继续模糊匹配
@@ -143,14 +148,12 @@ public class PermissionUtil {
         }
         // 开始模糊匹配
         for (String path : roleSet) {
-            if(LoopAuthUtil.fuzzyMatching(path, role)) {
+            if (LoopAuthUtil.fuzzyMatching(path, role)) {
                 return true;
             }
         }
         return false;
     }
-
-
 
 
     /**
@@ -161,7 +164,6 @@ public class PermissionUtil {
         // 默认使用jdk的注解处理器
         return element.getAnnotation(annotationClass);
     };
-
 
 
     public static boolean matchPaths(Collection<String> paths, ServletRequest request) {

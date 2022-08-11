@@ -29,8 +29,14 @@ public class LoopAuthRegister {
         return new LoopAuthConfig();
     }
 
+    /**
+     * 注入 上下文
+     * @return
+     */
     @Bean
     public LoopAuthContext getLoopAuthContext(){
         return new LoopAuthContextForSpring();
     }
+
+
 }

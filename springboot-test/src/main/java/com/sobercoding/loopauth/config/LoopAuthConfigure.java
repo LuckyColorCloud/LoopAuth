@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.filter.LoopAuthServletFilter;
+import com.sobercoding.loopauth.interceptor.LoopAuthAnnotationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,7 +18,7 @@ public class LoopAuthConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册注解拦截器
-//        registry.addInterceptor(new Object()).addPathPatterns("/**");
+        registry.addInterceptor(new LoopAuthAnnotationInterceptor()).addPathPatterns("/**");
     }
 
     /**
