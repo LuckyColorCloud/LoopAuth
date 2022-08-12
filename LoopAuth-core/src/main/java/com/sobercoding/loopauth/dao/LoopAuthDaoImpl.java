@@ -1,11 +1,5 @@
 package com.sobercoding.loopauth.dao;
 
-import com.sobercoding.loopauth.exception.LoopAuthLoginException;
-import com.sobercoding.loopauth.model.TokenModel;
-import com.sobercoding.loopauth.model.UserSession;
-import com.sobercoding.loopauth.util.JsonUtil;
-
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

@@ -1,7 +1,5 @@
 package com.sobercoding.loopauth.dao;
 
-import com.sobercoding.loopauth.model.UserSession;
-
 import java.util.Map;
 
 /**

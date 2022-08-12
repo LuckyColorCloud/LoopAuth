@@ -1,6 +1,5 @@
 package com.sobercoding.loopauth.util;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**

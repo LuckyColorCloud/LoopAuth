@@ -1,10 +1,7 @@
 package com.sobercoding.loopauth.exception;
 
-import com.sobercoding.loopauth.model.TokenModel;
-import com.sobercoding.loopauth.util.JsonUtil;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
