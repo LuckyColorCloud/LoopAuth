@@ -1,16 +1,9 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.exception.LoopAuthLoginException;
-import com.sobercoding.loopauth.util.JsonUtil;
 
-import javax.security.auth.login.CredentialNotFoundException;
 import java.io.Serializable;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -119,11 +112,7 @@ public class UserSession implements Serializable {
      * @Date: 2022/8/11 0:42
      */
     public UserSession getUserSession(){
-        this.setTokens(
-                JsonUtil.jsonToList(
-                        LoopAuthStrategy.getLoopAuthDao().get(this.getUserId()),
-                        TokenModel.class)
-        );
+        this.setTokens((List<TokenModel>) LoopAuthStrategy.getLoopAuthDao().get(this.getUserId()));
         return this;
     }
 
@@ -144,7 +133,7 @@ public class UserSession implements Serializable {
             // 删除会话
             remove();
         }else {
-            LoopAuthStrategy.getLoopAuthDao().set(this.getUserId(), JsonUtil.objToJson(this.getTokens()));
+            LoopAuthStrategy.getLoopAuthDao().set(this.getUserId(), this.getTokens());
         }
     }
 

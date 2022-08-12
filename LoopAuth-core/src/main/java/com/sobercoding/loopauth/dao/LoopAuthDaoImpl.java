@@ -1,5 +1,8 @@
 package com.sobercoding.loopauth.dao;
 
+import com.sobercoding.loopauth.model.TokenModel;
+
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +20,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * 用户id 和 Token模型 键值对应
      * 等于缓存UserSession类数据 但是都序列化成String了
      */
-    private Map<String, String> LOOP_AUTH_DATA_PERSISTENCE  = new ConcurrentHashMap<>();
+    private final Map<String, Object> LOOP_AUTH_DATA_PERSISTENCE  = new ConcurrentHashMap<>();
 
 
     /**
@@ -31,7 +34,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * @Date: 2022/8/8 17:16
      */
     @Override
-    public String get(String key) {
+    public Object get(String key) {
         return this.LOOP_AUTH_DATA_PERSISTENCE.get(key);
     }
 
@@ -51,7 +54,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     }
 
     @Override
-    public Map<String, String> getAll() {
+    public Map<String, Object> getAll() {
         return this.LOOP_AUTH_DATA_PERSISTENCE;
     }
 
@@ -67,7 +70,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      * @Date: 2022/8/8 17:16
      */
     @Override
-    public void set(String key, String value) {
+    public void set(String key, Object value) {
         this.LOOP_AUTH_DATA_PERSISTENCE.put(key, value);
     }
 

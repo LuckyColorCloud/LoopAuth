@@ -5,8 +5,8 @@ import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
-import com.sobercoding.loopauth.fabricate.TokenBehavior;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
+import com.sobercoding.loopauth.face.component.LoopAuthToken;
 import com.sobercoding.loopauth.function.LrFunction;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.permission.PermissionInterface;
@@ -49,21 +49,21 @@ public class LoopAuthStrategy {
     /**
      * Token风格
      */
-    private volatile static TokenBehavior tokenBehavior;
+    private volatile static LoopAuthToken loopAuthToken;
 
-    public static void setTokenBehavior(TokenBehavior tokenBehavior) {
-        LoopAuthStrategy.tokenBehavior = tokenBehavior;
+    public static void setLoopAuthToken(LoopAuthToken loopAuthToken) {
+        LoopAuthStrategy.loopAuthToken = loopAuthToken;
     }
 
-    public static TokenBehavior getTokenBehavior() {
-        if (LoopAuthStrategy.tokenBehavior == null){
+    public static LoopAuthToken getLoopAuthToken() {
+        if (LoopAuthStrategy.loopAuthToken == null){
             synchronized(LoopAuthStrategy.class){
-                if (LoopAuthStrategy.tokenBehavior == null){
-                    LoopAuthStrategy.tokenBehavior = LoopAuthStrategy.getLoopAuthConfig().getTokenStyle().getBean();
+                if (LoopAuthStrategy.loopAuthToken == null){
+                    LoopAuthStrategy.loopAuthToken = new LoopAuthToken();
                 }
             }
         }
-        return LoopAuthStrategy.tokenBehavior;
+        return LoopAuthStrategy.loopAuthToken;
     }
 
     /**

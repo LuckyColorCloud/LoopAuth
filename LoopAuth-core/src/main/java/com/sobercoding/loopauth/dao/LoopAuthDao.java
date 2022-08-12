@@ -20,7 +20,7 @@ public interface LoopAuthDao {
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
-    String get(String key);
+    Object get(String key);
 
 
     /**
@@ -44,7 +44,7 @@ public interface LoopAuthDao {
      * @Exception:
      * @Date: 2022/8/10 23:11
      */
-    Map<String, String> getAll();
+    Map<String, Object> getAll();
 
     /**
      * @Method: setUserSession
@@ -57,7 +57,7 @@ public interface LoopAuthDao {
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
-    void set(String key, String value);
+    void set(String key, Object value);
 
     /**
      * @Method: setUserSession

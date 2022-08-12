@@ -5,13 +5,7 @@ import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.model.UserSession;
-import com.sobercoding.loopauth.util.JsonUtil;
-import com.sobercoding.loopauth.util.LoopAuthUtil;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 /**
@@ -25,7 +19,7 @@ public class LoopAuthLogin {
     // 会话操作开始
 
     /**
-     * @param userId     用户id
+     * @param loginId     用户id
      * @param tokenModel token模型
      * @Method: login
      * @Author: Sober
@@ -35,9 +29,9 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public TokenModel login(String userId, TokenModel tokenModel) {
+    public TokenModel login(String loginId, TokenModel tokenModel) {
         // 创建会话
-        creationSession(userId, tokenModel);
+        creationSession(loginId, tokenModel);
 
         // TODO: 2022/8/10
         // 还有cookie没做处理
@@ -98,32 +92,31 @@ public class LoopAuthLogin {
     }
 
     /**
-     * @param userId     用户id
+     * @param loginId     用户id
      * @param tokenModel token模型
      * @Method: creationSession
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 创建会话
+     * @Description: 创建会话，创建token写入缓存
      * @Return: com.sobercoding.loopauth.model.UserSession
      * @Exception:
      * @Date: 2022/8/9 23:18
      */
-    public void creationSession(String userId, TokenModel tokenModel) {
+    public void creationSession(String loginId, TokenModel tokenModel) {
         // 生成token载入到tokenModel
-        LoopAuthStrategy.getTokenBehavior()
+        String token = LoopAuthStrategy.getLoopAuthToken()
                 .createToken(
-                        userId,
-                        LoopAuthStrategy.getSecretKey.apply(userId),
-                        tokenModel
+                        loginId,
+                        LoopAuthStrategy.getSecretKey.apply(loginId)
                 );
         // 获取存储用户的所有会话   写入当前会话   刷新会话
-        getUserSession(userId)
-                .setToken(tokenModel)
+        getUserSession(loginId)
+                .setToken(tokenModel.setValue(token))
                 .setUserSession();
     }
 
     /**
-     * @param userId 用户id
+     * @param loginId 用户id
      * @Method: getUserSession
      * @Author: Sober
      * @Version: 0.0.1
@@ -132,12 +125,12 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/9 23:05
      */
-    public UserSession getUserSession(String userId) {
-        // 先判断userId是否存在 否则抛出异常
+    public UserSession getUserSession(String loginId) {
+        // 先判断loginId是否存在 否则抛出异常
         LoopAuthLoginException.isTrue(
-                LoopAuthStrategy.getLoopAuthDao().containsKey(userId),
+                LoopAuthStrategy.getLoopAuthDao().containsKey(loginId),
                 LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
-        return new UserSession().setUserId(userId)
+        return new UserSession().setUserId(loginId)
                 .getUserSession();
     }
 
@@ -193,11 +186,11 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/11 16:43
      */
-    public Map<String, String> getBodyTokenInfo() {
+    public Object getBodyTokenInfo() {
         // 从请求体获取携带的token
         String token = getBodyToken();
         // 解析token参数
-        Map<String, String> info = LoopAuthStrategy.getTokenBehavior().getInfo(token);
+        String info = LoopAuthStrategy.getLoopAuthToken().getInfo(token);
         return info;
     }
 
@@ -214,7 +207,7 @@ public class LoopAuthLogin {
     public String getUserId() {
         // token合法验证
         LoopAuthLoginException.isTrue(isLoginNow(), LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
-        return getBodyTokenInfo().get("userId");
+        return (String) getBodyTokenInfo();
     }
 
     /**
@@ -229,12 +222,13 @@ public class LoopAuthLogin {
      */
     public boolean isLoginNow() {
         // 解析token参数
-        Map<String, String> info = getBodyTokenInfo();
+        String info = (String) getBodyTokenInfo();
         // TODO: 2022/8/11
         // 需要处理decodeToken抛出的异常
         // TODO: 2022/8/11
         // 需要增加token对内存的鉴定，查看内存中是否存在
+        LoopAuthStrategy.getLoopAuthDao().get((String) getBodyTokenInfo());
         // token合法验证
-        return LoopAuthStrategy.getTokenBehavior().decodeToken(getBodyToken(), LoopAuthStrategy.getSecretKey.apply(info.get("userId")));
+        return LoopAuthStrategy.getLoopAuthToken().verify(getBodyToken(), LoopAuthStrategy.getSecretKey.apply(info));
     }
 }

@@ -1,7 +1,6 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.model.constant.TokenAccess;
-import com.sobercoding.loopauth.model.constant.TokenStyle;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -64,11 +63,6 @@ public class LoopAuthConfig implements Serializable{
      */
     private String secretKey = "LoopAuth";
 
-    /**
-     * Token风格
-     */
-    private TokenStyle tokenStyle = TokenStyle.JWT;
-
     public LoopAuthConfig setTokenName(String tokenName) {
         this.tokenName = tokenName;
         return this;
@@ -109,15 +103,6 @@ public class LoopAuthConfig implements Serializable{
         return this;
     }
 
-    public LoopAuthConfig setTokenStyle(TokenStyle tokenStyle) {
-        this.tokenStyle = tokenStyle;
-        return this;
-    }
-
-    public TokenStyle getTokenStyle() {
-        return tokenStyle;
-    }
-
     public String getSecretKey() {
         return secretKey;
     }
@@ -150,7 +135,6 @@ public class LoopAuthConfig implements Serializable{
         return accessModes;
     }
 
-
     @Override
     public String toString() {
         return "LoopAuthConfig{" +
@@ -158,11 +142,10 @@ public class LoopAuthConfig implements Serializable{
                 ", timeOut=" + timeOut +
                 ", isMutualism=" + isMutualism +
                 ", isExclusion=" + isExclusion +
-                ", isRenew=" + isRenew +
                 ", maxLoginCount=" + maxLoginCount +
+                ", isRenew=" + isRenew +
                 ", accessModes=" + accessModes +
                 ", secretKey='" + secretKey + '\'' +
-                ", tokenStyle=" + tokenStyle +
                 '}';
     }
 }

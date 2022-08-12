@@ -1,9 +1,5 @@
 package com.sobercoding;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.config.LoopAuthConfig;
-import com.sobercoding.loopauth.model.constant.TokenStyle;
-
 
 /**
  * @program: ${PROJECT_NAME}
