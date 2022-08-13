@@ -1,6 +1,5 @@
 package com.sobercoding;
 
-
 import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.config.RedisConfig;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -44,7 +43,7 @@ public class RedisConn {
         maxTotal = redisConfig.getMaxTotal();
         maxIdle = redisConfig.getMaxIdle();
         minIdle = redisConfig.getMinIdle();
-        needPool  = redisConfig.isNeedPool();
+        needPool = redisConfig.isNeedPool();
     }
 
     /**
