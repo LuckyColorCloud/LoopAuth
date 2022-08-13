@@ -12,7 +12,7 @@ import com.sobercoding.loopauth.model.TokenModel;
  */
 public class LoopAuthFaceImpl {
 
-    private static final LoopAuthLogin LOOP_AUTH_LOGIN = new LoopAuthLogin();
+    public static LoopAuthLogin LOOP_AUTH_LOGIN = new LoopAuthLogin();
 
     /**
      * @Method: login
@@ -29,7 +29,7 @@ public class LoopAuthFaceImpl {
                 userId,
                 new TokenModel()
                         .setFacility("LoopAuth"))
-                        .setCreateTime(System.nanoTime())
+                        .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut()
         );
     }
@@ -50,7 +50,7 @@ public class LoopAuthFaceImpl {
                 userId,
                 new TokenModel()
                         .setFacility(facility)
-                        .setCreateTime(System.nanoTime())
+                        .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
         );
     }

@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.model.constant;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+
 /**
  * @program: LoopAuth
  * @author: Sober
@@ -11,10 +13,22 @@ public enum TokenAccess {
     /**
      * 请求头获取token
      */
-    HEADER,
+    HEADER{
+        @Override
+        public String getToken() {
+            return LoopAuthStrategy.getLoopAuthContext().getRequest().getHeader(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
+        }
+    },
     /**
      * Cookie获取token
      */
-    COOKIE;
+    COOKIE{
+        @Override
+        public String getToken() {
+            return "";
+        }
+    };
+
+    public abstract String getToken();
 
 }

@@ -21,7 +21,7 @@ public class MyLoopAuthToken extends LoopAuthToken {
      * @Date: 2022/8/12 22:26
      */
     @Override
-    public String createToken(String info, String secretKey) {
+    public String createToken(Object info, String secretKey) {
         // 添加会话基本信息的base编码
         return "";
     }

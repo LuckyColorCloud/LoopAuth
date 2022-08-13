@@ -33,7 +33,7 @@ public class LoopAuthConfigure implements WebMvcConfigurer {
                 .setLoopAuthFilter(obj -> {
                     System.out.println(obj);
                     System.out.println("=======================>个人业务 认证处理");
-                    throw new RuntimeException("测试");
+//                    throw new RuntimeException("测试");
                 })
                 // 异常处理函数：每次认证函数发生异常时执行此函数
                 .setLoopAuthErrorFilter(e -> {

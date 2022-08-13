@@ -9,7 +9,7 @@ import java.util.Objects;
  * @Description: token模型
  * @create: 2022/07/22 20:06
  */
-public class TokenModel implements Serializable,Comparable<TokenModel> {
+public class TokenModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -69,12 +69,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
         return timeOut;
     }
 
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value,createTime,timeOut,facility);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -86,11 +80,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel> {
         TokenModel tokenModel = (TokenModel) obj;
 
         return Objects.equals(this.value, tokenModel.value);
-    }
-
-    @Override
-    public int compareTo(TokenModel obj) {
-        return Integer.compare(this.hashCode() - obj.hashCode(), 0);
     }
 
     @Override
