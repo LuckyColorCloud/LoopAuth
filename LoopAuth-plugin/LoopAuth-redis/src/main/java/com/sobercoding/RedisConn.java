@@ -1,6 +1,8 @@
 package com.sobercoding;
 
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.config.RedisConfig;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.Jedis;
@@ -22,15 +24,28 @@ public class RedisConn {
 
     private static volatile JedisPool jedisPool;        // 连接池
     private static volatile Jedis jedisConn;            // 单链接
-    private static String host = "hw.iscolt.com";       // Redis服务器地址
-    private static String password = "5211";            // Redis 密码,没有设置可以为空
-    private static int port = 6379;                     // Redis端口号， 默认是6379
-    private static int databaseNo = 0;                  // Redis 默认链接的数据库
-    private static int timeout = 2000;                  // 超时时间
-    private static int maxTotal = 16;                   // 最大连接数
-    private static int maxIdle = 8;                     // 最大空闲连接数
-    private static int minIdle = 4;                     // 最小空闲连接数
-    private static boolean needPool = true;             // 需要连接池
+    private static String host;                         // Redis服务器地址
+    private static String password;                     // Redis 密码,没有设置可以为空
+    private static int port;                            // Redis端口号， 默认是6379
+    private static int databaseNo;                      // Redis 默认链接的数据库
+    private static int timeout;                         // 超时时间
+    private static int maxTotal;                        // 最大连接数
+    private static int maxIdle;                         // 最大空闲连接数
+    private static int minIdle;                         // 最小空闲连接数
+    private static boolean needPool;                    // 需要连接池
+
+    static {
+        RedisConfig redisConfig = LoopAuthStrategy.getLoopAuthConfig().getRedisConfig();
+        host = redisConfig.getHost();
+        password = redisConfig.getPassword();
+        port = redisConfig.getPort();
+        databaseNo = redisConfig.getDatabaseNo();
+        timeout = redisConfig.getTimeout();
+        maxTotal = redisConfig.getMaxTotal();
+        maxIdle = redisConfig.getMaxIdle();
+        minIdle = redisConfig.getMinIdle();
+        needPool  = redisConfig.isNeedPool();
+    }
 
     /**
      * 获取 Redis 客户端

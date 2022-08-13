@@ -14,10 +14,19 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <LoopAuth-core.version>1.0-SNAPSHOT</LoopAuth-core.version>
         <redis.clients.jedis.version>4.2.3</redis.clients.jedis.version>
     </properties>
 
     <dependencies>
+        <!-- LoopAuto-core -->
+        <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-core</artifactId>
+            <version>${LoopAuth-core.version}</version>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Redis Client Jedis -->
         <dependency>
             <groupId>redis.clients</groupId>

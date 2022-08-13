@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * @Description: 配置类数据模型
  * @create: 2022/07/20 20:13
  */
-public class LoopAuthConfig implements Serializable{
+public class LoopAuthConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,6 +63,8 @@ public class LoopAuthConfig implements Serializable{
      */
     private String secretKey = "LoopAuth";
 
+    private RedisConfig redisConfig = new RedisConfig();
+
     public LoopAuthConfig setTokenName(String tokenName) {
         this.tokenName = tokenName;
         return this;
@@ -103,6 +105,11 @@ public class LoopAuthConfig implements Serializable{
         return this;
     }
 
+    public LoopAuthConfig setRedisConfig(RedisConfig redisConfig) {
+        this.redisConfig = redisConfig;
+        return this;
+    }
+
     public String getSecretKey() {
         return secretKey;
     }
@@ -135,6 +142,10 @@ public class LoopAuthConfig implements Serializable{
         return accessModes;
     }
 
+    public RedisConfig getRedisConfig() {
+        return redisConfig;
+    }
+
     @Override
     public String toString() {
         return "LoopAuthConfig{" +
@@ -146,6 +157,7 @@ public class LoopAuthConfig implements Serializable{
                 ", isRenew=" + isRenew +
                 ", accessModes=" + accessModes +
                 ", secretKey='" + secretKey + '\'' +
+                ", redisConfig=" + redisConfig +
                 '}';
     }
 }
