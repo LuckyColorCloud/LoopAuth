@@ -18,7 +18,9 @@ public enum LoopAuthExceptionEnum {
     //无权限
     NO_PERMISSION(500003, "无权限访问本路径"),
     // 非法请求
-    LOGIN_NOT_EXIST(401, "非法请求");
+    LOGIN_NOT_EXIST(401, "非法请求"),
+    // 非法请求
+    LOGIN_EXPIRE(500004, "登录过期");
 
     /**
      * 异常状态码

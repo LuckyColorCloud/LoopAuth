@@ -27,7 +27,7 @@ public class PermissionConfig implements PermissionInterface {
         //这里只做演示 所以写死 根据业务查询数据库或者其他操作
         return new HashSet<String>() {
             {
-                add("admin");
+                add("user");
             }
         };
     }

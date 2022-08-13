@@ -12,7 +12,7 @@ import com.sobercoding.loopauth.model.TokenModel;
  */
 public class LoopAuthFaceImpl {
 
-    private static final LoopAuthLogin LOOP_AUTH_LOGIN = new LoopAuthLogin();
+    public static LoopAuthLogin LOOP_AUTH_LOGIN = new LoopAuthLogin();
 
     /**
      * @Method: login
@@ -29,7 +29,7 @@ public class LoopAuthFaceImpl {
                 userId,
                 new TokenModel()
                         .setFacility("LoopAuth"))
-                        .setCreateTime(System.nanoTime())
+                        .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut()
         );
     }
@@ -50,7 +50,7 @@ public class LoopAuthFaceImpl {
                 userId,
                 new TokenModel()
                         .setFacility(facility)
-                        .setCreateTime(System.nanoTime())
+                        .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
         );
     }
@@ -81,36 +81,23 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public static String getUserId(){
-        return LOOP_AUTH_LOGIN.getUserId();
+    public static String getLoginId(){
+        return LOOP_AUTH_LOGIN.getLoginId();
     }
 
-    /**
-     * @Method: getTokenNow
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取当前token模型
-     * @param
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/10 16:33
-     */
-    public static TokenModel getTokenNow(){
-        return LOOP_AUTH_LOGIN.getTokenNow();
-    }
 
     /**
      * @Method: isLoginNow
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 判断当前是否登录
+     * @Description: 登录校验
      * @param
      * @Return: java.lang.String
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public static boolean isLoginNow(){
-        return LOOP_AUTH_LOGIN.isLoginNow();
+    public static void isLoginNow(){
+        LOOP_AUTH_LOGIN.isLoginNow();
     }
 
 }

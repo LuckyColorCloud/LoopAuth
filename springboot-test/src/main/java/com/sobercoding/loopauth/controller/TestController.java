@@ -32,10 +32,8 @@ public class TestController {
 
     @GetMapping("/islogin")
     public String islogin(){
-        if (LoopAuthFaceImpl.isLoginNow()){
-            return "登录了";
-        }
-        return "000";
+        LoopAuthFaceImpl.isLoginNow();
+        return "登录了";
     }
 
 

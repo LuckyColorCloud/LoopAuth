@@ -4,6 +4,8 @@ import com.sobercoding.loopauth.util.AesUtil;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: LoopAuth
@@ -25,13 +27,15 @@ public class LoopAuthToken {
      * @Exception:
      * @Date: 2022/8/12 22:26
      */
-    public String createToken(String info, String secretKey) {
+    public String createToken(Object info, String secretKey) {
+        HashMap<String,String> infoMap = (HashMap<String, String>) info;
         // 添加会话基本信息的base编码
-        return getBase64(info) +
+        String original = infoMap.get("loginId") + "," + infoMap.get("createTime");
+        return getBase64(original) +
                 // 添加分隔符
                 "_" +
                 // 添加密文
-                AesUtil.encrypted(info, secretKey);
+                AesUtil.encrypted(original, secretKey);
     }
 
     /**
@@ -69,11 +73,15 @@ public class LoopAuthToken {
      * @Exception:
      * @Date: 2022/8/12 22:47
      */
-    public String getInfo(String token) {
+    public Object getInfo(String token) {
         // 分割token
         String[] tokens = token.split("_");
+        Map<String,String> info = new HashMap<>(4);
+        String[] infos = getFromBase64(tokens[0]).split(",");
         // 获取token包含的会话信息
-        return getFromBase64(tokens[0]);
+        info.put("loginId",infos[0]);
+        info.put("createTime",infos[1]);
+        return info;
     }
 
     /**
@@ -86,10 +94,9 @@ public class LoopAuthToken {
      * @Exception:
      * @Date: 2022/8/12 23:00
      */
-    public String getBase64(String str) {
+    private String getBase64(String str) {
         byte[] b = str.getBytes(StandardCharsets.UTF_8);
-        String s = new BASE64Encoder().encode(b);
-        return s;
+        return new BASE64Encoder().encode(b);
     }
 
 
@@ -103,7 +110,7 @@ public class LoopAuthToken {
      * @Exception:
      * @Date: 2022/8/12 23:00
      */
-    public String getFromBase64(String str) {
+    private String getFromBase64(String str) {
         byte[] b;
         String result = null;
         if (str != null) {
