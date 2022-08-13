@@ -67,7 +67,6 @@ public class PermissionUtil {
      * @param loopAutoCheckLogin
      */
     private static void checkByAnnotation(LoopAutoCheckLogin loopAutoCheckLogin) {
-//        LoopAuthStrategy.getLoopAuthLogin().isLoginNow();
         LoopAuthFaceImpl.isLoginNow();
     }
 
@@ -79,7 +78,7 @@ public class PermissionUtil {
     private static void checkByAnnotation(LoopAuthPermission loopAuthPermission) {
         String[] roleArray = loopAuthPermission.value();
         //TODO  缺少登入类型 暂做扩展
-        String loginId = LoopAuthFaceImpl.getUserId();
+        String loginId = LoopAuthFaceImpl.getLoginId();
         String loginType = "";
         if (loopAuthPermission.mode() == LoopAuthMode.AND) {
             checkAnd(roleArray, LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType));
@@ -98,7 +97,7 @@ public class PermissionUtil {
     private static void checkByAnnotation(LoopAuthRole loopAuthRole) {
         String[] roleArray = loopAuthRole.value();
         //TODO  缺少登入类型 暂做扩展
-        String loginId = LoopAuthFaceImpl.getUserId();
+        String loginId = LoopAuthFaceImpl.getLoginId();
         String loginType = "";
         if (loopAuthRole.mode() == LoopAuthMode.AND) {
             checkAnd(roleArray, LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType));

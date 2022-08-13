@@ -65,7 +65,7 @@ public class LoopAuthLogin {
      */
     public void logoutNow(String... facilitys) {
         // 获取当前会话的userSession
-        UserSession userSession = getUserSession(getUserId());
+        UserSession userSession = getUserSession(getLoginId());
         if (facilitys.length > 0) {
             // 注销 所选的设备
             userSession.removeTokenByFacility(facilitys)
@@ -88,7 +88,7 @@ public class LoopAuthLogin {
      */
     public void logoutNowAll() {
         // 获取会话    删除所有token
-        getUserSession(getUserId()).remove();
+        getUserSession(getLoginId()).remove();
     }
 
     /**
@@ -126,10 +126,6 @@ public class LoopAuthLogin {
      * @Date: 2022/8/9 23:05
      */
     public UserSession getUserSession(String loginId) {
-        // 先判断loginId是否存在 否则抛出异常
-        LoopAuthLoginException.isTrue(
-                LoopAuthStrategy.getLoopAuthDao().containsKey(loginId),
-                LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         return new UserSession().setUserId(loginId)
                 .getUserSession();
     }
@@ -147,7 +143,7 @@ public class LoopAuthLogin {
     public TokenModel getTokenNow() {
         // 从请求体获取携带的token
         String token = getBodyToken();
-        return getUserSession(getUserId())
+        return getUserSession(getLoginId())
                 .getTokens()
                 .stream()
                 .filter(
@@ -190,8 +186,7 @@ public class LoopAuthLogin {
         // 从请求体获取携带的token
         String token = getBodyToken();
         // 解析token参数
-        String info = LoopAuthStrategy.getLoopAuthToken().getInfo(token);
-        return info;
+        return LoopAuthStrategy.getLoopAuthToken().getInfo(token);
     }
 
     /**
@@ -204,9 +199,9 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public String getUserId() {
-        // token合法验证
-        LoopAuthLoginException.isTrue(isLoginNow(), LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
+    public String getLoginId() {
+        // 登录验证
+        isLoginNow();
         return (String) getBodyTokenInfo();
     }
 
@@ -214,21 +209,18 @@ public class LoopAuthLogin {
      * @Method: isLoginNow
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 判断当前是否登录
+     * @Description: 登录校验
      * @param
      * @Return: java.lang.String
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public boolean isLoginNow() {
+    public void isLoginNow() {
         // 解析token参数
         String info = (String) getBodyTokenInfo();
-        // TODO: 2022/8/11
-        // 需要处理decodeToken抛出的异常
-        // TODO: 2022/8/11
-        // 需要增加token对内存的鉴定，查看内存中是否存在
-        LoopAuthStrategy.getLoopAuthDao().get((String) getBodyTokenInfo());
         // token合法验证
-        return LoopAuthStrategy.getLoopAuthToken().verify(getBodyToken(), LoopAuthStrategy.getSecretKey.apply(info));
+        LoopAuthLoginException.isTrue(
+                LoopAuthStrategy.getLoopAuthToken().verify(getTokenNow().getValue(), LoopAuthStrategy.getSecretKey.apply(info)),
+                LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
     }
 }

@@ -1,6 +1,8 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 
 import java.io.Serializable;
 import java.util.*;
@@ -112,6 +114,10 @@ public class UserSession implements Serializable {
      * @Date: 2022/8/11 0:42
      */
     public UserSession getUserSession(){
+        // 先判断loginId是否存在 否则抛出异常
+        LoopAuthLoginException.isTrue(
+                LoopAuthStrategy.getLoopAuthDao().containsKey(this.getUserId()),
+                LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         this.setTokens((List<TokenModel>) LoopAuthStrategy.getLoopAuthDao().get(this.getUserId()));
         return this;
     }
