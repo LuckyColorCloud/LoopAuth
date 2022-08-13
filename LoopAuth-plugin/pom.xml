@@ -12,6 +12,7 @@
 
     <modules>
         <module>LoopAuth-abac</module>
+        <module>LoopAuth-redis</module>
     </modules>
     <artifactId>LoopAuth-plugin</artifactId>
 
