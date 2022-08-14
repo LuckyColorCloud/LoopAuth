@@ -63,6 +63,9 @@ public class LoopAuthConfig implements Serializable {
      */
     private String secretKey = "LoopAuth";
 
+    /**
+     * redis配置
+     */
     private RedisConfig redisConfig = new RedisConfig();
 
     public LoopAuthConfig setTokenName(String tokenName) {
