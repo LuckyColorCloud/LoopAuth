@@ -243,7 +243,9 @@ public class LoopAuthLogin {
         // 从请求体获取携带的token
         String token = getBodyToken();
         // 解析token参数
-        return (Map<String, String>) LoopAuthStrategy.getLoopAuthToken().getInfo(token);
+        Map<String,String> infoMap = (Map<String, String>) LoopAuthStrategy.getLoopAuthToken().getInfo(token);
+        LoopAuthLoginException.isEmpty(infoMap,LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
+        return infoMap;
     }
 
     /**

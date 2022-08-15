@@ -74,14 +74,18 @@ public class LoopAuthToken {
      * @Date: 2022/8/12 22:47
      */
     public Object getInfo(String token) {
-        // 分割token
-        String[] tokens = token.split("_");
-        Map<String,String> info = new HashMap<>(4);
-        String[] infos = getFromBase64(tokens[0]).split(",");
-        // 获取token包含的会话信息
-        info.put("loginId",infos[0]);
-        info.put("createTime",infos[1]);
-        return info;
+        try {
+            // 分割token
+            String[] tokens = token.split("_");
+            Map<String,String> info = new HashMap<>(4);
+            String[] infos = getFromBase64(tokens[0]).split(",");
+            // 获取token包含的会话信息
+            info.put("loginId",infos[0]);
+            info.put("createTime",infos[1]);
+            return info;
+        }catch (RuntimeException e){
+            return null;
+        }
     }
 
     /**
