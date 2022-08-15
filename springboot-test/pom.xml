@@ -56,12 +56,6 @@
 <!--            <scope>runtime</scope>-->
 <!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
     <build>
