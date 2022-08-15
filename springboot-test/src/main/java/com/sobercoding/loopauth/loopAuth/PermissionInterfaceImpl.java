@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Yun
  */
 @Component
-public class PermissionConfig implements PermissionInterface {
+public class PermissionInterfaceImpl implements PermissionInterface {
     @Override
     public Set<String> getPermissionSet(String userId, String loginType) {
         //这里只做演示 所以写死 根据业务查询数据库或者其他操作

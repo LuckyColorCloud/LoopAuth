@@ -5,10 +5,10 @@ import com.sobercoding.loopauth.LoopAuthStrategy;
 /**
  * @program: LoopAuth
  * @author: Sober
- * @Description: 认证获取类型枚举
+ * @Description: 认证获取方式枚举
  * @create: 2022/07/20 21:19
  */
-public enum TokenAccess {
+public enum TokenAccessMode {
 
     /**
      * 请求头获取token

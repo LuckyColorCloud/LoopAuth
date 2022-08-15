@@ -1,11 +1,11 @@
-package com.sobercoding.loopauth.annotation;
+package com.sobercoding.loopauth.model.constant;
 
 /**
- * 注解鉴权的验证模式
+ * 鉴权的验证模式
  *  且 或 非
  * @author Yun
  */
-public enum LoopAuthMode {
+public enum LoopAuthVerifyMode {
 
 	/**
 	 * 必须具有所有的元素 

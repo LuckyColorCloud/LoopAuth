@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.interceptor;
 
-import com.sobercoding.loopauth.util.PermissionUtil;
+import com.sobercoding.loopauth.CheckPermissionAnnotation;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -33,7 +33,7 @@ public class LoopAuthAnnotationInterceptor implements HandlerInterceptor {
 		}
 		Method method = ((HandlerMethod) handler).getMethod();
 		// 进行验证
-		PermissionUtil.checkMethodAnnotation.accept(method);
+		CheckPermissionAnnotation.checkMethodAnnotation.accept(method);
 		// 通过验证
 		return true;
 	}

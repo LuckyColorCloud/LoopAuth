@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.annotation;
 
+import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,7 +27,7 @@ public @interface LoopAuthRole {
 	 * 验证模式：AND | OR | non，默认AND
 	 * @return 验证模式
 	 */
-	LoopAuthMode mode() default LoopAuthMode.AND;
+	LoopAuthVerifyMode mode() default LoopAuthVerifyMode.AND;
 
     /**
      * 账号类型 

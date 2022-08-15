@@ -5,6 +5,7 @@ package com.sobercoding.loopauth.filter;
  *
  * @author Yun
  */
+@FunctionalInterface
 public interface LoopAuthFilter {
 
     /**

@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.filter;
 
-import com.sobercoding.loopauth.util.PermissionUtil;
+import com.sobercoding.loopauth.CheckPermissionAnnotation;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class LoopAuthServletFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         try {
-            loopAuthFilter.run(PermissionUtil.matchPaths(excludeList, request));
+            loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request));
         } catch (Throwable e) {
             // 1. 获取异常处理策略结果
             String result =  String.valueOf(loopAuthErrorFilter.run(e));

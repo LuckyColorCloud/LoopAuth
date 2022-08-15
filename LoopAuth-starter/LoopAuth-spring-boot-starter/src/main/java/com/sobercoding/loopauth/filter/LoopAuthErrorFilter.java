@@ -4,6 +4,7 @@ package com.sobercoding.loopauth.filter;
  * 全局 错误认证过滤器
  * @author Yun
  */
+@FunctionalInterface
 public interface LoopAuthErrorFilter {
 
     /**

@@ -19,12 +19,12 @@ public class RedisConfig implements Serializable {
     /**
      * Redis服务器地址
      */
-    private String host = "hw.iscolt.com";
+    private String host = "127.0.0.1";
 
     /**
      * Redis 密码，没有设置可以为空
      */
-    private String password = "5211";
+    private String password = "";
 
     /**
      * Redis端口号， 默认是6379

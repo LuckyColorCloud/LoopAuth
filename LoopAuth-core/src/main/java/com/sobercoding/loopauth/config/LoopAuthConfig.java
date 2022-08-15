@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.model.constant.TokenAccess;
+import com.sobercoding.loopauth.model.constant.TokenAccessMode;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -56,7 +56,7 @@ public class LoopAuthConfig implements Serializable {
      * token获取方式 默认[AccessMode.COOKIE,AccessMode.HEADER]顺序获取
      * 即使COOKIE中获取到鉴权成功，则不前往HEADER获取
      */
-    private ConcurrentSkipListSet<TokenAccess> accessModes = new ConcurrentSkipListSet<>(Arrays.asList(TokenAccess.COOKIE, TokenAccess.HEADER));
+    private ConcurrentSkipListSet<TokenAccessMode> accessModes = new ConcurrentSkipListSet<>(Arrays.asList(TokenAccessMode.COOKIE, TokenAccessMode.HEADER));
 
     /**
      * Token生成密钥
@@ -98,7 +98,7 @@ public class LoopAuthConfig implements Serializable {
         return this;
     }
 
-    public LoopAuthConfig setAccessModes(ConcurrentSkipListSet<TokenAccess> accessModes) {
+    public LoopAuthConfig setAccessModes(ConcurrentSkipListSet<TokenAccessMode> accessModes) {
         this.accessModes = accessModes;
         return this;
     }
@@ -141,7 +141,7 @@ public class LoopAuthConfig implements Serializable {
         return maxLoginCount;
     }
 
-    public Set<TokenAccess> getAccessModes() {
+    public Set<TokenAccessMode> getAccessModes() {
         return accessModes;
     }
 

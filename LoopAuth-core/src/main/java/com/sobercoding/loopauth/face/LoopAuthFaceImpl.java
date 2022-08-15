@@ -3,6 +3,7 @@ package com.sobercoding.loopauth.face;
 import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 
 /**
  * @program: LoopAuth
@@ -100,4 +101,33 @@ public class LoopAuthFaceImpl {
         LOOP_AUTH_LOGIN.isLoginNow();
     }
 
+    /**
+     * @Method: checkByRole
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 角色认证
+     * @param loopAuthVerifyMode 认证方式
+     * @param roles 角色列表
+     * @Return: java.lang.String
+     * @Exception:
+     * @Date: 2022/8/10 16:33
+     */
+    public static void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
+        LoopAuthStrategy.getLoopAuthPermission().checkByRole(loopAuthVerifyMode,roles);
+    }
+
+    /**
+     * @Method: checkByPermission
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 权限认证
+     * @param loopAuthVerifyMode 认证方式
+     * @param permissions 权限代码列表
+     * @Return: java.lang.String
+     * @Exception:
+     * @Date: 2022/8/10 16:33
+     */
+    public static void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
+        LoopAuthStrategy.getLoopAuthPermission().checkByPermission(loopAuthVerifyMode,permissions);
+    }
 }

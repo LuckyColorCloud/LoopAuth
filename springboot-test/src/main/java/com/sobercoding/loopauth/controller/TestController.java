@@ -1,7 +1,6 @@
 package com.sobercoding.loopauth.controller;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.annotation.LoopAuthMode;
+import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;
 import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
@@ -10,8 +9,6 @@ import com.sobercoding.loopauth.model.TokenModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.lang.reflect.Array;
 
 
 /**
@@ -49,13 +46,13 @@ public class TestController {
         return "检测成功";
     }
 
-    @LoopAuthPermission(value="user-add",mode = LoopAuthMode.OR)
+    @LoopAuthPermission(value="user-add",mode = LoopAuthVerifyMode.OR)
     @GetMapping("/testPermission")
     public String testPermission(){
         return "检测成功";
     }
 
-    @LoopAuthRole(value="user",mode = LoopAuthMode.OR)
+    @LoopAuthRole(value="user",mode = LoopAuthVerifyMode.OR)
     @GetMapping("/testRole")
     public String testRole(){
         return "检测成功";

@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
+import com.sobercoding.loopauth.face.component.LoopAuthPermission;
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
 import com.sobercoding.loopauth.function.LrFunction;
 import com.sobercoding.loopauth.model.TokenModel;
@@ -66,6 +67,26 @@ public class LoopAuthStrategy {
     }
 
     /**
+     * 验证权限 Bean
+     */
+    private volatile static LoopAuthPermission loopAuthPermission;
+
+    public static void setLoopAuthPermission(LoopAuthPermission loopAuthPermission) {
+        LoopAuthStrategy.loopAuthPermission = loopAuthPermission;
+    }
+
+    public static LoopAuthPermission getLoopAuthPermission() {
+        if (LoopAuthStrategy.loopAuthPermission == null){
+            synchronized(LoopAuthStrategy.class){
+                if (LoopAuthStrategy.loopAuthPermission == null){
+                    LoopAuthStrategy.loopAuthPermission = new LoopAuthPermission();
+                }
+            }
+        }
+        return LoopAuthStrategy.loopAuthPermission;
+    }
+
+    /**
      * 会话缓存操作
      */
     private volatile static LoopAuthDao loopAuthDao;
@@ -98,7 +119,7 @@ public class LoopAuthStrategy {
 
 
     /**
-     * 权限认证 Bean
+     * 权限认证 Bean 获取角色/权限代码
      */
     private volatile static PermissionInterface permissionInterface;
     public static void setPermissionInterface(PermissionInterface permissionInterface) {

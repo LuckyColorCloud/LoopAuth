@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.exception;
 
-import com.sobercoding.loopauth.util.LoopAuthResult;
+import com.sobercoding.loopauth.model.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -16,9 +16,9 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public LoopAuthResult handlerException(Exception e) {
+    public Result handlerException(Exception e) {
         e.printStackTrace();
-        return LoopAuthResult.error(e.getMessage());
+        return Result.error(e.getMessage());
     }
 
 }

@@ -5,7 +5,7 @@ import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.model.UserSession;
-import com.sobercoding.loopauth.model.constant.TokenAccess;
+import com.sobercoding.loopauth.model.constant.TokenAccessMode;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.util.HashMap;
@@ -217,8 +217,8 @@ public class LoopAuthLogin {
     private String getBodyToken() {
         // 从请求体获取携带的token
         String token = null;
-        for (TokenAccess tokenAccess : LoopAuthStrategy.getLoopAuthConfig().getAccessModes()){
-            token = tokenAccess.getToken();
+        for (TokenAccessMode tokenAccessMode : LoopAuthStrategy.getLoopAuthConfig().getAccessModes()){
+            token = tokenAccessMode.getToken();
             if (LoopAuthUtil.isNotEmpty(token)){
                 break;
             }

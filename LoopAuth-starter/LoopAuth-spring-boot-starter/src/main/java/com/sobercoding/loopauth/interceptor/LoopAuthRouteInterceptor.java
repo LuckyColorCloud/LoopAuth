@@ -1,7 +1,5 @@
 package com.sobercoding.loopauth.interceptor;
 
-
-import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
 import com.sobercoding.loopauth.router.LoopAuthRouteFunction;
 import com.sobercoding.loopauth.servlet.model.LoopAuthRequestForServlet;
