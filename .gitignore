@@ -10,4 +10,6 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 .idea
 *.iml
+
 springboot-test/src/main/resources/application.yml
+LoopAuth-doc/node_modules
