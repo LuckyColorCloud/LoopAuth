@@ -40,19 +40,12 @@ public class LoopAuthLogin {
         // TODO: 2022/8/10
         // 还有cookie没做处理
 
-        // 根据accessModes配置项，写入上下文
-//        LoopAuthStrategy.getLoopAuthContext()
-//                .getStorage()
-//                .set(
-//                        LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
-//                        tokenModel.getValue()
-//                );
-//        LoopAuthStrategy.getLoopAuthContext()
-//                .getResponse()
-//                .setHeader(
-//                        LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
-//                        tokenModel.getValue()
-//                );
+        // 写入内部使用的会话存储,
+        LoopAuthStrategy.getLoopAuthContext().getStorage()
+                .set(
+                    LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
+                    tokenModel.getValue()
+                );
         // 返回token模型
         return tokenModel;
     }
