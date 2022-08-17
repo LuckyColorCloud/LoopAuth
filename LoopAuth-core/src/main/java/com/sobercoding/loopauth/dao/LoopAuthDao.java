@@ -27,24 +27,13 @@ public interface LoopAuthDao {
      * @Method: containsKey
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 获取指定缓存
+     * @Description: 查看key是否存在
      * @param key 字典
      * @Return: boolean
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
     boolean containsKey(String key);
-
-    /**
-     * @Method: getAll
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取全部缓存
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/10 23:11
-     */
-    Map<String, Object> getAll();
 
     /**
      * @Method: setUserSession
@@ -71,15 +60,5 @@ public interface LoopAuthDao {
      */
     void remove(String key);
 
-    /**
-     * @Method: removeAll
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 清空登录态
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/8 17:16
-     */
-    void removeAll();
 
 }

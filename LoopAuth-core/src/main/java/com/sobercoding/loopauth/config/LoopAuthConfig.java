@@ -4,6 +4,7 @@ import com.sobercoding.loopauth.model.constant.TokenAccessMode;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -24,9 +25,9 @@ public class LoopAuthConfig implements Serializable {
      */
     private String tokenName = "LoopAuth";
     /**
-     * token有效期(单位毫秒) 默认7天、-1永久
+     * token有效期(单位毫秒) 默认2小时、-1永久
      */
-    private long timeOut = 60 * 60 * 24 * 7 * 1000;
+    private long timeOut = 60 * 60 * 2 * 1000;
 
     /**
      * token共生  默认不开启
@@ -56,7 +57,7 @@ public class LoopAuthConfig implements Serializable {
      * token获取方式 默认[AccessMode.COOKIE,AccessMode.HEADER]顺序获取
      * 即使COOKIE中获取到鉴权成功，则不前往HEADER获取
      */
-    private ConcurrentSkipListSet<TokenAccessMode> accessModes = new ConcurrentSkipListSet<>(Arrays.asList(TokenAccessMode.COOKIE, TokenAccessMode.HEADER));
+    private ConcurrentSkipListSet<TokenAccessMode> accessModes = new ConcurrentSkipListSet<>(Collections.singletonList(TokenAccessMode.COOKIE));
 
     /**
      * Token生成密钥
@@ -64,9 +65,35 @@ public class LoopAuthConfig implements Serializable {
     private String secretKey = "LoopAuth";
 
     /**
+     * token持久层存储的前缀
+     */
+    private String tokenPersistencePrefix = "LoopAuthToken";
+
+    /**
+     * LoginId持久层存储的前缀
+     */
+    private String loginIdPersistencePrefix = "LoopAuthLoginId";
+
+    /**
      * redis配置
      */
     private RedisConfig redisConfig = new RedisConfig();
+
+    public String getTokenPersistencePrefix() {
+        return tokenPersistencePrefix;
+    }
+
+    public void setTokenPersistencePrefix(String tokenPersistencePrefix) {
+        this.tokenPersistencePrefix = tokenPersistencePrefix;
+    }
+
+    public String getLoginIdPersistencePrefix() {
+        return loginIdPersistencePrefix;
+    }
+
+    public void setLoginIdPersistencePrefix(String loginIdPersistencePrefix) {
+        this.loginIdPersistencePrefix = loginIdPersistencePrefix;
+    }
 
     public LoopAuthConfig setTokenName(String tokenName) {
         this.tokenName = tokenName;
@@ -157,7 +184,7 @@ public class LoopAuthConfig implements Serializable {
                 ", isMutualism=" + isMutualism +
                 ", isExclusion=" + isExclusion +
                 ", maxLoginCount=" + maxLoginCount +
-                ", isRenew=" + isRenew +
+//                ", isRenew=" + isRenew +
                 ", accessModes=" + accessModes +
                 ", secretKey='" + secretKey + '\'' +
                 ", redisConfig=" + redisConfig +

@@ -2,6 +2,8 @@ package com.sobercoding.loopauth.face;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.face.component.LoopAuthLogin;
+import com.sobercoding.loopauth.face.component.LoopAuthPermission;
+import com.sobercoding.loopauth.face.component.LoopAuthToken;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 
@@ -13,25 +15,29 @@ import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
  */
 public class LoopAuthFaceImpl {
 
-    public static LoopAuthLogin LOOP_AUTH_LOGIN = new LoopAuthLogin();
+    public static LoopAuthLogin LOOP_AUTH_LOGIN = LoopAuthStrategy.getLoopAuthLogin();
+
+    public static LoopAuthToken LOOP_AUTH_TOKEN = LoopAuthStrategy.getLoopAuthToken();
+
+    public static LoopAuthPermission LOOP_AUTH_PERMISSION = LoopAuthStrategy.getLoopAuthPermission();
 
     /**
      * @Method: login
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 登录,不设置终端区别
-     * @param userId 用户id
+     * @param loginId 用户id
      * @Return: java.lang.String
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static TokenModel login(String userId) {
+    public static TokenModel login(String loginId) {
         return LOOP_AUTH_LOGIN.login(
-                userId,
                 new TokenModel()
-                        .setFacility("LoopAuth"))
+                        .setFacility("LoopAuth")
+                        .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
-                        .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut()
+                        .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
         );
     }
 
@@ -40,17 +46,17 @@ public class LoopAuthFaceImpl {
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 登录,设置终端
-     * @param userId 用户id
+     * @param loginId 用户id
      * @param facility 终端类型
      * @Return: java.lang.String
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static TokenModel login(String userId, String facility) {
+    public static TokenModel login(String loginId, String facility) {
         return LOOP_AUTH_LOGIN.login(
-                userId,
                 new TokenModel()
                         .setFacility(facility)
+                        .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
         );

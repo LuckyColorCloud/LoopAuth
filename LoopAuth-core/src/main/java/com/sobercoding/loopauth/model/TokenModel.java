@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.model;
 
+import com.sobercoding.loopauth.util.LoopAuthUtil;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,6 +21,16 @@ public class TokenModel implements Serializable {
     private String value;
 
     /**
+     * 删除标记
+     */
+    private boolean removeFlag;
+
+    /**
+     * 用户id
+     */
+    private String loginId;
+
+    /**
      * 设备值
      */
     private String facility;
@@ -32,6 +44,24 @@ public class TokenModel implements Serializable {
      * token有效期(单位毫秒)
      */
     private long timeOut;
+
+    public boolean isRemoveFlag() {
+        return removeFlag;
+    }
+
+    public TokenModel setRemoveFlag(boolean removeFlag) {
+        this.removeFlag = removeFlag;
+        return this;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public TokenModel setLoginId(String loginId) {
+        this.loginId = loginId;
+        return this;
+    }
 
     public TokenModel setValue(String value) {
         this.value = value;
@@ -80,6 +110,11 @@ public class TokenModel implements Serializable {
         TokenModel tokenModel = (TokenModel) obj;
 
         return Objects.equals(this.value, tokenModel.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     @Override

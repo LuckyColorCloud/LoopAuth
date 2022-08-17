@@ -1,9 +1,8 @@
 package com.sobercoding.loopauth.face.component;
 
 import com.sobercoding.loopauth.util.AesUtil;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class LoopAuthToken {
     public String createToken(Object info, String secretKey) {
         HashMap<String,String> infoMap = (HashMap<String, String>) info;
         // 添加会话基本信息的base编码
-        String original = infoMap.get("loginId") + "," + infoMap.get("createTime");
+        String original = infoMap.get("loginId") + "," + infoMap.get("createTime") + "," + infoMap.get("timeOut");
         return getBase64(original) +
                 // 添加分隔符
                 "_" +
@@ -82,6 +81,7 @@ public class LoopAuthToken {
             // 获取token包含的会话信息
             info.put("loginId",infos[0]);
             info.put("createTime",infos[1]);
+            info.put("timeOut",infos[2]);
             return info;
         }catch (RuntimeException e){
             return null;
@@ -100,7 +100,7 @@ public class LoopAuthToken {
      */
     private String getBase64(String str) {
         byte[] b = str.getBytes(StandardCharsets.UTF_8);
-        return new BASE64Encoder().encode(b);
+        return new String(Base64.getEncoder().encode(b));
     }
 
 
@@ -118,9 +118,8 @@ public class LoopAuthToken {
         byte[] b;
         String result = null;
         if (str != null) {
-            BASE64Decoder decoder = new BASE64Decoder();
             try {
-                b = decoder.decodeBuffer(str);
+                b = Base64.getDecoder().decode(str);
                 result = new String(b, StandardCharsets.UTF_8);
             } catch (Exception e) {
                 e.printStackTrace();

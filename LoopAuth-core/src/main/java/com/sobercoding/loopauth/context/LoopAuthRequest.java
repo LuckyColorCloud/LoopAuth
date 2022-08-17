@@ -12,7 +12,7 @@ public interface LoopAuthRequest extends SourceContext{
 	 * @param name 键
 	 * @return 值
 	 */
-	public String getParam(String name);
+	String getParam(String name);
 
 
 	/**
@@ -20,20 +20,20 @@ public interface LoopAuthRequest extends SourceContext{
 	 * @param name 键 
 	 * @return 值 
 	 */
-	public String getCookieValue(String name);
+	String getCookieValue(String name);
 
 	/**
 	 * 返回当前请求path (不包括上下文名称) 
 	 * @return see note
 	 */
-	public String getRequestPath();
+	String getRequestPath();
 
 	/**
 	 * 返回当前请求path是否为指定值 
 	 * @param path path 
 	 * @return see note
 	 */
-	public default boolean isPath(String path) {
+	default boolean isPath(String path) {
 		return getRequestPath().equals(path);
 	}
 
@@ -41,7 +41,7 @@ public interface LoopAuthRequest extends SourceContext{
 	 * 返回当前请求的类型 
 	 * @return see note
 	 */
-	public String getMethod();
+	String getMethod();
 
 
 	/**
@@ -49,7 +49,7 @@ public interface LoopAuthRequest extends SourceContext{
 	 * @param name 键
 	 * @return 值
 	 */
-	public String getHeader(String name);
+	String getHeader(String name);
 
 
 	

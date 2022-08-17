@@ -6,6 +6,7 @@ import com.sobercoding.loopauth.context.LoopAuthResponse;
 import com.sobercoding.loopauth.context.LoopAuthStorage;
 import com.sobercoding.loopauth.exception.LoopAuthException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthParamException;
 import com.sobercoding.loopauth.servlet.model.LoopAuthRequestForServlet;
 import com.sobercoding.loopauth.servlet.model.LoopAuthResponseForServlet;
 import com.sobercoding.loopauth.servlet.model.LoopAuthStorageForServlet;
@@ -39,6 +40,6 @@ public class LoopAuthContextForSpring implements LoopAuthContext {
     private ServletRequestAttributes getServletRequestAttributes(){
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return Optional.ofNullable(servletRequestAttributes)
-                .orElseThrow(() -> new LoopAuthException(LoopAuthExceptionEnum.ERROR));
+                .orElseThrow(() -> new LoopAuthParamException(LoopAuthExceptionEnum.PARAM_IS_NULL));
     }
 }

@@ -1,5 +1,8 @@
 package com.sobercoding.loopauth.permission;
 
+import com.sobercoding.loopauth.exception.LoopAuthConfigException;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,11 +14,11 @@ import java.util.Set;
 public class PermissionInterfaceDefImpl implements PermissionInterface {
     @Override
     public Set<String> getPermissionSet(String userId, String loginType) {
-        return new HashSet<>();
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.INITIALIZATION_FAILURE);
     }
 
     @Override
     public Set<String> getRoleSet(String userId, String loginType) {
-        return new HashSet<>();
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.INITIALIZATION_FAILURE);
     }
 }

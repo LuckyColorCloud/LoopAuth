@@ -3,8 +3,10 @@ package com.sobercoding.loopauth;
 
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.context.LoopAuthContextDefaultImpl;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
+import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.face.component.LoopAuthPermission;
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
 import com.sobercoding.loopauth.function.LrFunction;
@@ -67,7 +69,7 @@ public class LoopAuthStrategy {
     }
 
     /**
-     * 验证权限 Bean
+     * 验证权限策略
      */
     private volatile static LoopAuthPermission loopAuthPermission;
 
@@ -84,6 +86,24 @@ public class LoopAuthStrategy {
             }
         }
         return LoopAuthStrategy.loopAuthPermission;
+    }
+
+
+    private volatile static LoopAuthLogin loopAuthLogin;
+
+    public static void setLoopAuthLogin(LoopAuthLogin loopAuthLogin) {
+        LoopAuthStrategy.loopAuthLogin = loopAuthLogin;
+    }
+
+    public static LoopAuthLogin getLoopAuthLogin() {
+        if (LoopAuthStrategy.loopAuthLogin == null){
+            synchronized(LoopAuthStrategy.class){
+                if (LoopAuthStrategy.loopAuthLogin == null){
+                    LoopAuthStrategy.loopAuthLogin = new LoopAuthLogin();
+                }
+            }
+        }
+        return LoopAuthStrategy.loopAuthLogin;
     }
 
     /**
@@ -114,6 +134,13 @@ public class LoopAuthStrategy {
         LoopAuthStrategy.loopAuthContext = loopAuthContext;
     }
     public static LoopAuthContext getLoopAuthContext() {
+        if (loopAuthContext == null) {
+            synchronized (LoopAuthStrategy.class) {
+                if (loopAuthContext == null) {
+                    setLoopAuthContext(new LoopAuthContextDefaultImpl());
+                }
+            }
+        }
         return loopAuthContext;
     }
 

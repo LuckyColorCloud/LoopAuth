@@ -2,7 +2,7 @@ package com.sobercoding.loopauth.face.component;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.exception.NotRoleException;
+import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
@@ -69,7 +69,7 @@ public class LoopAuthPermission {
     private static void checkNon(Set<String> roleSet, String... roles) {
         for (String role : roles) {
             if (hasElement(roleSet, role)) {
-                throw new NotRoleException(LoopAuthExceptionEnum.NO_PERMISSION);
+                throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
             }
         }
     }
@@ -80,13 +80,13 @@ public class LoopAuthPermission {
                 return;
             }
         }
-        throw new NotRoleException(LoopAuthExceptionEnum.NO_PERMISSION);
+        throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
     }
 
     private static void checkAnd(Set<String> roleSet, String... roles) {
         for (String role : roles) {
             if (!hasElement(roleSet, role)) {
-                throw new NotRoleException(LoopAuthExceptionEnum.NO_ROLE.setMsg(role));
+                throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
             }
         }
     }

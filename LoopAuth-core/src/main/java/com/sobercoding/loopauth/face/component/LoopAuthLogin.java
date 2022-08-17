@@ -23,7 +23,6 @@ public class LoopAuthLogin {
     // 可重写开始
 
     /**
-     * @param loginId     用户id
      * @param tokenModel token模型
      * @Method: login
      * @Author: Sober
@@ -33,19 +32,12 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public TokenModel login(String loginId, TokenModel tokenModel) {
+    public TokenModel login(TokenModel tokenModel) {
         // 创建会话
-        creationSession(loginId, tokenModel);
+        creationSession(tokenModel);
 
-        // TODO: 2022/8/10
-        // 还有cookie没做处理
-
-        // 写入内部使用的会话存储,
-        LoopAuthStrategy.getLoopAuthContext().getStorage()
-                .set(
-                    LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
-                    tokenModel.getValue()
-                );
+        // 写入上下文
+        setContext(tokenModel);
         // 返回token模型
         return tokenModel;
     }
@@ -61,6 +53,8 @@ public class LoopAuthLogin {
      * @Date: 2022/8/8 17:05
      */
     public void logoutNow(String... facilitys) {
+        // TODO: 2022/8/18
+//        cookie如果有也要删除
         // 获取当前会话的userSession
         UserSession userSession = getUserSession(getLoginId());
         if (facilitys.length > 0) {
@@ -68,7 +62,7 @@ public class LoopAuthLogin {
             userSession.removeTokenByFacility(facilitys)
                     .setUserSession();
         } else {
-            // 通过上下文获取当前用户token 注销
+            // 注销 当前token
             userSession.removeToken(getTokenNow().getValue())
                     .setUserSession();
         }
@@ -123,7 +117,7 @@ public class LoopAuthLogin {
                 LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         // 登录有效期认证
         LoopAuthLoginException.isTrue(
-                isExpire(),
+                !isExpire(),
                 LoopAuthExceptionEnum.LOGIN_EXPIRE);
     }
 
@@ -132,7 +126,6 @@ public class LoopAuthLogin {
 
 
     /**
-     * @param loginId     用户id
      * @param tokenModel token模型
      * @Method: creationSession
      * @Author: Sober
@@ -142,18 +135,19 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/9 23:18
      */
-    private void creationSession(String loginId, TokenModel tokenModel) {
+    private void creationSession(TokenModel tokenModel) {
         // 生成token载入到tokenModel
         Map<String,String> info = new HashMap<>(4);
-        info.put("loginId",loginId);
+        info.put("loginId",tokenModel.getLoginId());
         info.put("createTime",String.valueOf(tokenModel.getCreateTime()));
+        info.put("timeOut",String.valueOf(tokenModel.getTimeOut()));
         String token = LoopAuthStrategy.getLoopAuthToken()
                 .createToken(
                         info,
-                        LoopAuthStrategy.getSecretKey.apply(loginId)
+                        LoopAuthStrategy.getSecretKey.apply(tokenModel.getLoginId())
                 );
         // 获取存储用户的所有会话   写入当前会话   刷新会话
-        getUserSession(loginId)
+        getUserSession(tokenModel.getLoginId())
                 .setToken(tokenModel.setValue(token))
                 .setUserSession();
     }
@@ -184,17 +178,26 @@ public class LoopAuthLogin {
      * @Date: 2022/8/11 16:42
      */
     private TokenModel getTokenNow() {
-        // 从请求体获取携带的token
-        String token = getBodyToken();
-        return getUserSession(getBodyTokenInfo().get("loginId"))
-                .getTokens()
-                .stream()
-                .filter(
-                        // 过滤出token值一样的TokenModel
-                        tokenModel -> token.equals(tokenModel.getValue())
-                ).findAny()
-                // 为空则抛出异常 否则正常返回
-                .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
+        // 有限从会话存储获取
+        TokenModel strategyTokenModel = (TokenModel) LoopAuthStrategy.getLoopAuthContext().getStorage()
+                .get("tokenModel");
+        if (LoopAuthUtil.isEmpty(strategyTokenModel)){
+            // 从请求体获取携带的token
+            String token = getBodyToken();
+            TokenModel userSessionTokenModel = getUserSession(getBodyTokenInfo().get("loginId"))
+                    .getTokens()
+                    .stream()
+                    .filter(
+                            // 过滤出token值一样的TokenModel
+                            tokenModel -> token.equals(tokenModel.getValue())
+                    ).findAny()
+                    // 为空则抛出异常 否则正常返回
+                    .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
+            // 写入当前会话Context存储器
+            LoopAuthStrategy.getLoopAuthContext().getStorage().set("tokenModel",userSessionTokenModel);
+            return userSessionTokenModel;
+        }
+        return strategyTokenModel;
     }
 
     /**
@@ -211,7 +214,21 @@ public class LoopAuthLogin {
         // 从请求体获取携带的token
         String token = null;
         for (TokenAccessMode tokenAccessMode : LoopAuthStrategy.getLoopAuthConfig().getAccessModes()){
-            token = tokenAccessMode.getToken();
+            switch (tokenAccessMode){
+                case COOKIE:
+                    token = LoopAuthStrategy.getLoopAuthContext()
+                            .getRequest()
+                            .getCookieValue(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
+                    break;
+                case HEADER:
+                    token = LoopAuthStrategy.getLoopAuthContext()
+                            .getRequest()
+                            .getHeader(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
+                    break;
+                default:
+                    break;
+            }
+            // 如果取到值则 不继续执行
             if (LoopAuthUtil.isNotEmpty(token)){
                 break;
             }
@@ -254,9 +271,57 @@ public class LoopAuthLogin {
     private boolean isExpire() {
         TokenModel tokenModel = getTokenNow();
         if (LoopAuthStrategy.getLoopAuthConfig().getTimeOut() != -1){
-            return tokenModel.getCreateTime() + tokenModel.getTimeOut() >= System.currentTimeMillis();
+            if (tokenModel.getCreateTime() + tokenModel.getTimeOut() < System.currentTimeMillis()){
+                // 到期删除当前token
+                getUserSession(tokenModel.getLoginId())
+                        .removeToken(tokenModel.getValue())
+                        .setUserSession();
+                return true;
+            }
         }
-        return true;
+        // token续期
+        if (LoopAuthStrategy.getLoopAuthConfig().getRenew()){
+            getUserSession(tokenModel.getLoginId())
+                    .renewalToken(tokenModel.getValue())
+                    .setUserSession();
+        }
+        return false;
+    }
+
+    /**
+     * @Method: setContext
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 写入上下文
+     * @param tokenModel
+     * @Return: void
+     * @Exception:
+     * @Date: 2022/8/17 20:09
+     */
+    private void setContext(TokenModel tokenModel){
+        // 如果选择了COOKIE获取  则 写入Response的Cookie存储
+        if (LoopAuthStrategy.getLoopAuthConfig()
+                .getAccessModes().stream()
+                .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.COOKIE)){
+            LoopAuthStrategy.getLoopAuthContext().getResponse().addCookie(
+                    LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
+                    tokenModel.getValue()
+            );
+        }
+
+        // 如果选择了HEADER获取  则 写入Response头返回
+        if (LoopAuthStrategy.getLoopAuthConfig()
+                .getAccessModes().stream()
+                .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.HEADER)){
+            LoopAuthStrategy.getLoopAuthContext().getResponse().setHeader(
+                    LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
+                    tokenModel.getValue()
+            );
+        }
+
+        // 写入内部使用的会话存储,
+        LoopAuthStrategy.getLoopAuthContext().getStorage()
+                .set("tokenModel", tokenModel);
     }
 
 

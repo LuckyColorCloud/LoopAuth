@@ -13,22 +13,10 @@ public enum TokenAccessMode {
     /**
      * 请求头获取token
      */
-    HEADER{
-        @Override
-        public String getToken() {
-            return LoopAuthStrategy.getLoopAuthContext().getRequest().getHeader(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
-        }
-    },
+    HEADER,
     /**
      * Cookie获取token
      */
-    COOKIE{
-        @Override
-        public String getToken() {
-            return "";
-        }
-    };
-
-    public abstract String getToken();
+    COOKIE;
 
 }

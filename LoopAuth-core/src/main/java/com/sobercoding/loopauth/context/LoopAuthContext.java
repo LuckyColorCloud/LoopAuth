@@ -12,19 +12,19 @@ public interface LoopAuthContext {
      *
      * @return see note
      */
-    public LoopAuthRequest getRequest();
+    LoopAuthRequest getRequest();
 
     /**
      * 获取当前请求的 [Response] 对象
      *
      * @return see note
      */
-    public LoopAuthResponse getResponse();
+    LoopAuthResponse getResponse();
 
     /**
      * 获取当前请求的 [存储器] 对象
      *
      * @return see note
      */
-    public LoopAuthStorage getStorage();
+    LoopAuthStorage getStorage();
 }

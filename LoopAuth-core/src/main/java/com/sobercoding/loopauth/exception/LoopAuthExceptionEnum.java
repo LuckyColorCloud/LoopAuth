@@ -7,20 +7,18 @@ package com.sobercoding.loopauth.exception;
  * @create: 2022/08/08 19:28
  */
 public enum LoopAuthExceptionEnum {
-    // 未知错误
-    ERROR(500, "未知错误"),
     // HTTP请求方式不对
     HTTP_MODULE_ERROR(415, "HTTP请求方式不对"),
-    //请求参数 不能为 必须有值
-    PARAM_IS_NULL(100001, "必要请求参数不存在:"),
-    //无此角色权限
-    NO_ROLE(500002, "本账户无此角色:"),
-    //无权限
-    NO_PERMISSION(500003, "无权限访问本路径"),
     // 非法请求
     LOGIN_NOT_EXIST(401, "非法请求"),
     // 非法请求
-    LOGIN_EXPIRE(500004, "登录过期");
+    LOGIN_EXPIRE(401, "登录过期"),
+    //无权限
+    NO_PERMISSION(401, "未经许可"),
+    //请求参数 不能为 必须有值
+    PARAM_IS_NULL(100001, "必要请求参数不存在:"),
+    // 初始化失败
+    INITIALIZATION_FAILURE(500005,"项目配置异常,初始化失败");
 
     /**
      * 异常状态码
