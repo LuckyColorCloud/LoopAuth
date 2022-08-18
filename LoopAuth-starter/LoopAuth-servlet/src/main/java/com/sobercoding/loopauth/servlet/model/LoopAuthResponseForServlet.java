@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.servlet.model;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.context.LoopAuthResponse;
 
 import javax.servlet.http.Cookie;
@@ -50,12 +51,6 @@ public class LoopAuthResponseForServlet implements LoopAuthResponse {
 		return this;
 	}
 
-	@Override
-	public LoopAuthResponse addCookie(String name, String value) {
-		Cookie cookie = new Cookie(name,value);
-		response.addCookie(cookie);
-		return this;
-	}
 
 	/**
 	 * 在响应头里添加一个值 

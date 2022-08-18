@@ -30,11 +30,4 @@ public interface LoopAuthResponse extends SourceContext {
      */
     LoopAuthResponse addHeader(String name, String value);
 
-    /**
-     * 写入cookie
-     * @param name 名字
-     * @param value 值
-     * @return 链式编程
-     */
-    LoopAuthResponse addCookie(String name, String value);
 }

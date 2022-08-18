@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.face.component;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.context.LoopAuthCookie;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthLoginException;
 import com.sobercoding.loopauth.model.TokenModel;
@@ -53,8 +54,6 @@ public class LoopAuthLogin {
      * @Date: 2022/8/8 17:05
      */
     public void logoutNow(String... facilitys) {
-        // TODO: 2022/8/18
-//        cookie如果有也要删除
         // 获取当前会话的userSession
         UserSession userSession = getUserSession(getLoginId());
         if (facilitys.length > 0) {
@@ -65,6 +64,22 @@ public class LoopAuthLogin {
             // 注销 当前token
             userSession.removeToken(getTokenNow().getValue())
                     .setUserSession();
+            // 删除cookie
+            if (LoopAuthStrategy.getLoopAuthConfig()
+                    .getAccessModes().stream()
+                    .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.COOKIE)){
+                LoopAuthCookie cookie = new LoopAuthCookie()
+                        .setName(LoopAuthStrategy.getLoopAuthConfig().getTokenName())
+                        .setValue("None")
+                        .setMaxAge(0L);
+//                    .setDomain(cfg.getDomain())
+//                    .setPath(cfg.getPath())
+//                    .setSecure(cfg.getSecure())
+//                    .setHttpOnly(cfg.getHttpOnly())
+//                    .setSameSite(cfg.getSameSite());
+                LoopAuthStrategy.getLoopAuthContext().getResponse()
+                        .addHeader("Set-Cookie",cookie.toCookieString());
+            }
         }
     }
 
@@ -276,6 +291,8 @@ public class LoopAuthLogin {
                 getUserSession(tokenModel.getLoginId())
                         .removeToken(tokenModel.getValue())
                         .setUserSession();
+                // TODO: 2022/8/19
+//                应该改用注销的方式
                 return true;
             }
         }
@@ -303,10 +320,17 @@ public class LoopAuthLogin {
         if (LoopAuthStrategy.getLoopAuthConfig()
                 .getAccessModes().stream()
                 .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.COOKIE)){
-            LoopAuthStrategy.getLoopAuthContext().getResponse().addCookie(
-                    LoopAuthStrategy.getLoopAuthConfig().getTokenName(),
-                    tokenModel.getValue()
-            );
+            LoopAuthCookie cookie = new LoopAuthCookie()
+                    .setName(LoopAuthStrategy.getLoopAuthConfig().getTokenName())
+                    .setValue(tokenModel.getValue())
+                    .setMaxAge(LoopAuthStrategy.getLoopAuthConfig().getTimeOut()/1000);
+//                    .setDomain(cfg.getDomain())
+//                    .setPath(cfg.getPath())
+//                    .setSecure(cfg.getSecure())
+//                    .setHttpOnly(cfg.getHttpOnly())
+//                    .setSameSite(cfg.getSameSite());
+            LoopAuthStrategy.getLoopAuthContext().getResponse()
+                    .addHeader("Set-Cookie",cookie.toCookieString());
         }
 
         // 如果选择了HEADER获取  则 写入Response头返回
