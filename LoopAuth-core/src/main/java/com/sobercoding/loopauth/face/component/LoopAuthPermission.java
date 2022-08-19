@@ -30,7 +30,7 @@ public class LoopAuthPermission {
      * @Date: 2022/8/10 16:33
      */
     public void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
-        String loginId = LoopAuthFaceImpl.getLoginId();
+        String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
         //TODO  缺少登入类型 暂做扩展
         String loginType = "";
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {
@@ -54,7 +54,7 @@ public class LoopAuthPermission {
      * @Date: 2022/8/10 16:33
      */
     public void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
-        String loginId = LoopAuthFaceImpl.getLoginId();
+        String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
         //TODO  缺少登入类型 暂做扩展
         String loginType = "";
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {

@@ -29,14 +29,14 @@ public class TestController {
 
     @GetMapping("/islogin")
     public String islogin(){
-        LoopAuthFaceImpl.isLoginNow();
+        LoopAuthFaceImpl.isLogin();
         return "登录了";
     }
 
 
     @GetMapping("/out")
     public String register1(){
-        LoopAuthFaceImpl.logoutNow();
+        LoopAuthFaceImpl.logout();
         return "注销成功";
     }
 

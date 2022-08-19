@@ -11,7 +11,7 @@ import java.util.Objects;
  * @Description: token模型
  * @create: 2022/07/22 20:06
  */
-public class TokenModel implements Serializable {
+public class TokenModel implements Serializable,Comparable<TokenModel>  {
 
     private static final long serialVersionUID = 1L;
 
@@ -116,7 +116,10 @@ public class TokenModel implements Serializable {
     public int hashCode() {
         return Objects.hash(value);
     }
-
+    @Override
+    public int compareTo(TokenModel obj) {
+        return Integer.compare(this.hashCode() - obj.hashCode(), 0);
+    }
     @Override
     public String toString() {
         return "TokenModel{" +

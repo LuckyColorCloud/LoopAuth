@@ -18,7 +18,7 @@ public class LoopAuthRouteInterceptor implements HandlerInterceptor {
 	/**
 	 * 每次进入拦截器的[执行函数]，默认为登录校验
 	 */
-	public LoopAuthRouteFunction function = (req, res, handler) -> LoopAuthFaceImpl.isLoginNow();
+	public LoopAuthRouteFunction function = (req, res, handler) -> LoopAuthFaceImpl.isLogin();
 
 	/**
 	 * 创建一个路由拦截器

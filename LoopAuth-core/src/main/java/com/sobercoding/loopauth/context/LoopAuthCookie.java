@@ -1,14 +1,13 @@
 package com.sobercoding.loopauth.context;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthParamException;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 /**
  * @program: LoopAuth
@@ -29,29 +28,29 @@ public class LoopAuthCookie {
     private String value;
 
     /**
-     * 域
-     */
-    private String domain;
-
-    /**
      * 过期时间
      */
-    private long maxAge;
+    private long maxAge = LoopAuthStrategy.getLoopAuthConfig().getTimeOut() / 1000;
+
+    /**
+     * 域
+     */
+    private String domain = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getDomain();
 
     /**
      * 路径
      */
-    private String path;
+    private String path = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getPath();
 
     /**
      * 是否允许js操作
      */
-    private boolean httpOnly;
+    private boolean httpOnly = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().isHttpOnly();
 
     /**
      * 是否只在https安全协议传输
      */
-    private boolean secure;
+    private boolean secure = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().isSecure();
 
     /**
      * 安全等级
@@ -59,7 +58,7 @@ public class LoopAuthCookie {
      * Lax 不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外
      * None
      */
-    private String sameSite;
+    private String sameSite = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getSameSite();
 
     public String getName() {
         return name;
@@ -148,9 +147,10 @@ public class LoopAuthCookie {
             stringBuilder.append("; Max-Age=").append(maxAge);
             String expires;
             if(maxAge == 0) {
-                expires = OffsetDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME);
+                expires = Instant.EPOCH.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);
             } else {
-                expires = OffsetDateTime.now().plusSeconds(maxAge).format(DateTimeFormatter.RFC_1123_DATE_TIME);
+                expires = Instant.ofEpochMilli(System.currentTimeMillis()).plusSeconds(maxAge)
+                        .atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);
             }
             stringBuilder.append("; Expires=").append(expires);
         }

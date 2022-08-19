@@ -42,6 +42,11 @@ public class LoopAuthConfig implements Serializable {
     private Boolean isExclusion = false;
 
     /**
+     * token持久化配置  默认不开启
+     */
+    private Boolean isTokenPersistence = false;
+
+    /**
      * 同一账号最大登录数量 默认1
      * -1代表不限 （只有在 isMutualism=true 时此配置才有效）
      */
@@ -58,6 +63,14 @@ public class LoopAuthConfig implements Serializable {
      * 即使COOKIE中获取到鉴权成功，则不前往HEADER获取
      */
     private ConcurrentSkipListSet<TokenAccessMode> accessModes = new ConcurrentSkipListSet<>(Collections.singletonList(TokenAccessMode.COOKIE));
+
+    public Boolean getTokenPersistence() {
+        return isTokenPersistence;
+    }
+
+    public void setTokenPersistence(Boolean tokenPersistence) {
+        isTokenPersistence = tokenPersistence;
+    }
 
     /**
      * Token生成密钥
@@ -78,6 +91,19 @@ public class LoopAuthConfig implements Serializable {
      * redis配置
      */
     private RedisConfig redisConfig = new RedisConfig();
+
+    /**
+     * cookie配置
+     */
+    private CookieConfig cookieConfig = new CookieConfig();
+
+    public CookieConfig getCookieConfig() {
+        return cookieConfig;
+    }
+
+    public void setCookieConfig(CookieConfig cookieConfig) {
+        this.cookieConfig = cookieConfig;
+    }
 
     public String getTokenPersistencePrefix() {
         return tokenPersistencePrefix;

@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.face.component.LoopAuthPermission;
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
 import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.model.UserSession;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 
 /**
@@ -72,24 +73,37 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static void logoutNow(String... facilitys) {
-        LOOP_AUTH_LOGIN.logoutNow(facilitys);
+    public static void logout(String... facilitys) {
+        LOOP_AUTH_LOGIN.logout(facilitys);
     }
 
 
-
     /**
-     * @Method: getUserId
+     * @Method: getTokenModel
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 提取当前用户id
+     * @Description: 获取当前会话的okenModel
      * @param
      * @Return: java.lang.String
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public static String getLoginId(){
-        return LOOP_AUTH_LOGIN.getLoginId();
+    public static TokenModel getTokenModel(){
+        return LOOP_AUTH_LOGIN.getTokenModel();
+    }
+
+    /**
+     * @Method: getUserSession
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 提取当前会话UserSession
+     * @param
+     * @Return: java.lang.String
+     * @Exception:
+     * @Date: 2022/8/10 16:33
+     */
+    public static UserSession getUserSession(){
+        return LOOP_AUTH_LOGIN.getUserSession();
     }
 
 
@@ -103,8 +117,22 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/10 16:33
      */
-    public static void isLoginNow(){
-        LOOP_AUTH_LOGIN.isLoginNow();
+    public static void isLogin(){
+        LOOP_AUTH_LOGIN.isLogin();
+    }
+
+    /**
+     * @Method: loginRenew
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 登录续期
+     * @param
+     * @Return: java.lang.String
+     * @Exception:
+     * @Date: 2022/8/10 16:33
+     */
+    public static void loginRenew(){
+        LOOP_AUTH_LOGIN.loginRenew();
     }
 
     /**

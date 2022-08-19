@@ -22,28 +22,23 @@ public class UserSession implements Serializable {
     /**
      * 用户id
      */
-    private String userId;
+    private String loginId;
 
     /**
      * token列表
      */
-    private List<TokenModel> tokens;
+    private Set<TokenModel> tokens;
 
-    public UserSession setUserId(String userId) {
-        this.userId = userId;
+    public UserSession setLoginId(String loginId) {
+        this.loginId = loginId;
         return this;
     }
 
-    public UserSession setTokens(List<TokenModel> tokens) {
-        this.tokens = tokens;
-        return this;
+    public String getLoginId() {
+        return loginId;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public List<TokenModel> getTokens() {
+    public Set<TokenModel> getTokens() {
         return tokens;
     }
 
@@ -59,23 +54,8 @@ public class UserSession implements Serializable {
      * @Date: 2022/8/10 23:51
      */
     public UserSession setToken(TokenModel tokenModel) {
+        this.tokens = LoopAuthStrategy.loginRulesMatching.exe(tokens,tokenModel);
         // 登录规则检测
-        return this.setTokens(LoopAuthStrategy.loginRulesMatching.exe(this.getTokens(),tokenModel));
-    }
-
-    /**
-     * @Method: renewalToken
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 刷新token有效期
-     * @param token
-     * @Return: com.sobercoding.loopauth.model.UserSession
-     * @Exception:
-     * @Date: 2022/8/18 3:51
-     */
-    public UserSession renewalToken(String token) {
-        this.getTokens().stream().filter(tokenModel -> token.equals(tokenModel.getValue())).findAny()
-                .ifPresent(tokenModel -> tokenModel.setCreateTime(System.currentTimeMillis()));
         return this;
     }
 
@@ -92,26 +72,28 @@ public class UserSession implements Serializable {
      */
     public void setUserSession(){
         // 如果已经不存在会话则删除用户所有会话存储
-        if (this.getTokens().stream().allMatch(TokenModel::isRemoveFlag)){
+        if (tokens.stream().allMatch(TokenModel::isRemoveFlag)){
             // 删除会话
             remove();
         }else {
-            Set<String> tokens = new HashSet<>();
+            // 过滤需要删除的会话
+            tokens = tokens.stream().filter(item -> !item.isRemoveFlag()).collect(Collectors.toSet());
+            Set<String> tokenValues = new HashSet<>();
             // 写入token对应模型
-            this.getTokens().forEach(tokenModel -> {
+            tokens.forEach(tokenModel -> {
                 LoopAuthStrategy.getLoopAuthDao()
                         .set(
                                 LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + tokenModel.getValue(),
                                 tokenModel
                         );
                 // 组装tokens
-                tokens.add(tokenModel.getValue());
+                tokenValues.add(tokenModel.getValue());
             });
             // 写入loginId对应tokens
             LoopAuthStrategy.getLoopAuthDao()
                     .set(
-                            LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() + ":" + this.getUserId(),
-                            tokens
+                            LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() + ":" + loginId,
+                            tokenValues
                     );
         }
     }
@@ -131,8 +113,8 @@ public class UserSession implements Serializable {
         Set<String> tokenSet = (Set<String>) LoopAuthStrategy.getLoopAuthDao()
                 .get(LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() +
                         ":" +
-                        this.getUserId());
-        List<TokenModel> tokenModels = new ArrayList<>();
+                        loginId);
+        Set<TokenModel> tokenModels = new HashSet<>();
         if (LoopAuthUtil.isNotEmpty(tokenSet)){
             tokenSet.forEach(token -> tokenModels
                     .add((TokenModel) LoopAuthStrategy.getLoopAuthDao()
@@ -141,7 +123,7 @@ public class UserSession implements Serializable {
                                     token))
             );
         }
-        this.setTokens(tokenModels);
+        this.tokens = tokenModels;
         return this;
     }
 
@@ -159,7 +141,7 @@ public class UserSession implements Serializable {
                 .remove(
                         LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() +
                         ":" +
-                        this.getUserId()
+                        loginId
                 );
         this.getTokens()
                 .forEach(
@@ -169,8 +151,8 @@ public class UserSession implements Serializable {
                                         tokenModel.getValue()
                 )
         );
-        this.setUserId(null);
-        this.setTokens(null);
+        this.loginId = null;
+        this.tokens = null;
     }
 
     /**
@@ -184,7 +166,7 @@ public class UserSession implements Serializable {
      * @Date: 2022/8/11 0:46
      */
     public UserSession removeTokenByFacility(String... facilitys) {
-        this.tokens.stream()
+        tokens.stream()
                 .filter(tokenModel -> Arrays.asList(facilitys).contains(tokenModel.getFacility()))
                 .forEach(tokenModel -> tokenModel.setRemoveFlag(true));
         return this;
@@ -197,14 +179,14 @@ public class UserSession implements Serializable {
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 删除会话token
-     * @param tokens
+     * @param tokenModelValues token值
      * @Return: com.sobercoding.loopauth.model.UserSession
      * @Exception:
      * @Date: 2022/8/11 0:44
      */
-    public UserSession removeToken(String... tokens) {
-        this.tokens.stream()
-                .filter(tokenModel -> Arrays.asList(tokens).contains(tokenModel.getValue()))
+    public UserSession removeToken(String... tokenModelValues) {
+        tokens.stream()
+                .filter(tokenModel -> Arrays.asList(tokenModelValues).contains(tokenModel.getValue()))
                 .forEach(tokenModel -> tokenModel.setRemoveFlag(true));
         return this;
     }
@@ -212,7 +194,7 @@ public class UserSession implements Serializable {
     @Override
     public String toString() {
         return "UserSession{" +
-                "userId='" + userId + '\'' +
+                "loginId='" + loginId + '\'' +
                 ", tokens=" + tokens +
                 '}';
     }
