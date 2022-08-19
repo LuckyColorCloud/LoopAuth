@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.servlet.model;
+package com.sobercoding.loopauth.servlet.context;
 
 import com.sobercoding.loopauth.context.LoopAuthStorage;
 

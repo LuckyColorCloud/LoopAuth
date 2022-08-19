@@ -32,14 +32,14 @@ public class RedisConfig implements Serializable {
     private int port = 6379;
 
     /**
-     * Redis 默认链接的数据库
+     * Redis 默认链接的数据库 默认0
      */
     private int databaseNo = 0;
 
     /**
      * 超时时间
      */
-    private int timeout = 2000;
+    private int timeOut = 2000;
 
     /**
      * 最大连接数
@@ -59,7 +59,7 @@ public class RedisConfig implements Serializable {
     /**
      * 需要连接池
      */
-    private boolean needPool = true;
+    private boolean isNeedPool = false;
 
     public RedisConfig setHost(String host) {
         this.host = host;
@@ -81,8 +81,8 @@ public class RedisConfig implements Serializable {
         return this;
     }
 
-    public RedisConfig setTimeout(int timeout) {
-        this.timeout = timeout;
+    public RedisConfig setTimeOut(int timeOut) {
+        this.timeOut = timeOut;
         return this;
     }
 
@@ -102,7 +102,7 @@ public class RedisConfig implements Serializable {
     }
 
     public RedisConfig setNeedPool(boolean needPool) {
-        this.needPool = needPool;
+        this.isNeedPool = needPool;
         return this;
     }
 
@@ -122,8 +122,8 @@ public class RedisConfig implements Serializable {
         return databaseNo;
     }
 
-    public int getTimeout() {
-        return timeout;
+    public int getTimeOut() {
+        return timeOut;
     }
 
     public int getMaxTotal() {
@@ -139,7 +139,7 @@ public class RedisConfig implements Serializable {
     }
 
     public boolean isNeedPool() {
-        return needPool;
+        return isNeedPool;
     }
 
     @Override
@@ -149,11 +149,11 @@ public class RedisConfig implements Serializable {
                 ", password='" + password + '\'' +
                 ", port=" + port +
                 ", databaseNo=" + databaseNo +
-                ", timeout=" + timeout +
+                ", timeOut=" + timeOut +
                 ", maxTotal=" + maxTotal +
                 ", maxIdle=" + maxIdle +
                 ", minIdle=" + minIdle +
-                ", needPool=" + needPool +
+                ", isNeedPool=" + isNeedPool +
                 '}';
     }
 }

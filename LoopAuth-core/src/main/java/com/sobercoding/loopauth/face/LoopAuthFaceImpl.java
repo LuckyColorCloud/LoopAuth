@@ -32,8 +32,8 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static TokenModel login(String loginId) {
-        return LOOP_AUTH_LOGIN.login(
+    public static void login(String loginId) {
+        LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility("LoopAuth")
                         .setLoginId(loginId)
@@ -53,8 +53,8 @@ public class LoopAuthFaceImpl {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static TokenModel login(String loginId, String facility) {
-        return LOOP_AUTH_LOGIN.login(
+    public static void login(String loginId, String facility) {
+        LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility(facility)
                         .setLoginId(loginId)

@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth;
+package com.sobercoding.loopauth.springbootstarter;
 
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.context.LoopAuthContext;

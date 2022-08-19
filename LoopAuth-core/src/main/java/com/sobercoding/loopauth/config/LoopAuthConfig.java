@@ -25,9 +25,9 @@ public class LoopAuthConfig implements Serializable {
      */
     private String tokenName = "LoopAuth";
     /**
-     * token有效期(单位毫秒) 默认2小时、-1永久
+     * token有效期(单位毫秒) 默认24小时、-1永久
      */
-    private long timeOut = 60 * 60 * 2 * 1000;
+    private long timeOut = 60 * 60 * 24 * 1000;
 
     /**
      * token共生  默认不开启
@@ -60,17 +60,9 @@ public class LoopAuthConfig implements Serializable {
 
     /**
      * token获取方式 默认[AccessMode.COOKIE,AccessMode.HEADER]顺序获取
-     * 即使COOKIE中获取到鉴权成功，则不前往HEADER获取
+     * 即COOKIE中获取到鉴权成功，则不前往HEADER获取
      */
     private ConcurrentSkipListSet<TokenAccessMode> accessModes = new ConcurrentSkipListSet<>(Collections.singletonList(TokenAccessMode.COOKIE));
-
-    public Boolean getTokenPersistence() {
-        return isTokenPersistence;
-    }
-
-    public void setTokenPersistence(Boolean tokenPersistence) {
-        isTokenPersistence = tokenPersistence;
-    }
 
     /**
      * Token生成密钥
@@ -97,28 +89,45 @@ public class LoopAuthConfig implements Serializable {
      */
     private CookieConfig cookieConfig = new CookieConfig();
 
+
+    public Boolean getTokenPersistence() {
+        return isTokenPersistence;
+    }
+
+    public void setTokenPersistence(Boolean tokenPersistence) {
+        isTokenPersistence = tokenPersistence;
+    }
+
     public CookieConfig getCookieConfig() {
         return cookieConfig;
     }
 
-    public void setCookieConfig(CookieConfig cookieConfig) {
+    public LoopAuthConfig setCookieConfig(CookieConfig cookieConfig) {
         this.cookieConfig = cookieConfig;
+        return this;
+    }
+
+    public LoopAuthConfig setRedisConfig(RedisConfig redisConfig) {
+        this.redisConfig = redisConfig;
+        return this;
     }
 
     public String getTokenPersistencePrefix() {
         return tokenPersistencePrefix;
     }
 
-    public void setTokenPersistencePrefix(String tokenPersistencePrefix) {
+    public LoopAuthConfig setTokenPersistencePrefix(String tokenPersistencePrefix) {
         this.tokenPersistencePrefix = tokenPersistencePrefix;
+        return this;
     }
 
     public String getLoginIdPersistencePrefix() {
         return loginIdPersistencePrefix;
     }
 
-    public void setLoginIdPersistencePrefix(String loginIdPersistencePrefix) {
+    public LoopAuthConfig setLoginIdPersistencePrefix(String loginIdPersistencePrefix) {
         this.loginIdPersistencePrefix = loginIdPersistencePrefix;
+        return this;
     }
 
     public LoopAuthConfig setTokenName(String tokenName) {
@@ -158,11 +167,6 @@ public class LoopAuthConfig implements Serializable {
 
     public LoopAuthConfig setSecretKey(String secretKey) {
         this.secretKey = secretKey;
-        return this;
-    }
-
-    public LoopAuthConfig setRedisConfig(RedisConfig redisConfig) {
-        this.redisConfig = redisConfig;
         return this;
     }
 
@@ -209,11 +213,15 @@ public class LoopAuthConfig implements Serializable {
                 ", timeOut=" + timeOut +
                 ", isMutualism=" + isMutualism +
                 ", isExclusion=" + isExclusion +
+                ", isTokenPersistence=" + isTokenPersistence +
                 ", maxLoginCount=" + maxLoginCount +
-//                ", isRenew=" + isRenew +
+                ", isRenew=" + isRenew +
                 ", accessModes=" + accessModes +
                 ", secretKey='" + secretKey + '\'' +
+                ", tokenPersistencePrefix='" + tokenPersistencePrefix + '\'' +
+                ", loginIdPersistencePrefix='" + loginIdPersistencePrefix + '\'' +
                 ", redisConfig=" + redisConfig +
+                ", cookieConfig=" + cookieConfig +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.controller;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;
@@ -23,8 +25,9 @@ public class TestController {
 
     @GetMapping("/login")
     public String register(){
-        TokenModel phone = LoopAuthFaceImpl.login("1", "PHONE");
-        return phone.getValue();
+        LoopAuthFaceImpl.login("1", "PHONE");
+        LoopAuthConfig loopAuthConfig = LoopAuthStrategy.getLoopAuthConfig();
+        return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 
     @GetMapping("/islogin")

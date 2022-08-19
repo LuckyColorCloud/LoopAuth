@@ -1,6 +1,6 @@
-package com.sobercoding.loopauth.filter;
+package com.sobercoding.loopauth.springbootstarter.filter;
 
-import com.sobercoding.loopauth.CheckPermissionAnnotation;
+import com.sobercoding.loopauth.springbootstarter.CheckPermissionAnnotation;
 
 import javax.servlet.*;
 import java.io.IOException;

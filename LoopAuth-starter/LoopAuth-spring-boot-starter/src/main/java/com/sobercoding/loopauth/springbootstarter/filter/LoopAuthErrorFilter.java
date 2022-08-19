@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.filter;
+package com.sobercoding.loopauth.springbootstarter.filter;
 
 /**
  * 全局 错误认证过滤器

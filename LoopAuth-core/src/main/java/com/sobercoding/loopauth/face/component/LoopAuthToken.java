@@ -1,5 +1,9 @@
 package com.sobercoding.loopauth.face.component;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthLoginException;
+import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.util.AesUtil;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -20,16 +24,18 @@ public class LoopAuthToken {
      * @Author: Sober
      * @Version: 0.0.1
      * @Description: 制造Token
-     * @param info 会话信息
+     * @param tokenModel token模型
      * @param secretKey 盐
      * @Return: String 返回token
      * @Exception:
      * @Date: 2022/8/12 22:26
      */
-    public String createToken(Object info, String secretKey) {
-        HashMap<String,String> infoMap = (HashMap<String, String>) info;
+    public String createToken(TokenModel tokenModel, String secretKey) {
         // 添加会话基本信息的base编码
-        String original = infoMap.get("loginId") + "," + infoMap.get("createTime") + "," + infoMap.get("timeOut");
+        String original = tokenModel.getLoginId() +
+                "," + tokenModel.getCreateTime() +
+                "," + tokenModel.getTimeOut() +
+                "," + tokenModel.getFacility();
         return getBase64(original) +
                 // 添加分隔符
                 "_" +
@@ -56,8 +62,13 @@ public class LoopAuthToken {
             String info = getFromBase64(tokens[0]);
             // 获得原文
             String originalText = AesUtil.decode(tokens[1],secretKey);
+            // 验证是否过期
+            TokenModel tokenModel = getInfo(token);
+            if (!LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence() && LoopAuthStrategy.getLoopAuthConfig().getTimeOut() != -1 && (tokenModel.getCreateTime() + tokenModel.getTimeOut()) < System.currentTimeMillis()){
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_EXPIRE);
+            }
             return info.equals(originalText);
-        }catch (RuntimeException e){
+        }catch (IllegalArgumentException e){
             return false;
         }
     }
@@ -72,17 +83,18 @@ public class LoopAuthToken {
      * @Exception:
      * @Date: 2022/8/12 22:47
      */
-    public Object getInfo(String token) {
+    public TokenModel getInfo(String token) {
         try {
             // 分割token
             String[] tokens = token.split("_");
-            Map<String,String> info = new HashMap<>(4);
             String[] infos = getFromBase64(tokens[0]).split(",");
             // 获取token包含的会话信息
-            info.put("loginId",infos[0]);
-            info.put("createTime",infos[1]);
-            info.put("timeOut",infos[2]);
-            return info;
+            return new TokenModel()
+                    .setValue(token)
+                    .setLoginId(infos[0])
+                    .setCreateTime(Long.parseLong(infos[1]))
+                    .setTimeOut(Long.parseLong(infos[2]))
+                    .setFacility(infos[3]);
         }catch (RuntimeException e){
             return null;
         }

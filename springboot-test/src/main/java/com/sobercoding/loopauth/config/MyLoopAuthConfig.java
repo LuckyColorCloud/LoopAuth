@@ -1,7 +1,5 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.filter.LoopAuthServletFilter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**

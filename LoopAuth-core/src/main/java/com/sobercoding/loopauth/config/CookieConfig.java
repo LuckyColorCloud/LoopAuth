@@ -1,17 +1,28 @@
 package com.sobercoding.loopauth.config;
 
+import java.io.Serializable;
+
 /**
  * @program: LoopAuth
  * @author: Sober
  * @Description:
  * @create: 2022/08/19 21:56
  */
-public class CookieConfig {
+public class CookieConfig implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
 
     /**
      * 域
      */
     private String domain;
+
+
+    /**
+     * cookie有效期 (单位毫秒) 默认0 即不采用该值设置过期时间，采用token的过期时间设置
+     */
+    private long timeOut = 0L;
 
     /**
      * 路径
@@ -36,50 +47,66 @@ public class CookieConfig {
      */
     private String sameSite;
 
+
+    public long getTimeOut() {
+        return timeOut;
+    }
+
+    public CookieConfig setTimeOut(long timeOut) {
+        this.timeOut = timeOut;
+        return this;
+    }
+
     public String getDomain() {
         return domain;
     }
 
-    public void setDomain(String domain) {
+    public CookieConfig setDomain(String domain) {
         this.domain = domain;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public CookieConfig setPath(String path) {
         this.path = path;
+        return this;
     }
 
     public boolean isHttpOnly() {
         return httpOnly;
     }
 
-    public void setHttpOnly(boolean httpOnly) {
+    public CookieConfig setHttpOnly(boolean httpOnly) {
         this.httpOnly = httpOnly;
+        return this;
     }
 
     public boolean isSecure() {
         return secure;
     }
 
-    public void setSecure(boolean secure) {
+    public CookieConfig setSecure(boolean secure) {
         this.secure = secure;
+        return this;
     }
 
     public String getSameSite() {
         return sameSite;
     }
 
-    public void setSameSite(String sameSite) {
+    public CookieConfig setSameSite(String sameSite) {
         this.sameSite = sameSite;
+        return this;
     }
 
     @Override
     public String toString() {
         return "CookieConfig{" +
                 "domain='" + domain + '\'' +
+                ", timeOut=" + timeOut +
                 ", path='" + path + '\'' +
                 ", httpOnly=" + httpOnly +
                 ", secure=" + secure +

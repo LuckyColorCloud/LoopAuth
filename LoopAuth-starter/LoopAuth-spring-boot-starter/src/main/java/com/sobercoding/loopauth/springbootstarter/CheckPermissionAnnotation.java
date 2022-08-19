@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth;
+package com.sobercoding.loopauth.springbootstarter;
 
 import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;

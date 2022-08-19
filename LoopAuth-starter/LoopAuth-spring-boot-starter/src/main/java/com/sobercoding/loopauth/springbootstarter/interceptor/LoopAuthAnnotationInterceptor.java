@@ -1,6 +1,6 @@
-package com.sobercoding.loopauth.interceptor;
+package com.sobercoding.loopauth.springbootstarter.interceptor;
 
-import com.sobercoding.loopauth.CheckPermissionAnnotation;
+import com.sobercoding.loopauth.springbootstarter.CheckPermissionAnnotation;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 

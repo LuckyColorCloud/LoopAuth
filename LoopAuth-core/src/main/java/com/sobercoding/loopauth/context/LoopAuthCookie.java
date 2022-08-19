@@ -30,7 +30,7 @@ public class LoopAuthCookie {
     /**
      * 过期时间
      */
-    private long maxAge = LoopAuthStrategy.getLoopAuthConfig().getTimeOut() / 1000;
+    private long maxAge = LoopAuthStrategy.getLoopAuthConfig().getTimeOut() / 1000L;
 
     /**
      * 域
@@ -143,16 +143,24 @@ public class LoopAuthCookie {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name).append("=").append(value);
 
-        if(maxAge >= 0) {
-            stringBuilder.append("; Max-Age=").append(maxAge);
-            String expires;
-            if(maxAge == 0) {
-                expires = Instant.EPOCH.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);
-            } else {
-                expires = Instant.ofEpochMilli(System.currentTimeMillis()).plusSeconds(maxAge)
+        long timeOut = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getTimeOut() / 1000L;
+        if (timeOut != 0L && maxAge != 0){
+            stringBuilder.append("; Max-Age=").append(timeOut);
+            String expires = Instant.ofEpochMilli(System.currentTimeMillis()).plusSeconds(timeOut)
                         .atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);
-            }
             stringBuilder.append("; Expires=").append(expires);
+        }else {
+            if(maxAge >= 0) {
+                stringBuilder.append("; Max-Age=").append(maxAge);
+                String expires;
+                if(maxAge == 0) {
+                    expires = Instant.EPOCH.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);
+                } else {
+                    expires = Instant.ofEpochMilli(System.currentTimeMillis()).plusSeconds(maxAge)
+                            .atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);
+                }
+                stringBuilder.append("; Expires=").append(expires);
+            }
         }
         if(LoopAuthUtil.isNotEmpty(domain)) {
             stringBuilder.append("; Domain=").append(domain);

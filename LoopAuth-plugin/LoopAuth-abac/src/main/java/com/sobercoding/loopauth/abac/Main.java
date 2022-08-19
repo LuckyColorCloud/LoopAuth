@@ -1,4 +1,4 @@
-package com.sobercoding;
+package com.sobercoding.loopauth.abac;
 
 /**
  * @program: ${PROJECT_NAME}

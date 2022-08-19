@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
+import com.sobercoding.loopauth.model.TokenModel;
 
 /**
  * @program: LoopAuth
@@ -21,7 +22,7 @@ public class MyLoopAuthToken extends LoopAuthToken {
      * @Date: 2022/8/12 22:26
      */
     @Override
-    public String createToken(Object info, String secretKey) {
+    public String createToken(TokenModel info, String secretKey) {
         // 添加会话基本信息的base编码
         return "";
     }
