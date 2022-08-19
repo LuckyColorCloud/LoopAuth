@@ -11,5 +11,4 @@ buildNumber.properties
 .idea
 *.iml
 
-springboot-test/src/main/resources/application.yml
 LoopAuth-doc/node_modules
