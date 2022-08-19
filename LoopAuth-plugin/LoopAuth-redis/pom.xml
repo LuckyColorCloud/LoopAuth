@@ -24,7 +24,14 @@
             <groupId>com.sobercoding</groupId>
             <artifactId>LoopAuth-core</artifactId>
             <version>${LoopAuth-core.version}</version>
-            <optional>true</optional>
+<!--            <optional>true</optional>-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.5</version>
+<!--            <optional>true</optional>-->
         </dependency>
 
         <!-- Redis Client Jedis -->
@@ -33,6 +40,7 @@
             <artifactId>jedis</artifactId>
             <version>${redis.clients.jedis.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>
