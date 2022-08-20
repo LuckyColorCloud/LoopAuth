@@ -1,8 +1,17 @@
 package com.sobercoding.loopauth.jedis;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
+import com.sobercoding.loopauth.exception.LoopAuthDaoException;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.util.JsonUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
+
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * <p>
@@ -17,6 +26,14 @@ import redis.clients.jedis.params.SetParams;
 public class JedisDaoImpl implements LoopAuthDao {
 
     public Jedis redisConn = JedisConn.getJedis();
+    private static final String tokenPersistencePrefix;
+    private static final String loginIdPersistencePrefix;
+
+    static {
+        LoopAuthConfig loopAuthConfig = LoopAuthStrategy.getLoopAuthConfig();
+        tokenPersistencePrefix = loopAuthConfig.getTokenPersistencePrefix();
+        loginIdPersistencePrefix = loopAuthConfig.getLoginIdPersistencePrefix();
+    }
 
     /**
      * 存入缓存
@@ -24,12 +41,26 @@ public class JedisDaoImpl implements LoopAuthDao {
      * key 前几个字符如果为 tokenPersistencePrefix 设置的值则 TokenModel 转 String
      * key 前几个字符如果为 loginIdPersistencePrefix 设置的值则 TokenModel 转 Set<String>
      * 有效时间参数在TokenModel里面
+     *
      * @param value 值
-     * 操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
+     *              操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
      */
     @Override
     public void set(String key, Object value) {
-
+        Long timeOut = null;
+        String json = null;
+        if (tokenPersistencePrefix.equals(key.substring(0, tokenPersistencePrefix.length()))) {
+            TokenModel tokenModel = (TokenModel) value;
+            timeOut = tokenModel.getTimeOut();
+            json = JsonUtil.objToJson(tokenModel);
+        }
+        if (loginIdPersistencePrefix.equals(key.substring(0, loginIdPersistencePrefix.length()))) {
+            Set<String> strings = (Set<String>) value;
+            json = JsonUtil.objToJson(strings);
+        }
+        LoopAuthDaoException.isEmpty(json, LoopAuthExceptionEnum.DATA_EXCEPTION);
+        String res = timeOut != null ?  set(key, json, timeOut / 1000) : set(key, json);
+        LoopAuthDaoException.isOK(res, LoopAuthExceptionEnum.CACHE_FAILED);
     }
 
     /**
@@ -60,8 +91,7 @@ public class JedisDaoImpl implements LoopAuthDao {
     /**
      * 获取Redis中的键
      *
-     * @param key
-     * 操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
+     * @param key 操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
      */
     @Override
     public void remove(String key) {
@@ -85,12 +115,12 @@ public class JedisDaoImpl implements LoopAuthDao {
      *
      * @param key   Redis键
      * @param value 待设置的值
-     * @param min   过期时间（分钟）
+     * @param seconds   过期时间（分钟）
      * @return 操作成功则返回 OK
      */
-    public String set(String key, String value, long min) {
-        min = min == 0 ? 1 : min;
-        return this.redisConn.set(key, value, SetParams.setParams().ex(min * 60));
+    public String set(String key, String value, long seconds) {
+        seconds = seconds == 0 ? 60 : seconds; // 如果是0秒，就改为60秒
+        return this.redisConn.set(key, value, SetParams.setParams().ex(seconds));
     }
 
     /**
