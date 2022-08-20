@@ -35,6 +35,7 @@ public interface LoopAuthDao {
      */
     boolean containsKey(String key);
 
+
     /**
      * @Method: setUserSession
      * @Author: Sober

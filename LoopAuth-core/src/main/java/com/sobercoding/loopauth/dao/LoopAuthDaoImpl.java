@@ -1,10 +1,9 @@
 package com.sobercoding.loopauth.dao;
 
-import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.util.LoopAuthUtil;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -15,13 +14,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LoopAuthDaoImpl implements LoopAuthDao {
 
-
     /**
      * 登录状态缓存
      * Token 和 Token模型 键值对应
      * 用户id 和 用户所有Token 键值对应
      */
     public Map<String, Object> dataPersistenceMap = new ConcurrentHashMap<>();
+
+    /**
+     * dataPersistenceMap有效期设置
+     */
+    public Map<String, String> expirationTime = new ConcurrentHashMap<>();
 
 
     /**
@@ -36,7 +39,20 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      */
     @Override
     public Object get(String key) {
-        return this.dataPersistenceMap.get(key);
+        String expirationTime = this.expirationTime.get(key);
+        if (LoopAuthUtil.isEmpty(expirationTime)){
+            return null;
+        }
+        long nowTime = System.currentTimeMillis();
+        // 过期验证
+        if (nowTime < Long.parseLong(expirationTime)){
+            // 未过期
+            return this.dataPersistenceMap.get(key);
+        }else {
+            // 过期操作
+            remove(key);
+            return null;
+        }
     }
 
     /**
@@ -51,7 +67,20 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      */
     @Override
     public boolean containsKey(String key) {
-        return this.dataPersistenceMap.containsKey(key);
+        long expirationTime = Long.parseLong(this.expirationTime.get(key));
+        if (LoopAuthUtil.isEmpty(expirationTime)){
+            return false;
+        }
+        long nowTime = System.currentTimeMillis();
+        // 过期验证
+        if (nowTime < expirationTime){
+            // 未过期
+            return this.dataPersistenceMap.containsKey(key);
+        }else {
+            // 过期操作
+            remove(key);
+            return false;
+        }
     }
 
     /**
@@ -69,6 +98,18 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     public void set(String key, Object value) {
         this.dataPersistenceMap.put(key,value);
     }
+
+    /**
+     * 设置过期时间
+     *
+     * @param key    Redis键
+     * @param minute 到期时间戳
+     * @return 操作成功返回 1
+     */
+    public void expire(String key, long minute) {
+//        return this.expirationTime.expire(key, minute * 60);
+    }
+
 
     /**
      * @Method: remove
