@@ -143,8 +143,9 @@ public class LoopAuthCookie {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name).append("=").append(value);
 
-        long timeOut = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getTimeOut() / 1000L;
-        if (timeOut != 0L && maxAge != 0){
+        long timeOut = LoopAuthStrategy.getLoopAuthConfig().getStorageTimeOut();
+        if (timeOut != 0 && maxAge != 0){
+            timeOut = timeOut / 1000;
             stringBuilder.append("; Max-Age=").append(timeOut);
             String expires = Instant.ofEpochMilli(System.currentTimeMillis()).plusSeconds(timeOut)
                         .atOffset(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME);

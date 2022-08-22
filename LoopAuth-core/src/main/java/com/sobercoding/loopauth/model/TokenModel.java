@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.model;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.io.Serializable;
@@ -97,6 +98,59 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
 
     public long getTimeOut() {
         return timeOut;
+    }
+
+    /**
+     * @Method: getTokenModel
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 对内存的直接操作
+     * 获取内存中当前token的TokenModel
+     * @Return: void
+     * @Exception:
+     * @Date: 2022/8/11 0:42
+     */
+    public TokenModel getTokenModel(){
+        return (TokenModel) LoopAuthStrategy.getLoopAuthDao()
+                .get(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
+                        ":" +
+                        value);
+    }
+
+    /**
+     * @Method: setTokenModel
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 对内存的直接操作
+     * 获取内存中当前token的TokenModel
+     * @param expirationTime 到期时间
+     * @Return: void
+     * @Exception:
+     * @Date: 2022/8/11 0:42
+     */
+    public void setTokenModel(long expirationTime){
+        LoopAuthStrategy.getLoopAuthDao()
+                .set(
+                        LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + value,
+                        this,
+                        expirationTime
+                );
+    }
+
+    /**
+     * @Method: remove
+     * @Author: Sober
+     * @Version: 0.0.1
+     * @Description: 对内存的直接操作，删除当前token会话
+     * @Return:
+     * @Exception:
+     * @Date: 2022/8/11 15:41
+     */
+    public void remove(){
+        LoopAuthStrategy.getLoopAuthDao()
+                .remove(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
+                        ":" +
+                        value);
     }
 
     @Override

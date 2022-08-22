@@ -9,6 +9,8 @@ import com.sobercoding.loopauth.model.UserSession;
 import com.sobercoding.loopauth.model.constant.TokenAccessMode;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
+import java.util.*;
+
 
 /**
  * @program: LoopAuth
@@ -68,7 +70,7 @@ public class LoopAuthLogin {
     }
 
     /**
-     * @param facilitys 终端类型 可多输入
+     * @param tokenModelValues token列表
      * @Method: logoutNow
      * @Author: Sober
      * @Version: 0.0.1
@@ -77,21 +79,14 @@ public class LoopAuthLogin {
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public void logout(String... facilitys) {
-        boolean tokenPersistence = LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence();
-        if (tokenPersistence && facilitys.length > 0) {
-            // 注销 所选的设备  只有开启持久化才执行这部分
-            getUserSession().removeTokenByFacility(facilitys)
+    public void logout(String... tokenModelValues) {
+        // 开启持久化才执行
+        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
+            getUserSession().removeToken(Arrays.asList(tokenModelValues))
                     .setUserSession();
-        } else {
-            // 开启持久化才执行
-            if (tokenPersistence){
-                // 注销 当前token
-                getUserSession().removeToken(getTokenModel().getValue())
-                        .setUserSession();
-            }
-            delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
         }
+        // 删除cookie
+        delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
     }
 
     /**
@@ -118,9 +113,7 @@ public class LoopAuthLogin {
      * @Date: 2022/8/9 23:05
      */
     public UserSession getUserSession() {
-        // 从会话存储获取
-        return (UserSession) LoopAuthStrategy.getLoopAuthContext().getStorage()
-                .get("userSession");
+        return getUserSessionByLoginId(getTokenModel().getLoginId());
     }
 
     /**
@@ -146,26 +139,17 @@ public class LoopAuthLogin {
             // 开启持久化才执行
             if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
                 // 验证存储中是否存在
-                UserSession userSession = getUserSessionByLoginId(tokenModel.getLoginId());
-                tokenModel = userSession.getTokens()
-                        .stream()
-                        .filter(
-                                // 过滤出token值一样的TokenModel
-                                item -> token.equals(item.getValue())
-                        ).findAny()
-                        // 为空则抛出异常 否则正常返回
+                tokenModel = Optional.ofNullable(tokenModel.getTokenModel())
                         .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
                 // 查看是否过期
                 if (isExpire(tokenModel)){
                     // 注销 当前token
-                    userSession.removeToken(tokenModel.getValue())
-                            .setUserSession();
+                    tokenModel.remove();
                     // 删除cookie
                     delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
                     throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_EXPIRE);
                 }
                 // 写入当前会话Context存储器
-                LoopAuthStrategy.getLoopAuthContext().getStorage().set("userSession",userSession);
             }
             // 写入当前会话Context存储器
             LoopAuthStrategy.getLoopAuthContext().getStorage().set("tokenModel",tokenModel);
@@ -331,10 +315,6 @@ public class LoopAuthLogin {
         }
         // 写入当前会话Context存储器
         LoopAuthStrategy.getLoopAuthContext().getStorage().set("tokenModel",tokenModel);
-        // 开启持久化才执行
-        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
-            LoopAuthStrategy.getLoopAuthContext().getStorage().set("userSession",userSession);
-        }
     }
 
     /**

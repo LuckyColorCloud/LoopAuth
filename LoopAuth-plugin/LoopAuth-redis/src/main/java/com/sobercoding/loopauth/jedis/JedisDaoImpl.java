@@ -23,7 +23,7 @@ import java.util.Set;
  * @see: com.sobercoding
  * @version: v1.0.0
  */
-public class JedisDaoImpl implements LoopAuthDao {
+public class JedisDaoImpl{
 
     public Jedis redisConn = JedisConn.getJedis();
     private static final String tokenPersistencePrefix;
@@ -45,7 +45,7 @@ public class JedisDaoImpl implements LoopAuthDao {
      * @param value 值
      *              操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
      */
-    @Override
+
     public void set(String key, Object value) {
         Long timeOut = null;
         String json = null;
@@ -72,7 +72,7 @@ public class JedisDaoImpl implements LoopAuthDao {
      * @param key Redis键
      * @return value
      */
-    @Override
+
     public Object get(String key) {
         return this.redisConn.get(key);
     }
@@ -83,7 +83,7 @@ public class JedisDaoImpl implements LoopAuthDao {
      * @param key Redis中的键
      * @return
      */
-    @Override
+
     public boolean containsKey(String key) {
         return this.redisConn.exists(key);
     }
@@ -93,7 +93,6 @@ public class JedisDaoImpl implements LoopAuthDao {
      *
      * @param key 操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
      */
-    @Override
     public void remove(String key) {
         long rs = this.redisConn.del(key);
 //        return rs == 1;

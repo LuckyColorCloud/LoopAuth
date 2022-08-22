@@ -3,21 +3,22 @@ server:
   port: 8080
 
 loop-auth:
-  time-out: 50000 # token有效时间  默认24小时
-  token-name: token # token名称  默认LoopAuth
+  time-out: 5000 # token有效时间  默认24小时
+#  storage-time-out: 10000 # 存储即redis或本机缓存的 有效期 (单位毫秒) 默认0 为0时即不采用该值设置过期时间，采用token的过期时间设置
+#  token-name: token # token名称  默认LoopAuth
   mutualism: true # token共生 默认false 开启则 账号可以同时在线
-  exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）
+#  exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）
   token-persistence: true # token持久化配置  默认false
   max-login-count: -1 # 同一账号最大登录数量 默认1  -1代表不限制
   renew: true # 自动续签 默认true 每次isLogin操作，会自动刷新token有效期
   access-modes: # token获取方式 默认[COOKIE,HEADER]顺序获取。即COOKIE中获取到鉴权成功，则不前往HEADER获取
+    - HEADER
     - COOKIE
   secret-key: secret # 默认LoopAuth Token生成密钥
   token-persistence-prefix: tokenPrefix # 默认LoopAuthToken token持久层存储的前缀
   login-id-persistence-prefix: loginIdPrefix # 默认LoopAuthLoginId LoginId持久层存储的前缀
   cookie-config: # cookie配置
     domain: localhost # 域 默认服务端域
-    time-out: 60000 # 有效期 (单位毫秒) 默认0 为0时即不采用该值设置过期时间，采用token的过期时间设置
 #    path: /test # 默认false '/' 路径
     http-only: true # 默认false 是否允许js操作
 #    secure: true # 默认false 是否只在https安全协议传输

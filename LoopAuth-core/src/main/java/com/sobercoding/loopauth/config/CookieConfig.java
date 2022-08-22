@@ -20,11 +20,6 @@ public class CookieConfig implements Serializable {
 
 
     /**
-     * cookie有效期 (单位毫秒) 默认0 即不采用该值设置过期时间，采用token的过期时间设置
-     */
-    private long timeOut = 0L;
-
-    /**
      * 路径
      */
     private String path = "/";
@@ -47,15 +42,6 @@ public class CookieConfig implements Serializable {
      */
     private String sameSite;
 
-
-    public long getTimeOut() {
-        return timeOut;
-    }
-
-    public CookieConfig setTimeOut(long timeOut) {
-        this.timeOut = timeOut;
-        return this;
-    }
 
     public String getDomain() {
         return domain;
@@ -106,7 +92,6 @@ public class CookieConfig implements Serializable {
     public String toString() {
         return "CookieConfig{" +
                 "domain='" + domain + '\'' +
-                ", timeOut=" + timeOut +
                 ", path='" + path + '\'' +
                 ", httpOnly=" + httpOnly +
                 ", secure=" + secure +

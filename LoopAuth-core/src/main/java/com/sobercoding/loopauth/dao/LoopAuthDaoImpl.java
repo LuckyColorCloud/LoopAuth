@@ -3,7 +3,6 @@ package com.sobercoding.loopauth.dao;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -84,30 +83,21 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * @Method: set
+     * @Method: setUserSession
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 写入缓存
-     * @param key 会话模型
+     * @Description: 写入用户会话
+     * @param key 字典
      * @param value 值
+     * @param expirationTime 到期时间戳
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
     @Override
-    public void set(String key, Object value) {
+    public void set(String key, Object value, long expirationTime) {
         this.dataPersistenceMap.put(key,value);
-    }
-
-    /**
-     * 设置过期时间
-     *
-     * @param key    Redis键
-     * @param minute 到期时间戳
-     * @return 操作成功返回 1
-     */
-    public void expire(String key, long minute) {
-//        return this.expirationTime.expire(key, minute * 60);
+        this.expirationTime.put(key,String.valueOf(expirationTime));
     }
 
 

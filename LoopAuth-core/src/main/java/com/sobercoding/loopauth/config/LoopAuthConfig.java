@@ -30,6 +30,11 @@ public class LoopAuthConfig implements Serializable {
     private long timeOut = 60 * 60 * 24 * 1000;
 
     /**
+     * 本机或redis缓存有效时间，默认0 即此该配置不生效，采用timeOut的时间
+     */
+    private long storageTimeOut = 0;
+
+    /**
      * token共生  默认不开启
      * 开启则 账号可以同时在线
      */
@@ -89,6 +94,13 @@ public class LoopAuthConfig implements Serializable {
      */
     private CookieConfig cookieConfig = new CookieConfig();
 
+    public long getStorageTimeOut() {
+        return storageTimeOut;
+    }
+
+    public void setStorageTimeOut(long storageTimeOut) {
+        this.storageTimeOut = storageTimeOut;
+    }
 
     public Boolean getTokenPersistence() {
         return isTokenPersistence;

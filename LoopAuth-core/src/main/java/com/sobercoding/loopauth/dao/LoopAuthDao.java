@@ -35,7 +35,6 @@ public interface LoopAuthDao {
      */
     boolean containsKey(String key);
 
-
     /**
      * @Method: setUserSession
      * @Author: Sober
@@ -43,11 +42,12 @@ public interface LoopAuthDao {
      * @Description: 写入用户会话
      * @param key 字典
      * @param value 值
+     * @param expirationTime 到期时间戳
      * @Return:
      * @Exception:
      * @Date: 2022/8/8 17:16
      */
-    void set(String key, Object value);
+    void set(String key, Object value, long expirationTime);
 
     /**
      * @Method: setUserSession

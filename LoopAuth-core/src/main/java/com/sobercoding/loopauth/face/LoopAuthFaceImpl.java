@@ -67,14 +67,15 @@ public class LoopAuthFaceImpl {
      * @Method: logout
      * @Author: Sober
      * @Version: 0.0.1
-     * @Description: 注销当前会话账号的某个终端登录
-     * @param facilitys 终端类型 可多输入Or留空
+     * @Description: 注销当前会话账号的某个登录
+     * 不填写参数则，注销当前登录
+     * @param tokenModelValues 需要注销的token
      * @Return: boolean 操作是否成功
      * @Exception:
      * @Date: 2022/8/8 17:05
      */
-    public static void logout(String... facilitys) {
-        LOOP_AUTH_LOGIN.logout(facilitys);
+    public static void logout(String... tokenModelValues) {
+        LOOP_AUTH_LOGIN.logout(tokenModelValues);
     }
 
 

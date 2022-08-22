@@ -31,8 +31,7 @@ public class TestController {
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
-        LoopAuthStrategy.getLoopAuthDao().get("s");
-        return "登录了";
+        return LoopAuthFaceImpl.getUserSession().toString();
     }
 
 
