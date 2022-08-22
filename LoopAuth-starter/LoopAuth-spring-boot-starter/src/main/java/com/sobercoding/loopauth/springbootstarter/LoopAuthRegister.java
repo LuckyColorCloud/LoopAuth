@@ -1,9 +1,14 @@
 package com.sobercoding.loopauth.springbootstarter;
 
+import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.permission.PermissionInterface;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
+
+import javax.annotation.Resource;
 
 /**
  * @program: LoopAuth
@@ -23,7 +28,7 @@ public class LoopAuthRegister {
      * @Exception:
      * @Date: 2022/7/30 23:58
      */
-    @Bean
+    @Bean("loopAuthConfig")
     @ConfigurationProperties(prefix = "loop-auth")
     public LoopAuthConfig getLoopAuthConfig() {
         return new LoopAuthConfig();

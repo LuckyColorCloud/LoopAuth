@@ -1,17 +1,16 @@
 package com.sobercoding.loopauth.jedis;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 import com.sobercoding.loopauth.exception.LoopAuthDaoException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.util.JsonUtil;
+import com.sobercoding.loopauth.util.LoopAuthUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
-
-import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -23,45 +22,9 @@ import java.util.Set;
  * @see: com.sobercoding
  * @version: v1.0.0
  */
-public class JedisDaoImpl{
+public class JedisDaoImpl implements LoopAuthDao{
 
-    public Jedis redisConn = JedisConn.getJedis();
-    private static final String tokenPersistencePrefix;
-    private static final String loginIdPersistencePrefix;
-
-    static {
-        LoopAuthConfig loopAuthConfig = LoopAuthStrategy.getLoopAuthConfig();
-        tokenPersistencePrefix = loopAuthConfig.getTokenPersistencePrefix();
-        loginIdPersistencePrefix = loopAuthConfig.getLoginIdPersistencePrefix();
-    }
-
-    /**
-     * 存入缓存
-     * value 需要根据 Config 设置的 tokenPersistencePrefix 及 loginIdPersistencePrefix 转换
-     * key 前几个字符如果为 tokenPersistencePrefix 设置的值则 TokenModel 转 String
-     * key 前几个字符如果为 loginIdPersistencePrefix 设置的值则 TokenModel 转 Set<String>
-     * 有效时间参数在TokenModel里面
-     *
-     * @param value 值
-     *              操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
-     */
-
-    public void set(String key, Object value) {
-        Long timeOut = null;
-        String json = null;
-        if (tokenPersistencePrefix.equals(key.substring(0, tokenPersistencePrefix.length()))) {
-            TokenModel tokenModel = (TokenModel) value;
-            timeOut = tokenModel.getTimeOut();
-            json = JsonUtil.objToJson(tokenModel);
-        }
-        if (loginIdPersistencePrefix.equals(key.substring(0, loginIdPersistencePrefix.length()))) {
-            Set<String> strings = (Set<String>) value;
-            json = JsonUtil.objToJson(strings);
-        }
-        LoopAuthDaoException.isEmpty(json, LoopAuthExceptionEnum.DATA_EXCEPTION);
-        String res = timeOut != null ?  set(key, json, timeOut / 1000) : set(key, json);
-        LoopAuthDaoException.isOK(res, LoopAuthExceptionEnum.CACHE_FAILED);
-    }
+    private final Jedis redisConn = JedisConn.getJedis();
 
     /**
      * 获取缓存值
@@ -72,9 +35,20 @@ public class JedisDaoImpl{
      * @param key Redis键
      * @return value
      */
-
+    @Override
     public Object get(String key) {
-        return this.redisConn.get(key);
+        String json = redisConn.get(key);
+        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
+            if (LoopAuthUtil.isNotEmpty(json)) {
+                return JsonUtil.jsonToObj(json,TokenModel.class);
+            }
+        }
+        if (LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
+            if (LoopAuthUtil.isNotEmpty(json)) {
+                return JsonUtil.<String>jsonToList(redisConn.get(key),String.class);
+            }
+        }
+        return null;
     }
 
     /**
@@ -83,9 +57,25 @@ public class JedisDaoImpl{
      * @param key Redis中的键
      * @return
      */
-
+    @Override
     public boolean containsKey(String key) {
-        return this.redisConn.exists(key);
+        return redisConn.exists(key);
+    }
+
+    @Override
+    public void set(String key, Object value, long expirationTime) {
+        String json = null;
+        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
+            TokenModel tokenModel = (TokenModel) value;
+            json = JsonUtil.objToJson(tokenModel);
+        }
+        if (LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
+            Set<String> strings = (Set<String>) value;
+            json = JsonUtil.objToJson(strings);
+        }
+        LoopAuthDaoException.isEmpty(json, LoopAuthExceptionEnum.DATA_EXCEPTION);
+        LoopAuthDaoException.isOK(redisConn.set(key, json, SetParams.setParams().ex(expirationTime / 1000)),
+                LoopAuthExceptionEnum.CACHE_FAILED);
     }
 
     /**
@@ -93,65 +83,11 @@ public class JedisDaoImpl{
      *
      * @param key 操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
      */
+    @Override
     public void remove(String key) {
-        long rs = this.redisConn.del(key);
-//        return rs == 1;
+        LoopAuthDaoException.isOK(redisConn.del(key) == 1 ? "OK":"", LoopAuthExceptionEnum.CACHE_FAILED);
     }
 
-    /**
-     * 设置字符串值
-     *
-     * @param key   Redis键
-     * @param value 待设置的值
-     * @return 操作成功则返回 OK
-     */
-    public String set(String key, String value) {
-        return this.redisConn.set(key, value);
-    }
 
-    /**
-     * 设置字符串值
-     *
-     * @param key   Redis键
-     * @param value 待设置的值
-     * @param seconds   过期时间（分钟）
-     * @return 操作成功则返回 OK
-     */
-    public String set(String key, String value, long seconds) {
-        seconds = seconds == 0 ? 60 : seconds; // 如果是0秒，就改为60秒
-        return this.redisConn.set(key, value, SetParams.setParams().ex(seconds));
-    }
 
-    /**
-     * 获取Redis中的键
-     *
-     * @param key
-     * @return 操作成功返回 true
-     */
-    public boolean delete(String key) {
-        long rs = this.redisConn.del(key);
-        return rs == 1;
-    }
-
-    /**
-     * 此方法不需要  缓存的有效期写入token的时候统一管理，token续期时也是重新生成token，token是唯一的。所以无需此方法
-     * 设置过期时间
-     *
-     * @param key    Redis键
-     * @param minute 过期时间（分钟）
-     * @return 操作成功返回 1
-     */
-    public long expire(String key, long minute) {
-        return this.redisConn.expire(key, minute * 60);
-    }
-
-    /**
-     * 判断key是否存在
-     *
-     * @param key Redis中的键
-     * @return
-     */
-    public boolean hasKey(String key) {
-        return this.redisConn.exists(key);
-    }
 }

@@ -27,15 +27,15 @@ loop-auth:
     # None 不限制
     same-site: Strict
   redis-config: # redis配置 需要加载LoopAuth-redis包才生效
-    host: xxxxxxxx # 服务器地址 默认127.0.0.1
-    password: xxxxxxx # 密码  默认空
-    port: 8910 # 端口号， 默认是6379
+#    host: xxxxxxxx # 服务器地址 默认127.0.0.1
+#    password: xxxxxxx # 密码  默认空
+#    port: 8910 # 端口号， 默认是6379
     database-no: 1 # 链接的数据库 默认0
     time-out: 1000 # 超时时间 默认2000
     max-total: 10 # 最大连接数 默认16
     max-idle: 5 # 最大空闲连接数 默认8
     min-idle: 2 # 最小空闲连接数 默认4
-    need-pool: true # 是否需要连接池 默认false
+    need-pool: false # 是否需要连接池 默认false
 
 
 

@@ -37,7 +37,7 @@ public class RedisConfig implements Serializable {
     private int databaseNo = 0;
 
     /**
-     * 超时时间
+     * 超时时间 毫秒单位
      */
     private int timeOut = 2000;
 

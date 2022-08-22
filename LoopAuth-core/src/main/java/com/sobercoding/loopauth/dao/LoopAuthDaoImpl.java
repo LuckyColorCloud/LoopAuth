@@ -97,7 +97,7 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     @Override
     public void set(String key, Object value, long expirationTime) {
         this.dataPersistenceMap.put(key,value);
-        this.expirationTime.put(key,String.valueOf(expirationTime));
+        this.expirationTime.put(key,String.valueOf(System.currentTimeMillis() + expirationTime));
     }
 
 

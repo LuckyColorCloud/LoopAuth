@@ -110,7 +110,7 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
      * @Exception:
      * @Date: 2022/8/11 0:42
      */
-    public TokenModel getTokenModel(){
+    public TokenModel gainTokenModel(){
         return (TokenModel) LoopAuthStrategy.getLoopAuthDao()
                 .get(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
                         ":" +
@@ -174,10 +174,13 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     public int compareTo(TokenModel obj) {
         return Integer.compare(this.hashCode() - obj.hashCode(), 0);
     }
+
     @Override
     public String toString() {
         return "TokenModel{" +
                 "value='" + value + '\'' +
+                ", removeFlag=" + removeFlag +
+                ", loginId='" + loginId + '\'' +
                 ", facility='" + facility + '\'' +
                 ", createTime=" + createTime +
                 ", timeOut=" + timeOut +

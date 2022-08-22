@@ -85,7 +85,6 @@ public class JedisConn {
                     if (LoopAuthUtil.isNotEmpty(PASSWORD)) {
                         pool = jedisPool = new JedisPool(genericObjectPoolConfig, HOST, PORT, TIMEOUT, PASSWORD, DATABASE_NO);
                     } else {
-                        // TODO 没有 JedisPool(config, host, port, timeout, database) 构造，pwd传入null未经过测试
                         pool = jedisPool = new JedisPool(genericObjectPoolConfig, HOST, PORT, TIMEOUT, null, DATABASE_NO);
                     }
                 }

@@ -53,7 +53,9 @@ public class UserSession implements Serializable {
      * @Date: 2022/8/10 23:51
      */
     public UserSession setToken(TokenModel tokenModel) {
-        this.tokens = LoopAuthStrategy.loginRulesMatching.exe(tokens,tokenModel);
+        tokens = LoopAuthStrategy.loginRulesMatching.exe(
+                tokens.stream().filter(item -> !item.isRemoveFlag()).collect(Collectors.toSet()),
+                tokenModel);
         // 登录规则检测
         return this;
     }
@@ -75,6 +77,7 @@ public class UserSession implements Serializable {
             // 删除会话
             remove();
         }else {
+            tokens.stream().filter(TokenModel::isRemoveFlag).forEach(TokenModel::remove);
             // 过滤需要删除的会话
             tokens = tokens.stream().filter(item -> !item.isRemoveFlag()).collect(Collectors.toSet());
             Set<String> tokenValues = new HashSet<>();
@@ -86,8 +89,8 @@ public class UserSession implements Serializable {
             tokens.forEach(tokenModel -> {
                 // 加载缓存过期时间
                 long expirationTime = storageTimeOut == 0 ?
-                        tokenModel.getCreateTime() + tokenModel.getTimeOut() :
-                        tokenModel.getCreateTime() + storageTimeOut;
+                        tokenModel.getTimeOut() :
+                        storageTimeOut;
                 // 判断所以会话最晚过期时间
                 if (expirationTime > maxExpirationTime.get()){
                     maxExpirationTime.set(expirationTime);
@@ -126,7 +129,7 @@ public class UserSession implements Serializable {
         if (LoopAuthUtil.isNotEmpty(tokenSet)){
             // 过滤过期空值之后组装 Set<TokenModel>
             tokenSet.stream().filter(LoopAuthUtil::isNotEmpty).forEach(token ->
-                    tokenModels.add(new TokenModel().setValue(token).getTokenModel())
+                    tokenModels.add(new TokenModel().setValue(token).gainTokenModel())
             );
         }
         this.tokens = tokenModels.stream().filter(LoopAuthUtil::isNotEmpty).collect(Collectors.toSet());

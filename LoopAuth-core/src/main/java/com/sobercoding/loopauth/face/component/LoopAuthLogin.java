@@ -55,6 +55,7 @@ public class LoopAuthLogin {
         TokenModel tokenModel = getTokenModel()
                 .setCreateTime(System.currentTimeMillis())
                 .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut());
+        String token = tokenModel.getValue();
         // 创建新的token
         creationToken(tokenModel);
         UserSession userSession = null;
@@ -62,6 +63,10 @@ public class LoopAuthLogin {
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
             // 获取存储用户的所有会话
             userSession = getUserSession();
+            // 删除老会话
+            userSession.removeToken(Collections.singleton(token));
+            // 加入新会话
+            userSession.setToken(tokenModel);
             // 刷新会话
             userSession.setUserSession();
         }
@@ -139,7 +144,7 @@ public class LoopAuthLogin {
             // 开启持久化才执行
             if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
                 // 验证存储中是否存在
-                tokenModel = Optional.ofNullable(tokenModel.getTokenModel())
+                tokenModel = Optional.ofNullable(tokenModel.gainTokenModel())
                         .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
                 // 查看是否过期
                 if (isExpire(tokenModel)){

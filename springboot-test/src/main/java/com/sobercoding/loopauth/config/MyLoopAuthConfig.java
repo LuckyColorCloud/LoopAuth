@@ -1,6 +1,10 @@
 package com.sobercoding.loopauth.config;
 
+import com.sobercoding.loopauth.dao.LoopAuthDao;
+import com.sobercoding.loopauth.jedis.JedisDaoImpl;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 /**
  * @program: LoopAuth
@@ -31,5 +35,11 @@ public class MyLoopAuthConfig {
 //                    return e.getMessage();
 //                });
 //    }
+
+    @Bean
+    @DependsOn("loopAuthConfig")
+    public LoopAuthDao getLoopAuthDao() {
+        return new JedisDaoImpl();
+    }
 
 }
