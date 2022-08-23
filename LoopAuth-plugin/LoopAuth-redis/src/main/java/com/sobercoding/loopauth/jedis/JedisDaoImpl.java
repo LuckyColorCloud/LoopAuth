@@ -25,7 +25,7 @@ import java.util.Set;
  */
 public class JedisDaoImpl implements LoopAuthDao{
 
-    private Jedis redisConn;
+    private volatile Jedis redisConn;
 
     private Jedis getRedisConn(){
         if (redisConn == null){
