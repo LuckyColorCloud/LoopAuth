@@ -170,7 +170,7 @@ public class UserSession implements Serializable {
      */
     public UserSession removeToken(Collection<String> tokenModelValues) {
         tokens.stream()
-                .filter(tokenModel -> tokenModelValues.contains(tokenModel.getValue()))
+                .filter(tokenModel -> !tokenModelValues.contains(tokenModel.getValue()))
                 .forEach(tokenModel -> tokenModel.setRemoveFlag(true));
         return this;
     }
