@@ -22,33 +22,20 @@ import redis.clients.jedis.JedisPool;
  */
 public class JedisConn {
 
-    private static volatile JedisPool jedisPool;
-    private static volatile Jedis jedisConn;
+    private volatile JedisPool jedisPool;
+    private volatile Jedis jedisConn;
 
-    private static final String HOST;
+    private final RedisConfig redisConfig = LoopAuthStrategy.getLoopAuthConfig().getRedisConfig();
 
-    private static final String PASSWORD;
-    private static final int PORT;
-    private static final int DATABASE_NO;
-    private static final int TIMEOUT;
-    private static final int MAX_TOTAL;
-    private static final int MAX_IDLE;
-    private static final int MIN_IDLE;
-
-    private static final boolean IS_NEED_POOL;
-
-    static {
-        RedisConfig redisConfig = LoopAuthStrategy.getLoopAuthConfig().getRedisConfig();
-        HOST = redisConfig.getHost();
-        PASSWORD = redisConfig.getPassword();
-        PORT = redisConfig.getPort();
-        DATABASE_NO = redisConfig.getDatabaseNo();
-        TIMEOUT = redisConfig.getTimeOut();
-        MAX_TOTAL = redisConfig.getMaxTotal();
-        MAX_IDLE = redisConfig.getMaxIdle();
-        MIN_IDLE = redisConfig.getMinIdle();
-        IS_NEED_POOL = redisConfig.isNeedPool();
-    }
+    private final String HOST = redisConfig.getHost();
+    private final String PASSWORD = redisConfig.getPassword();
+    private final int PORT = redisConfig.getPort();
+    private final int DATABASE_NO = redisConfig.getDatabaseNo();
+    private final int TIMEOUT = redisConfig.getTimeOut();
+    private final int MAX_TOTAL = redisConfig.getMaxTotal();
+    private final int MAX_IDLE = redisConfig.getMaxIdle();
+    private final int MIN_IDLE = redisConfig.getMinIdle();
+    private final boolean IS_NEED_POOL = redisConfig.isNeedPool();
 
     /**
      * 获取 Redis 客户端
@@ -56,7 +43,7 @@ public class JedisConn {
      *
      * @return Jedis
      */
-    public static Jedis getJedis() {
+    public Jedis getJedis() {
         try {
             return IS_NEED_POOL ? genPoolConn() : genSingleConn();
         } catch (Exception e) {
@@ -71,7 +58,7 @@ public class JedisConn {
      *
      * @return
      */
-    private static Jedis genPoolConn() {
+    private Jedis genPoolConn() {
         JedisPool pool = jedisPool;
         if (pool == null) {
             synchronized (JedisConn.class) {
@@ -98,7 +85,7 @@ public class JedisConn {
      *
      * @return
      */
-    private static Jedis genSingleConn() {
+    private Jedis genSingleConn() {
         if (jedisConn == null) {
             Builder config = DefaultJedisClientConfig.builder()
                     .database(DATABASE_NO)
@@ -116,7 +103,7 @@ public class JedisConn {
     /**
      * 关闭连接
      */
-    public static void close() {
+    public void close() {
         if (jedisConn != null) {
             jedisConn.close();
         }

@@ -40,7 +40,7 @@ public class LoopAuthStrategy {
         if (LoopAuthStrategy.loopAuthConfig == null){
             synchronized(LoopAuthStrategy.class){
                 if (LoopAuthStrategy.loopAuthConfig == null){
-                    LoopAuthStrategy.loopAuthConfig = new LoopAuthConfig();
+                    setLoopAuthConfig(new LoopAuthConfig());
                 }
             }
         }
@@ -60,7 +60,7 @@ public class LoopAuthStrategy {
         if (LoopAuthStrategy.loopAuthToken == null){
             synchronized(LoopAuthStrategy.class){
                 if (LoopAuthStrategy.loopAuthToken == null){
-                    LoopAuthStrategy.loopAuthToken = new LoopAuthToken();
+                    setLoopAuthToken(new LoopAuthToken());
                 }
             }
         }
@@ -80,7 +80,7 @@ public class LoopAuthStrategy {
         if (LoopAuthStrategy.loopAuthPermission == null){
             synchronized(LoopAuthStrategy.class){
                 if (LoopAuthStrategy.loopAuthPermission == null){
-                    LoopAuthStrategy.loopAuthPermission = new LoopAuthPermission();
+                    setLoopAuthPermission(new LoopAuthPermission());
                 }
             }
         }
@@ -98,7 +98,7 @@ public class LoopAuthStrategy {
         if (LoopAuthStrategy.loopAuthLogin == null){
             synchronized(LoopAuthStrategy.class){
                 if (LoopAuthStrategy.loopAuthLogin == null){
-                    LoopAuthStrategy.loopAuthLogin = new LoopAuthLogin();
+                    setLoopAuthLogin(new LoopAuthLogin());
                 }
             }
         }
@@ -118,7 +118,7 @@ public class LoopAuthStrategy {
         if (LoopAuthStrategy.loopAuthDao == null){
             synchronized(LoopAuthStrategy.class){
                 if (LoopAuthStrategy.loopAuthDao == null){
-                    LoopAuthStrategy.loopAuthDao = new LoopAuthDaoImpl();
+                    setLoopAuthDao(new LoopAuthDaoImpl());
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.sobercoding.loopauth.jedis;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.config.LoopAuthConfig;
+import com.sobercoding.loopauth.config.RedisConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 import com.sobercoding.loopauth.exception.LoopAuthDaoException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
@@ -10,7 +12,6 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -24,7 +25,18 @@ import java.util.concurrent.TimeUnit;
  */
 public class JedisDaoImpl implements LoopAuthDao{
 
-    private final Jedis redisConn = JedisConn.getJedis();
+    private Jedis redisConn;
+
+    private Jedis getRedisConn(){
+        if (redisConn == null){
+            synchronized(this){
+                if (redisConn == null){
+                    redisConn = new JedisConn().getJedis();
+                }
+            }
+        }
+        return redisConn;
+    }
 
     /**
      * 获取缓存值
@@ -37,7 +49,7 @@ public class JedisDaoImpl implements LoopAuthDao{
      */
     @Override
     public Object get(String key) {
-        String json = redisConn.get(key);
+        String json = getRedisConn().get(key);
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
                 return JsonUtil.jsonToObj(json,TokenModel.class);
@@ -45,7 +57,7 @@ public class JedisDaoImpl implements LoopAuthDao{
         }
         if (LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
-                return JsonUtil.<String>jsonToList(redisConn.get(key),String.class);
+                return JsonUtil.<String>jsonToList(getRedisConn().get(key),String.class);
             }
         }
         return null;
@@ -59,7 +71,7 @@ public class JedisDaoImpl implements LoopAuthDao{
      */
     @Override
     public boolean containsKey(String key) {
-        return redisConn.exists(key);
+        return getRedisConn().exists(key);
     }
 
     @Override
@@ -74,7 +86,7 @@ public class JedisDaoImpl implements LoopAuthDao{
             json = JsonUtil.objToJson(strings);
         }
         LoopAuthDaoException.isEmpty(json, LoopAuthExceptionEnum.DATA_EXCEPTION);
-        LoopAuthDaoException.isOK(redisConn.set(key, json, SetParams.setParams().ex(expirationTime / 1000)),
+        LoopAuthDaoException.isOK(getRedisConn().set(key, json, SetParams.setParams().ex(expirationTime / 1000)),
                 LoopAuthExceptionEnum.CACHE_FAILED);
     }
 
@@ -85,7 +97,7 @@ public class JedisDaoImpl implements LoopAuthDao{
      */
     @Override
     public void remove(String key) {
-        LoopAuthDaoException.isOK(redisConn.del(key) == 1 ? "OK":"", LoopAuthExceptionEnum.CACHE_FAILED);
+        LoopAuthDaoException.isOK(getRedisConn().del(key) == 1 ? "OK":"", LoopAuthExceptionEnum.CACHE_FAILED);
     }
 
 

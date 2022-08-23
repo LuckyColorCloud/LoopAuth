@@ -28,7 +28,7 @@ public class LoopAuthRegister {
      * @Exception:
      * @Date: 2022/7/30 23:58
      */
-    @Bean("loopAuthConfig")
+    @Bean
     @ConfigurationProperties(prefix = "loop-auth")
     public LoopAuthConfig getLoopAuthConfig() {
         return new LoopAuthConfig();
