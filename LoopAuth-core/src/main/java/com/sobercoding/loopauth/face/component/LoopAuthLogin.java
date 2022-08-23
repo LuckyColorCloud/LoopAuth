@@ -27,7 +27,7 @@ public class LoopAuthLogin {
      */
     public void login(TokenModel tokenModel) {
         // 创建会话
-        UserSession userSession = creationSession(tokenModel);
+        creationSession(tokenModel);
 
         // 写入上下文
         setContext(tokenModel);
@@ -39,24 +39,17 @@ public class LoopAuthLogin {
      * @author Sober
      */
     public void loginRenew() {
-        // 获取老的TokenModel
+        // 获取老的TokenModel 并刷新过期时间
         TokenModel tokenModel = getTokenModel()
                 .setCreateTime(System.currentTimeMillis())
                 .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut());
-        String token = tokenModel.getValue();
-        // 创建新的token
-        creationToken(tokenModel);
-        UserSession userSession = null;
         // 开启持久化才执行
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
-            // 获取存储用户的所有会话
-            userSession = getUserSession();
-            // 删除老会话
-            userSession.removeToken(Collections.singleton(token));
-            // 加入新会话
-            userSession.setToken(tokenModel);
-            // 刷新会话
-            userSession.setUserSession();
+            // 更新会话过期时间
+            getUserSession().setToken(tokenModel);
+        }else {
+            // 创建新的token
+            creationToken(tokenModel);
         }
         // 写入上下文
         setContext(tokenModel);
@@ -70,8 +63,7 @@ public class LoopAuthLogin {
     public void logout(String... tokenModelValues) {
         // 开启持久化才执行
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
-            getUserSession().removeToken(Arrays.asList(tokenModelValues))
-                    .setUserSession();
+            getUserSession().removeToken(Arrays.asList(tokenModelValues));
         }
         // 删除cookie
         delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
@@ -152,8 +144,7 @@ public class LoopAuthLogin {
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
             // 获取存储用户的所有会话   写入当前会话   刷新会话
             UserSession userSession = getUserSessionByLoginId(tokenModel.getLoginId());
-            userSession.setToken(tokenModel)
-                    .setUserSession();
+            userSession.setToken(tokenModel);
             return userSession;
         }
         return null;
@@ -177,7 +168,7 @@ public class LoopAuthLogin {
      */
     private UserSession getUserSessionByLoginId(String loginId) {
         return new UserSession().setLoginId(loginId)
-                .gainTokenModel();
+                .gainUserSession();
     }
 
 

@@ -3,13 +3,13 @@ server:
   port: 8080
 
 loop-auth:
-  time-out: 50000 # token有效时间(单位毫秒)  默认24小时
-#  storage-time-out: 10000 # 存储即redis或本机缓存的 有效期 (单位毫秒) 默认0 为0时即不采用该值设置过期时间，采用token的过期时间设置
+  time-out: 50 # token有效时间(单位秒)  默认24小时
+#  storage-time-out: 10 # 存储即redis或本机缓存的 有效期 (单位秒) 默认0 为0时即不采用该值设置过期时间，采用token的过期时间设置
 #  token-name: token # token名称  默认LoopAuth
   mutualism: true # token共生 默认false 开启则 账号可以同时在线
-#  exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）
+  exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）
   token-persistence: true # token持久化配置  默认false
-  max-login-count: -1 # 同一账号最大登录数量 默认1  -1代表不限制
+  max-login-count: 3 # 同一账号最大登录数量 默认1  -1代表不限制
   renew: true # 自动续签 默认true 每次isLogin操作，会自动刷新token有效期
   access-modes: # token获取方式 默认[COOKIE,HEADER]顺序获取。即COOKIE中获取到鉴权成功，则不前往HEADER获取
     - HEADER

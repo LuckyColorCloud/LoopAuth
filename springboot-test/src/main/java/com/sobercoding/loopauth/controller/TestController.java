@@ -23,15 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/login")
-    public String register(){
-        LoopAuthFaceImpl.login("1", "PHONE");
+    public String register(String type){
+        LoopAuthFaceImpl.login("1", type);
         return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
-        return LoopAuthFaceImpl.getUserSession().toString();
+        return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 
 

@@ -3,7 +3,6 @@ package com.sobercoding.loopauth.config;
 import com.sobercoding.loopauth.model.constant.TokenAccessMode;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -96,16 +95,18 @@ public class LoopAuthConfig implements Serializable {
         return storageTimeOut;
     }
 
-    public void setStorageTimeOut(long storageTimeOut) {
-        this.storageTimeOut = storageTimeOut;
+    public LoopAuthConfig setStorageTimeOut(long storageTimeOut) {
+        this.storageTimeOut = storageTimeOut * 1000;
+        return this;
     }
 
     public Boolean getTokenPersistence() {
         return isTokenPersistence;
     }
 
-    public void setTokenPersistence(Boolean tokenPersistence) {
+    public LoopAuthConfig setTokenPersistence(Boolean tokenPersistence) {
         isTokenPersistence = tokenPersistence;
+        return this;
     }
 
     public CookieConfig getCookieConfig() {
@@ -146,7 +147,7 @@ public class LoopAuthConfig implements Serializable {
     }
 
     public LoopAuthConfig setTimeOut(long timeOut) {
-        this.timeOut = timeOut;
+        this.timeOut = timeOut * 1000;
         return this;
     }
 

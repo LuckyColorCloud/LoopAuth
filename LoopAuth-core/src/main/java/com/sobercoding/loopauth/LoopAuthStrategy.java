@@ -169,40 +169,48 @@ public class LoopAuthStrategy {
 
     /**
      * 默认登录规则处理
+     * 新的TokenModel直接加入tokenModels
+     * 返回需要删除的Set<TokenModel>
      */
     public static LrFunction<Set<TokenModel>, TokenModel> loginRulesMatching = (tokenModels, tokenModel) -> {
+        Set<TokenModel> removeTokenModels = new HashSet<>();
         // 开启token共生
         if (LoopAuthStrategy.getLoopAuthConfig().getMutualism()){
             // 同端互斥开启  删除相同端的登录
             if (LoopAuthStrategy.getLoopAuthConfig().getExclusion()){
-                tokenModels.remove(
-                        tokenModels.stream()
-                                .filter(item -> item.getFacility().equals(tokenModel.getFacility()))
-                                .findAny()
-                                .orElse(new TokenModel())
-                );
+                // 查看是否有同端口
+                Optional<TokenModel> optionalTokenModel = tokenModels.stream()
+                        .filter(item -> item.getFacility().equals(tokenModel.getFacility()))
+                        .findAny();
+                // 对tokenModels,removeTokenModels操作
+                if (optionalTokenModel.isPresent()){
+                    tokenModels.remove(optionalTokenModel.get());
+                    removeTokenModels.add(optionalTokenModel.get());
+                }
             }
             // 登录数量超出限制  删除较早的会话
             int maxLoginCount = LoopAuthStrategy.getLoopAuthConfig().getMaxLoginCount();
             if (maxLoginCount != -1 && tokenModels.size() >= maxLoginCount){
                 List<TokenModel> tokenModelList = new ArrayList<>(tokenModels);
+                // 排序
                 tokenModelList = tokenModelList.stream()
                         .sorted(Comparator.comparing(TokenModel::getCreateTime))
                         .collect(Collectors.toList());
-                tokenModelList.removeAll(
-                        tokenModels.stream()
-                                .limit(tokenModels.size() - maxLoginCount + 1)
-                                .collect(Collectors.toList())
-                );
-                tokenModels = new HashSet<>(tokenModelList);
+                // 获得早期会话
+                tokenModelList = tokenModelList.stream()
+                        .limit(tokenModels.size() - maxLoginCount + 1)
+                        .collect(Collectors.toList());
+                // 对tokenModels,removeTokenModels操作
+                tokenModelList.forEach(tokenModels::remove);
+                removeTokenModels.addAll(tokenModelList);
             }
         }else {
             // 未开启token共生  清除所有会话
-            tokenModels.clear();
+            removeTokenModels.addAll(tokenModels);
         }
         // 添加新的会话
         tokenModels.add(tokenModel);
-        return tokenModels;
+        return removeTokenModels;
     };
 
 

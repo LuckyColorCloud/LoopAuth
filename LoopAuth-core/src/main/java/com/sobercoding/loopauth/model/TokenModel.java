@@ -20,11 +20,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     private String value;
 
     /**
-     * 删除标记
-     */
-    private boolean removeFlag;
-
-    /**
      * 用户id
      */
     private String loginId;
@@ -43,15 +38,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
      * token有效期(单位毫秒)
      */
     private long timeOut;
-
-    public boolean isRemoveFlag() {
-        return removeFlag;
-    }
-
-    public TokenModel setRemoveFlag(boolean removeFlag) {
-        this.removeFlag = removeFlag;
-        return this;
-    }
 
     public String getLoginId() {
         return loginId;
@@ -114,9 +100,14 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     /**
      * 对内存的直接操作
      * 获取内存中当前token的TokenModel
-     * @param expirationTime 到期时间
      */
-    public void setTokenModel(long expirationTime){
+    public void setTokenModel(){
+        // 缓存时间
+        long storageTimeOut = LoopAuthStrategy.getLoopAuthConfig().getStorageTimeOut();
+        // 加载缓存过期时间
+        long expirationTime = storageTimeOut == 0 ?
+                timeOut :
+                storageTimeOut;
         LoopAuthStrategy.getLoopAuthDao()
                 .set(
                         LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + value,
@@ -162,7 +153,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     public String toString() {
         return "TokenModel{" +
                 "value='" + value + '\'' +
-                ", removeFlag=" + removeFlag +
                 ", loginId='" + loginId + '\'' +
                 ", facility='" + facility + '\'' +
                 ", createTime=" + createTime +

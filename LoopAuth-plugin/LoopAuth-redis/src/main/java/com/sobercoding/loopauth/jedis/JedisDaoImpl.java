@@ -1,8 +1,6 @@
 package com.sobercoding.loopauth.jedis;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.config.LoopAuthConfig;
-import com.sobercoding.loopauth.config.RedisConfig;
 import com.sobercoding.loopauth.dao.LoopAuthDao;
 import com.sobercoding.loopauth.exception.LoopAuthDaoException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
