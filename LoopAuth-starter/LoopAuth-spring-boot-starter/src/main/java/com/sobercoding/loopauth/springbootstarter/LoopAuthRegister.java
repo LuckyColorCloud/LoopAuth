@@ -11,6 +11,11 @@ import org.springframework.context.annotation.Bean;
  */
 public class LoopAuthRegister {
 
+    /**
+     * 注入配置类
+     * @author Sober
+     * @return com.sobercoding.loopauth.config.LoopAuthConfig
+     */
     @Bean
     @ConfigurationProperties(prefix = "loop-auth")
     public LoopAuthConfig getLoopAuthConfig() {
@@ -19,6 +24,8 @@ public class LoopAuthRegister {
 
     /**
      * 注入 上下文
+     * @author Sober
+     * @return com.sobercoding.loopauth.context.LoopAuthContext
      */
     @Bean
     public LoopAuthContext getLoopAuthContext(){

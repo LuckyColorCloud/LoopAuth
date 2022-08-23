@@ -19,10 +19,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * @program: LoopAuth
+ * LoopAuth  Bean管理器
  * @author: Sober
- * @Description: LoopAuth  Bean管理器
- * @create: 2022/07/20 19:43
  */
 
 public class LoopAuthStrategy {

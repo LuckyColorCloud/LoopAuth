@@ -17,8 +17,9 @@ public class LoopAuthDaoException extends LoopAuthException{
 
     /**
      * 判断数据是否为空
-     * @param obj
-     * @param loopAuthExceptionEnum
+     * @author Sober
+     * @param obj 对象
+     * @param loopAuthExceptionEnum 错误枚举
      */
     public static void isEmpty(Object obj, LoopAuthExceptionEnum loopAuthExceptionEnum) {
         Optional.ofNullable(obj)
@@ -28,8 +29,8 @@ public class LoopAuthDaoException extends LoopAuthException{
 
     /**
      * 判断Redis缓存是否成功
-     * @param obj
-     * @param loopAuthExceptionEnum
+     * @param obj 对象
+     * @param loopAuthExceptionEnum 错误枚举
      */
     public static void isTrue(boolean obj, LoopAuthExceptionEnum loopAuthExceptionEnum) {
         Optional.of(obj)

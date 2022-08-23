@@ -28,6 +28,8 @@ public class LoopAuthInject {
 
     /**
      * 注入权限认证Bean
+     * @author Sober
+     * @param permissionInterface 权限类
      */
     @Autowired(required = false)
     public void setPermissionInterface(PermissionInterface permissionInterface) {
@@ -36,7 +38,8 @@ public class LoopAuthInject {
 
     /**
      * 注入持久层
-     *
+     * @author Sober
+     * @param loopAuthDao 持久层类
      */
     @Autowired(required = false)
     public void setLoopAuthDao(LoopAuthDao loopAuthDao) {

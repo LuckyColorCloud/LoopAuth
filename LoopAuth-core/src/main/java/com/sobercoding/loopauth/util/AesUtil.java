@@ -37,7 +37,7 @@ public class AesUtil {
     private static final int TWOSING = 2;
 
     /**
-     * byte[] -> 16
+     * 2转16
      * @param bytes: 二进制数组
      * @author gezi
      * @return java.lang.String
@@ -53,7 +53,7 @@ public class AesUtil {
     }
 
     /**
-     * 16 -> byte[]
+     * 16转2
      * @param hexStr: 十六进制字符串
      * @author gezi
      * @return byte[]

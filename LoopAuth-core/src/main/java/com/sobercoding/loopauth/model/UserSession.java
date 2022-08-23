@@ -43,7 +43,7 @@ public class UserSession implements Serializable {
     /**
      * 建立会话
      * @author Sober
-     * @param tokenModel
+     * @param tokenModel token模型
      * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession setToken(TokenModel tokenModel) {
