@@ -11,24 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @program: LoopAuth
- * @author: Sober
- * @Description: 默认Toekn生成策略
+ * 默认Toekn生成策略
  * 多段式token 仿JWT模式
- * @create: 2022/08/12 22:20
+ * @author: Sober
  */
 public class LoopAuthToken {
 
     /**
-     * @Method: createToken
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 制造Token
+     * 制造Token
+     * @author: Sober
      * @param tokenModel token模型
      * @param secretKey 盐
-     * @Return: String 返回token
-     * @Exception:
-     * @Date: 2022/8/12 22:26
+     * @return java.lang.String
      */
     public String createToken(TokenModel tokenModel, String secretKey) {
         // 添加会话基本信息的base编码
@@ -44,15 +38,11 @@ public class LoopAuthToken {
     }
 
     /**
-     * @Method: verify
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 验证token合法性
+     * 验证token合法性
+     * @author Sober
      * @param token token
      * @param secretKey 盐
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/12 22:46
+     * @return boolean
      */
     public boolean verify(String token, String secretKey) {
         try {
@@ -74,14 +64,10 @@ public class LoopAuthToken {
     }
 
     /**
-     * @Method: getInfo
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取token种信息
-     * @param token
-     * @Return: java.util.Map<java.lang.String,java.lang.String>
-     * @Exception:
-     * @Date: 2022/8/12 22:47
+     * 获取token种信息
+     * @author Sober
+     * @param token token
+     * @return com.sobercoding.loopauth.model.TokenModel
      */
     public TokenModel getInfo(String token) {
         try {
@@ -101,14 +87,10 @@ public class LoopAuthToken {
     }
 
     /**
-     * @Method: getBASE64
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 使用Base64对字符串进行编码
-     * @param str
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/12 23:00
+     * 使用Base64对字符串进行编码
+     * @author Sober
+     * @param str 串
+     * @return java.lang.String
      */
     private String getBase64(String str) {
         byte[] b = str.getBytes(StandardCharsets.UTF_8);
@@ -117,14 +99,10 @@ public class LoopAuthToken {
 
 
     /**
-     * @Method: getFromBASE64
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 使用Base64对字符串进行解码
-     * @param str
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/12 23:00
+     * 使用Base64对字符串进行解码
+     * @author Sober
+     * @param str 串
+     * @return java.lang.String
      */
     private String getFromBase64(String str) {
         byte[] b;

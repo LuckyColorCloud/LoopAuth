@@ -10,5 +10,6 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 .idea
 *.iml
+.flattened-pom.xml
 
 LoopAuth-doc/node_modules

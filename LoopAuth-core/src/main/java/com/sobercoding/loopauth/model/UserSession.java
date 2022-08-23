@@ -9,10 +9,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
- * @program: LoopAuth
+ * 用户会话模型
  * @author: Sober
- * @Description: 用户会话模型
- * @create: 2022/07/20 19:38
  */
 public class UserSession implements Serializable {
 
@@ -43,14 +41,10 @@ public class UserSession implements Serializable {
 
 
     /**
-     * @Method: setToken
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 建立会话
+     * 建立会话
+     * @author Sober
      * @param tokenModel
-     * @Return: com.sobercoding.loopauth.model.UserSession
-     * @Exception:
-     * @Date: 2022/8/10 23:51
+     * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession setToken(TokenModel tokenModel) {
         tokens = LoopAuthStrategy.loginRulesMatching.exe(
@@ -61,15 +55,9 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * @Method: setUserSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 对内存的直接操作
+     * 对内存的直接操作
      * 刷新会话存储，除remove以外，所有对于会话的更新操作均需要调用setUserSession进行存储刷新
-     * @param
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/11 0:42
+     * @author Sober
      */
     public void setUserSession(){
         // 如果已经不存在会话则删除用户所有会话存储
@@ -110,15 +98,10 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * @Method: getUserSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 对内存的直接操作
+     * 对内存的直接操作
      * 获取内存中用户的所有UserSession
-     * @param
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/11 0:42
+     * @author Sober
+     * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession getUserSession(){
         Set<String> tokenSet = (Set<String>) LoopAuthStrategy.getLoopAuthDao()
@@ -137,13 +120,8 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * @Method: remove
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 对内存的直接操作，删除当前用户所有会话
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/11 15:41
+     * 对内存的直接操作，删除当前用户所有会话
+     * @author Sober
      */
     public void remove(){
         LoopAuthStrategy.getLoopAuthDao()
@@ -158,15 +136,12 @@ public class UserSession implements Serializable {
     }
 
 
+
     /**
-     * @Method: removeToken
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 删除会话token
+     * 删除会话token
+     * @author Sober
      * @param tokenModelValues token值
-     * @Return: com.sobercoding.loopauth.model.UserSession
-     * @Exception:
-     * @Date: 2022/8/11 0:44
+     * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession removeToken(Collection<String> tokenModelValues) {
         tokens.stream()

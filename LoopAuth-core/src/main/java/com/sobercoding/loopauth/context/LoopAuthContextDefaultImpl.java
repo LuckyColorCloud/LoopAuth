@@ -4,10 +4,8 @@ import com.sobercoding.loopauth.exception.LoopAuthConfigException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 
 /**
- * @program: LoopAuth
- * @author: Sober
- * @Description:
- * @create: 2022/08/17 17:08
+ * 上下文默认类
+ * @author Sober
  */
 public class LoopAuthContextDefaultImpl implements LoopAuthContext{
     @Override

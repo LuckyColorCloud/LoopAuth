@@ -3,14 +3,8 @@ package com.sobercoding.loopauth.config;
 import java.io.Serializable;
 
 /**
- * <p>
- * Description: Redis 配置类
- * </p>
- *
- * @author: Weny
- * @date: 2022/8/13
- * @see: com.sobercoding.loopauth.config
- * @version: v1.0.0
+ * Redis 配置类
+ * @author Weny
  */
 public class RedisConfig implements Serializable {
 

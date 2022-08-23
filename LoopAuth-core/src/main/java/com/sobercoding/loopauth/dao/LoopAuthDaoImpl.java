@@ -6,10 +6,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @program: LoopAuth
+ * 持久层实现
  * @author: Sober
- * @Description: 缓存实现
- * @create: 2022/07/20 23:35
  */
 public class LoopAuthDaoImpl implements LoopAuthDao {
 
@@ -27,14 +25,10 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
 
 
     /**
-     * @Method: get
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取指定缓存
+     * 获取用户会话
+     * @author Sober
      * @param key 字典
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/8 17:16
+     * @return java.lang.Object
      */
     @Override
     public Object get(String key) {
@@ -55,14 +49,10 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * @Method: containsKey
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取指定缓存
+     * 查看key是否存在
+     * @author Sober
      * @param key 字典
-     * @Return: boolean
-     * @Exception:
-     * @Date: 2022/8/8 17:16
+     * @return boolean
      */
     @Override
     public boolean containsKey(String key) {
@@ -83,16 +73,11 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * @Method: setUserSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 写入用户会话
+     * 写入用户会话
+     * @author Sober
      * @param key 字典
      * @param value 值
      * @param expirationTime 到期时间戳
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/8 17:16
      */
     @Override
     public void set(String key, Object value, long expirationTime) {
@@ -102,14 +87,9 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
 
 
     /**
-     * @Method: remove
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 清除指定信息
+     * 删除
+     * @author Sober
      * @param key 字典
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/8 17:16
      */
     @Override
     public void remove(String key) {

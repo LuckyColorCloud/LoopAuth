@@ -5,10 +5,7 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 import java.util.Optional;
 
 /**
- * @program: LoopAuth
  * @author: Sober
- * @Description: 会话异常
- * @create: 2022/08/08 19:24
  */
 public class LoopAuthLoginException extends LoopAuthException{
 

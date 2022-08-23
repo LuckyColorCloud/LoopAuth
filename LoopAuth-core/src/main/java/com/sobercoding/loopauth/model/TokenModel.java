@@ -7,10 +7,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @program: LoopAuth
+ * token模型
  * @author: Sober
- * @Description: token模型
- * @create: 2022/07/22 20:06
  */
 public class TokenModel implements Serializable,Comparable<TokenModel>  {
 
@@ -101,14 +99,10 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     }
 
     /**
-     * @Method: getTokenModel
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 对内存的直接操作
+     * 对内存的直接操作
      * 获取内存中当前token的TokenModel
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/11 0:42
+     * @author Sober
+     * @return com.sobercoding.loopauth.model.TokenModel
      */
     public TokenModel gainTokenModel(){
         return (TokenModel) LoopAuthStrategy.getLoopAuthDao()
@@ -118,15 +112,9 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     }
 
     /**
-     * @Method: setTokenModel
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 对内存的直接操作
+     * 对内存的直接操作
      * 获取内存中当前token的TokenModel
      * @param expirationTime 到期时间
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/11 0:42
      */
     public void setTokenModel(long expirationTime){
         LoopAuthStrategy.getLoopAuthDao()
@@ -138,13 +126,8 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     }
 
     /**
-     * @Method: remove
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 对内存的直接操作，删除当前token会话
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/11 15:41
+     * 对内存的直接操作，删除当前token会话
+     * @author Sober
      */
     public void remove(){
         LoopAuthStrategy.getLoopAuthDao()

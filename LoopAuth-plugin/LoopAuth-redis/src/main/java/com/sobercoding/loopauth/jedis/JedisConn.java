@@ -11,14 +11,8 @@ import redis.clients.jedis.DefaultJedisClientConfig.Builder;
 import redis.clients.jedis.JedisPool;
 
 /**
- * <p>
- * Description: Redis 连接
- * </p>
- *
+ * Redis 连接
  * @author: Weny
- * @date: 2022/8/13
- * @see: com.sobercoding
- * @version: v1.0.0
  */
 public class JedisConn {
 
@@ -41,7 +35,7 @@ public class JedisConn {
      * 获取 Redis 客户端
      * 如果 {@link JedisConn#IS_NEED_POOL} 为 true 则通过连接池返回连接
      *
-     * @return Jedis
+     * @return redis.clients.jedis.Jedis
      */
     public Jedis getJedis() {
         try {
@@ -56,7 +50,7 @@ public class JedisConn {
      * 生成连接池连接
      * 通过方法内局部变量的定义,优化系统性能(减少了主内存与线程本地内存的数据交换次数)
      *
-     * @return
+     * @return redis.clients.jedis.Jedis
      */
     private Jedis genPoolConn() {
         JedisPool pool = jedisPool;
@@ -82,8 +76,7 @@ public class JedisConn {
 
     /**
      * 生成单连接
-     *
-     * @return
+     * @return redis.clients.jedis.Jedis
      */
     private Jedis genSingleConn() {
         if (jedisConn == null) {

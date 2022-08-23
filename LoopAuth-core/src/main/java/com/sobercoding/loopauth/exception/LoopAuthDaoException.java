@@ -5,14 +5,7 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 import java.util.Optional;
 
 /**
- * <p>
- * Description:
- * </p>
- *
  * @author: Weny
- * @date: 2022/8/20
- * @see: com.sobercoding.loopauth.exception
- * @version: v1.0.0
  */
 public class LoopAuthDaoException extends LoopAuthException{
 

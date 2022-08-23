@@ -77,7 +77,7 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * 设置 过滤规则
      * @param loopAuthFilter
-     * @return
+     * @return com.sobercoding.loopauth.springbootstarter.filter.LoopAuthServletFilter
      */
     public LoopAuthServletFilter setLoopAuthFilter(LoopAuthFilter loopAuthFilter) {
         this.loopAuthFilter = loopAuthFilter;
@@ -87,7 +87,7 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * 设置异常处理规则
      * @param loopAuthErrorFilter
-     * @return
+     * @return com.sobercoding.loopauth.springbootstarter.filter.LoopAuthServletFilter
      */
     public LoopAuthServletFilter setLoopAuthErrorFilter(LoopAuthErrorFilter loopAuthErrorFilter) {
         this.loopAuthErrorFilter = loopAuthErrorFilter;

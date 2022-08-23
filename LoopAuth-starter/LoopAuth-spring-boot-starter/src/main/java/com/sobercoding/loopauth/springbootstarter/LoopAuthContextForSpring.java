@@ -15,10 +15,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.Optional;
 
 /**
- * @program: LoopAuth
+ * Spring上下文
  * @author: Sober
- * @Description: Spring上下文
- * @create: 2022/08/10 18:34
  */
 public class LoopAuthContextForSpring implements LoopAuthContext {
     @Override

@@ -3,10 +3,8 @@ package com.sobercoding.loopauth.config;
 import java.io.Serializable;
 
 /**
- * @program: LoopAuth
- * @author: Sober
- * @Description:
- * @create: 2022/08/19 21:56
+ * Cookie配置类
+ * @author Sober
  */
 public class CookieConfig implements Serializable {
 

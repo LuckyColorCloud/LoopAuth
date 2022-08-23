@@ -164,28 +164,13 @@ public class LoopAuthStrategy {
 
 
     /**
-     * @Method:
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取盐默认方法
-     * @param: userId 用户id
-     * @Return:
-     * @Exception: 
-     * @Date: 2022/8/9 15:21
+     * 获取盐默认方法
      */
     public static Function<String,String> getSecretKey = userId -> LoopAuthStrategy
             .getLoopAuthConfig().getSecretKey();
 
     /**
-     * @Method:
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 默认登录规则处理
-     * @param: userId 用户id
-     * @param: tokenModels 用户当前的token集合
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/9 15:21
+     * 默认登录规则处理
      */
     public static LrFunction<Set<TokenModel>, TokenModel> loginRulesMatching = (tokenModels, tokenModel) -> {
         // 开启token共生

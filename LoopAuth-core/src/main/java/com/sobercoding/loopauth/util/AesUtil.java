@@ -9,10 +9,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
- * @program: LoopAuth
+ * AES加密
  * @author: Sober
- * @Description: AES加密
- * @create: 2022/08/12 20:38
  */
 public class AesUtil {
 
@@ -39,10 +37,9 @@ public class AesUtil {
     private static final int TWOSING = 2;
 
     /**
+     * byte[] -> 16
      * @param bytes: 二进制数组
-     * @Author gezi
-     * @Description: byte[] -> 16
-     * @Since 2022/7/24 12:38
+     * @author gezi
      * @return java.lang.String
      */
     public static String encodeHexStr(byte[] bytes){
@@ -56,10 +53,9 @@ public class AesUtil {
     }
 
     /**
+     * 16 -> byte[]
      * @param hexStr: 十六进制字符串
-     * @Author gezi
-     * @Description: 16 -> byte[]
-     * @Since 2022/7/24 12:37
+     * @author gezi
      * @return byte[]
      */
     public static byte[] decodeHex(String hexStr){
@@ -82,11 +78,8 @@ public class AesUtil {
     }
 
     /**
-     * @param type:
-     * @param seed:
-     * @Author gezi
-     * @Description: 获取cipher对象
-     * @Since 2022/7/23 20:44
+     * 获取cipher对象
+     * @author gezi
      * @return javax.crypto.Cipher
      */
     private static Cipher getCipher(int type,String seed) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
@@ -109,15 +102,11 @@ public class AesUtil {
     }
 
     /**
-     * @Method: encrypted
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 加密文本
+     * 加密文本
+     * @author Sober
      * @param originalText 原文
      * @param secretKey 盐
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/12 22:37
+     * @return java.lang.String
      */
     public static String encrypted(String originalText, String secretKey){
         byte[] encodedBytes;
@@ -133,15 +122,11 @@ public class AesUtil {
     }
 
     /**
-     * @Method: decode
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 解码密文
+     * 解码密文
+     * @author Sober
      * @param ciphertext 密文
      * @param secretKey 盐
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/12 22:36
+     * @return java.lang.String
      */
     public static String decode(String ciphertext, String secretKey){
         byte[] decryptedBytes;

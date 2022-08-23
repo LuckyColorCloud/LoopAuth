@@ -13,42 +13,30 @@ import java.util.*;
 
 
 /**
- * @program: LoopAuth
+ * 登录操作
  * @author: Sober
- * @Description: 登录操作
- * @create: 2022/08/08 17:27
  */
 public class LoopAuthLogin {
 
     // 可重写开始
 
     /**
+     * 登录, 设置终端
+     * @author Sober
      * @param tokenModel token模型
-     * @Method: login
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 登录, 设置终端
-     * @Return: java.lang.String 返回token
-     * @Exception:
-     * @Date: 2022/8/8 17:05
      */
     public void login(TokenModel tokenModel) {
         // 创建会话
         UserSession userSession = creationSession(tokenModel);
 
         // 写入上下文
-        setContext(userSession,tokenModel);
+        setContext(tokenModel);
 
     }
 
     /**
-     * @Method: loginRenew
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 登录续期
-     * @Return: boolean 操作是否成功
-     * @Exception:
-     * @Date: 2022/8/8 17:05
+     * 登录续期
+     * @author Sober
      */
     public void loginRenew() {
         // 获取老的TokenModel
@@ -71,18 +59,13 @@ public class LoopAuthLogin {
             userSession.setUserSession();
         }
         // 写入上下文
-        setContext(userSession,tokenModel);
+        setContext(tokenModel);
     }
 
     /**
+     * 注销某Token登录
+     * @author Sober
      * @param tokenModelValues token列表
-     * @Method: logoutNow
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 注销某终端登录
-     * @Return: boolean 操作是否成功
-     * @Exception:
-     * @Date: 2022/8/8 17:05
      */
     public void logout(String... tokenModelValues) {
         // 开启持久化才执行
@@ -95,40 +78,26 @@ public class LoopAuthLogin {
     }
 
     /**
-     * @Method: isLoginNow
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 登录校验
-     * @param
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/10 16:33
+     * 登录校验
+     * @author Sober
      */
     public void isLogin() {
         getTokenModel();
     }
 
     /**
-     * @Method: getUserSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取当前用户所有会话
-     * @Return: com.sobercoding.loopauth.model.UserSession
-     * @Exception:
-     * @Date: 2022/8/9 23:05
+     * 获取当前用户所有会话
+     * @author Sober
+     * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession getUserSession() {
         return getUserSessionByLoginId(getTokenModel().getLoginId());
     }
 
     /**
-     * @Method: getTokenModel
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 获取当前请求的token模型
-     * @Return: TokenModel
-     * @Exception:
-     * @Date: 2022/8/11 16:42
+     * 获取当前请求的token模型
+     * @author Sober
+     * @return com.sobercoding.loopauth.model.TokenModel
      */
     public TokenModel getTokenModel() {
         // 优先从会话存储获取
@@ -170,16 +139,11 @@ public class LoopAuthLogin {
     // 可重写结束
 
 
-
     /**
+     * 创建会话，创建token写入缓存
+     * @author Sober
      * @param tokenModel token模型
-     * @Method: creationSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 创建会话，创建token写入缓存
-     * @Return: com.sobercoding.loopauth.model.UserSession
-     * @Exception:
-     * @Date: 2022/8/9 23:18
+     * @return com.sobercoding.loopauth.model.UserSession
      */
     private UserSession creationSession(TokenModel tokenModel) {
         // 生成token
@@ -206,28 +170,21 @@ public class LoopAuthLogin {
     }
 
     /**
+     * 从存储获取用户所有会话
+     * @author Sober
      * @param loginId 用户id
-     * @Method: getUserSession
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 从存储获取用户所有会话
-     * @Return: com.sobercoding.loopauth.model.UserSession
-     * @Exception:
-     * @Date: 2022/8/9 23:05
+     * @return com.sobercoding.loopauth.model.UserSession
      */
     private UserSession getUserSessionByLoginId(String loginId) {
         return new UserSession().setLoginId(loginId)
                 .getUserSession();
     }
 
+
     /**
-     * @Method: getBodyToken
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 从请求体获取token  通过合法认证的token但未必有效
-     * @Return:
-     * @Exception:
-     * @Date: 2022/8/11 16:43
+     * 从请求体获取token  通过合法认证的token但未必有效
+     * @author Sober
+     * @return java.lang.String
      */
     private String getBodyToken() {
         // 从请求体获取携带的token
@@ -266,14 +223,10 @@ public class LoopAuthLogin {
 
 
     /**
-     * @Method: isExpire
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: token是否过期
-     * @param
-     * @Return: boolean
-     * @Exception:
-     * @Date: 2022/8/13 18:44
+     * token是否过期
+     * @author Sober
+     * @param tokenModel token模型
+     * @return boolean
      */
     private boolean isExpire(TokenModel tokenModel) {
         if (LoopAuthStrategy.getLoopAuthConfig().getTimeOut() != -1){
@@ -283,16 +236,11 @@ public class LoopAuthLogin {
     }
 
     /**
-     * @Method: setContext
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 写入上下文
-     * @param tokenModel
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/17 20:09
+     * @author Sober
+     * @param tokenModel token模型
+     * @return void
      */
-    private void setContext(UserSession userSession, TokenModel tokenModel){
+    private void setContext(TokenModel tokenModel){
         // 如果选择了COOKIE获取  则 写入Response的Cookie存储
         if (LoopAuthStrategy.getLoopAuthConfig()
                 .getAccessModes().stream()
@@ -323,14 +271,9 @@ public class LoopAuthLogin {
     }
 
     /**
-     * @Method: setContext
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: setCookie
+     * 删除cookie
+     * @author Sober
      * @param name 名字
-     * @Return: void
-     * @Exception:
-     * @Date: 2022/8/17 20:09
      */
     private void delCookie(String name){
         // 如果选择了COOKIE获取  则 写入Response的Cookie存储

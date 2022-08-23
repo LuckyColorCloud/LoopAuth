@@ -9,10 +9,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
- * @program: LoopAuth
- * @author: Sober
- * @Description: 配置类数据模型
- * @create: 2022/07/20 20:13
+ * 配置类
+ * @author Sober
  */
 public class LoopAuthConfig implements Serializable {
 

@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * @program: LoopAuth
+ * json工具类
  * @author: Sober
- * @Description:
- * @create: 2022/08/08 17:43
  */
 public class JsonUtil {
 

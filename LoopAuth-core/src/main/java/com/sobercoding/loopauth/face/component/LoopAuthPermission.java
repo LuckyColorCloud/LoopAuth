@@ -10,24 +10,16 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 import java.util.Set;
 
 /**
- * @program: LoopAuthPermission
  * @author: Sober
- * @Description:
- * @create: 2022/08/16 02:33
  */
 public class LoopAuthPermission {
 
 
     /**
-     * @Method: checkByRole
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 角色认证
+     * 角色认证
+     * @author: Sober
      * @param loopAuthVerifyMode 认证方式
      * @param roles 角色列表
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/10 16:33
      */
     public void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
         String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
@@ -43,15 +35,10 @@ public class LoopAuthPermission {
     }
 
     /**
-     * @Method: checkByPermission
-     * @Author: Sober
-     * @Version: 0.0.1
-     * @Description: 权限认证
+     * 权限认证
+     * @author: Sober
      * @param loopAuthVerifyMode 认证方式
      * @param permissions 权限代码列表
-     * @Return: java.lang.String
-     * @Exception:
-     * @Date: 2022/8/10 16:33
      */
     public void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
         String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();

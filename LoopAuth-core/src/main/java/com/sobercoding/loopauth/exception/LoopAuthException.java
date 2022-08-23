@@ -2,10 +2,7 @@ package com.sobercoding.loopauth.exception;
 
 
 /**
- * @program: LoopAuth
  * @author: Sober
- * @Description: 异常类
- * @create: 2022/08/08 19:07
  */
 public class LoopAuthException extends RuntimeException{
 

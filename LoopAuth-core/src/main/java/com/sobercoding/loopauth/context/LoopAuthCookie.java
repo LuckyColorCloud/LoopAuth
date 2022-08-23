@@ -10,10 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
 /**
- * @program: LoopAuth
- * @author: Sober
- * @Description:
- * @create: 2022/08/19 02:28
+ * Cookie生成
+ * @author Sober
  */
 public class LoopAuthCookie {
 
@@ -134,7 +132,7 @@ public class LoopAuthCookie {
 
     /**
      * 转换为响应头 Set-Cookie 参数需要的值
-     * @return /
+     * @return java.lang.String
      */
     public String toCookieString() {
         LoopAuthParamException.isNotEmpty(name, LoopAuthExceptionEnum.PARAM_IS_NULL);

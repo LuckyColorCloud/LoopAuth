@@ -15,14 +15,8 @@ import redis.clients.jedis.params.SetParams;
 import java.util.Set;
 
 /**
- * <p>
- * Description: Redis 操作助手
- * </p>
- *
+ * Redis 操作助手
  * @author: Weny
- * @date: 2022/8/13
- * @see: com.sobercoding
- * @version: v1.0.0
  */
 public class JedisDaoImpl implements LoopAuthDao {
 
@@ -40,13 +34,10 @@ public class JedisDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * 获取缓存值
-     * value 需要根据 Config 设置的 tokenPersistencePrefix 及 loginIdPersistencePrefix 转换
-     * key 前几个字符如果为 tokenPersistencePrefix设置的值则 转 TokenModel
-     * key 前几个字符如果为 loginIdPersistencePrefix设置的值则 转 Set<String>
-     *
-     * @param key Redis键
-     * @return value
+     * 获取用户会话
+     * @author Sober
+     * @param key 字典
+     * @return java.lang.Object
      */
     @Override
     public Object get(String key) {
@@ -65,16 +56,23 @@ public class JedisDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * 判断key是否存在
-     *
-     * @param key Redis中的键
-     * @return
+     * 查看key是否存在
+     * @author Sober
+     * @param key 字典
+     * @return boolean
      */
     @Override
     public boolean containsKey(String key) {
         return getRedisConn().exists(key);
     }
 
+    /**
+     * 写入用户会话
+     * @author Sober
+     * @param key 字典
+     * @param value 值
+     * @param expirationTime 到期时间戳
+     */
     @Override
     public void set(String key, Object value, long expirationTime) {
         String json = null;
@@ -92,9 +90,9 @@ public class JedisDaoImpl implements LoopAuthDao {
     }
 
     /**
-     * 获取Redis中的键
-     *
-     * @param key 操作失败抛出异常  异常请参考exception目录其他异常 新建一个DaoException异常类，并在Enum枚举类新增  持久层操作失败的异常code msg
+     * 删除
+     * @author Sober
+     * @param key 字典
      */
     @Override
     public void remove(String key) {
