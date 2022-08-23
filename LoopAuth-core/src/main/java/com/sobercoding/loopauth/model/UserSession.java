@@ -47,9 +47,11 @@ public class UserSession implements Serializable {
      * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession setToken(TokenModel tokenModel) {
-        tokens = LoopAuthStrategy.loginRulesMatching.exe(
+        tokens.addAll(
+                LoopAuthStrategy.loginRulesMatching.exe(
                 tokens.stream().filter(item -> !item.isRemoveFlag()).collect(Collectors.toSet()),
-                tokenModel);
+                tokenModel)
+        );
         // 登录规则检测
         return this;
     }
@@ -103,7 +105,7 @@ public class UserSession implements Serializable {
      * @author Sober
      * @return com.sobercoding.loopauth.model.UserSession
      */
-    public UserSession getUserSession(){
+    public UserSession gainTokenModel(){
         Set<String> tokenSet = (Set<String>) LoopAuthStrategy.getLoopAuthDao()
                 .get(LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() +
                         ":" +
@@ -145,7 +147,7 @@ public class UserSession implements Serializable {
      */
     public UserSession removeToken(Collection<String> tokenModelValues) {
         tokens.stream()
-                .filter(tokenModel -> !tokenModelValues.contains(tokenModel.getValue()))
+                .filter(tokenModel -> tokenModelValues.contains(tokenModel.getValue()))
                 .forEach(tokenModel -> tokenModel.setRemoveFlag(true));
         return this;
     }

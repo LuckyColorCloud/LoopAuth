@@ -177,7 +177,7 @@ public class LoopAuthLogin {
      */
     private UserSession getUserSessionByLoginId(String loginId) {
         return new UserSession().setLoginId(loginId)
-                .getUserSession();
+                .gainTokenModel();
     }
 
 
