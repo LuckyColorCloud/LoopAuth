@@ -110,7 +110,7 @@ public class LoopAuthLogin {
                 // 查看是否过期
                 if (isExpire(tokenModel)){
                     // 注销 当前token
-                    tokenModel.remove();
+                    getUserSession().removeToken(Collections.singleton(tokenModel.getValue()));
                     // 删除cookie
                     delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
                     throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_EXPIRE);

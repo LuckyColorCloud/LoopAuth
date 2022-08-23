@@ -133,14 +133,10 @@ public class UserSession implements Serializable {
             Set<String> tokenValues = new HashSet<>();
             // 原子化
             AtomicLong maxExpirationTime = new AtomicLong(0);
-            // 缓存时间
-            long storageTimeOut = LoopAuthStrategy.getLoopAuthConfig().getStorageTimeOut();
             // 写入token对应模型
             tokens.forEach(tokenModel -> {
-                // 加载缓存过期时间
-                long expirationTime = storageTimeOut == 0 ?
-                        tokenModel.getTimeOut() :
-                        storageTimeOut;
+                // 加载过期时间
+                long expirationTime = tokenModel.getTimeOut();
                 // 判断所以会话最晚过期时间
                 if (expirationTime > maxExpirationTime.get()){
                     maxExpirationTime.set(expirationTime);

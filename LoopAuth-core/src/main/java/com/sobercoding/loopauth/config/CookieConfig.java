@@ -23,6 +23,11 @@ public class CookieConfig implements Serializable {
     private String path = "/";
 
     /**
+     * 是否长久有效 默认false 开启则cookie的有效时间为time-out,关闭则网页关闭后cookie丢失
+     */
+    private boolean remember;
+
+    /**
      * 是否允许js操作
      */
     private boolean httpOnly;
@@ -40,6 +45,13 @@ public class CookieConfig implements Serializable {
      */
     private String sameSite;
 
+    public boolean isRemember() {
+        return remember;
+    }
+
+    public void setRemember(boolean remember) {
+        this.remember = remember;
+    }
 
     public String getDomain() {
         return domain;

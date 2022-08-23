@@ -21,15 +21,12 @@ public class LoopAuthConfig implements Serializable {
      * 一体项目通过该Value获取cookie
      */
     private String tokenName = "LoopAuth";
+
     /**
      * token有效期(单位毫秒) 默认24小时、-1永久
      */
     private long timeOut = 60 * 60 * 24 * 1000;
 
-    /**
-     * 本机或redis缓存有效时间，默认0 即此该配置不生效，采用timeOut的时间
-     */
-    private long storageTimeOut = 0;
 
     /**
      * token共生  默认不开启
@@ -90,15 +87,6 @@ public class LoopAuthConfig implements Serializable {
      * cookie配置
      */
     private CookieConfig cookieConfig = new CookieConfig();
-
-    public long getStorageTimeOut() {
-        return storageTimeOut;
-    }
-
-    public LoopAuthConfig setStorageTimeOut(long storageTimeOut) {
-        this.storageTimeOut = storageTimeOut * 1000;
-        return this;
-    }
 
     public Boolean getTokenPersistence() {
         return isTokenPersistence;

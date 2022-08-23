@@ -22,4 +22,5 @@ public class LoopAuthParamException extends LoopAuthException{
                 .orElseThrow(() -> new LoopAuthParamException(loopAuthExceptionEnum));
     }
 
+
 }

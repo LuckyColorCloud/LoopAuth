@@ -1,5 +1,11 @@
 package com.sobercoding.loopauth.util;
 
+import com.sun.istack.internal.Nullable;
+
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -18,7 +24,21 @@ public class LoopAuthUtil {
      * @return 是否
      */
     public static boolean isEmpty(Object object) {
-        return object == null || "".equals(object) || object.toString().length() == 0;
+        if (object == null) {
+            return true;
+        } else if (object instanceof Optional) {
+            return !((Optional<?>)object).isPresent();
+        } else if (object instanceof CharSequence) {
+            return ((CharSequence)object).length() == 0;
+        } else if (object.getClass().isArray()) {
+            return Array.getLength(object) == 0;
+        } else if (object instanceof Collection) {
+            return ((Collection<?>)object).isEmpty();
+        } else if (object instanceof Map) {
+            return ((Map<?, ?>) object).isEmpty();
+        }else {
+            return false;
+        }
     }
 
     /**
@@ -29,6 +49,14 @@ public class LoopAuthUtil {
      */
     public static boolean isNotEmpty(Object object) {
         return !isEmpty(object);
+    }
+
+    public static boolean isNotEmpty(Object[] array) {
+        return !isEmpty(array);
+    }
+
+    public static boolean isEmpty(Object[] array) {
+        return array == null || array.length == 0;
     }
 
     /**

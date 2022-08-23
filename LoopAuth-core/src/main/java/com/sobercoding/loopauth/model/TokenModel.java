@@ -102,17 +102,11 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
      * 获取内存中当前token的TokenModel
      */
     public void setTokenModel(){
-        // 缓存时间
-        long storageTimeOut = LoopAuthStrategy.getLoopAuthConfig().getStorageTimeOut();
-        // 加载缓存过期时间
-        long expirationTime = storageTimeOut == 0 ?
-                timeOut :
-                storageTimeOut;
         LoopAuthStrategy.getLoopAuthDao()
                 .set(
                         LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + value,
                         this,
-                        expirationTime
+                        timeOut
                 );
     }
 

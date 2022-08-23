@@ -7,6 +7,7 @@ import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;
 import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,14 +26,14 @@ public class TestController {
     @GetMapping("/login")
     public String register(String type){
         LoopAuthFaceImpl.login("1", type);
-        LoopAuthStrategy.getLoopAuthDao().get("");
+//        LoopAuthStrategy.getLoopAuthDao().get("asd");
         return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
-        LoopAuthStrategy.getLoopAuthDao().get("");
+//        LoopAuthStrategy.getLoopAuthDao().get("");
         return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 

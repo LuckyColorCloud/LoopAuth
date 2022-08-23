@@ -1,6 +1,8 @@
 package com.sobercoding.loopauth.face;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthParamException;
 import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.face.component.LoopAuthPermission;
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
@@ -26,6 +28,7 @@ public class LoopAuthFaceImpl {
      * @param loginId 登录id
      */
     public static void login(String loginId) {
+        LoopAuthParamException.isNotEmpty(loginId, LoopAuthExceptionEnum.PARAM_IS_NULL);
         LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility("LoopAuth")
@@ -41,7 +44,10 @@ public class LoopAuthFaceImpl {
      * @param loginId 登录id
      * @param facility 终端类型
      */
+
     public static void login(String loginId, String facility) {
+        LoopAuthParamException.isNotEmpty(loginId, LoopAuthExceptionEnum.PARAM_IS_NULL);
+        LoopAuthParamException.isNotEmpty(facility, LoopAuthExceptionEnum.PARAM_IS_NULL);
         LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility(facility)
@@ -57,6 +63,7 @@ public class LoopAuthFaceImpl {
      * @param tokenModelValues token列表
      */
     public static void logout(String... tokenModelValues) {
+        LoopAuthParamException.isNotEmpty(tokenModelValues, LoopAuthExceptionEnum.PARAM_IS_NULL);
         LOOP_AUTH_LOGIN.logout(tokenModelValues);
     }
 
@@ -103,7 +110,8 @@ public class LoopAuthFaceImpl {
      * @param roles 角色列表
      */
     public static void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
-        LoopAuthStrategy.getLoopAuthPermission().checkByRole(loopAuthVerifyMode,roles);
+        LoopAuthParamException.isNotEmpty(roles, LoopAuthExceptionEnum.PARAM_IS_NULL);
+        LOOP_AUTH_PERMISSION.checkByRole(loopAuthVerifyMode,roles);
     }
 
     /**
@@ -113,6 +121,6 @@ public class LoopAuthFaceImpl {
      * @param permissions 权限代码列表
      */
     public static void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
-        LoopAuthStrategy.getLoopAuthPermission().checkByPermission(loopAuthVerifyMode,permissions);
+        LOOP_AUTH_PERMISSION.checkByPermission(loopAuthVerifyMode,permissions);
     }
 }
