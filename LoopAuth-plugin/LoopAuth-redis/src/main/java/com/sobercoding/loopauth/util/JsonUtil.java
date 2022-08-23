@@ -3,7 +3,6 @@ package com.sobercoding.loopauth.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import com.sobercoding.loopauth.model.TokenModel;
 
 import java.io.IOException;
 import java.util.*;
@@ -47,11 +46,6 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return userList;
-    }
-
-    public static void main(String[] args) {
-        TokenModel tokenModel = new TokenModel().setValue("sad");
-        System.out.println(objToJson(tokenModel));
     }
 
 }
