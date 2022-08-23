@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.jedis.JedisDaoImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * @program: LoopAuth
@@ -37,7 +38,7 @@ public class MyLoopAuthConfig {
 //    }
 
     @Bean
-    @DependsOn("loopAuthConfig")
+    @Lazy
     public LoopAuthDao getLoopAuthDao() {
         return new JedisDaoImpl();
     }
