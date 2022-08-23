@@ -3,7 +3,7 @@ server:
   port: 8080
 
 loop-auth:
-  time-out: 5000 # token有效时间  默认24小时
+  time-out: 5000 # token有效时间(单位毫秒)  默认24小时
 #  storage-time-out: 10000 # 存储即redis或本机缓存的 有效期 (单位毫秒) 默认0 为0时即不采用该值设置过期时间，采用token的过期时间设置
 #  token-name: token # token名称  默认LoopAuth
   mutualism: true # token共生 默认false 开启则 账号可以同时在线
@@ -31,7 +31,7 @@ loop-auth:
 #    password: xxxxxxx # 密码  默认空
 #    port: 8910 # 端口号， 默认是6379
     database-no: 1 # 链接的数据库 默认0
-    time-out: 1000 # 超时时间 默认2000
+    time-out: 1000 # 超时时间(单位毫秒) 默认2000
     max-total: 10 # 最大连接数 默认16
     max-idle: 5 # 最大空闲连接数 默认8
     min-idle: 2 # 最小空闲连接数 默认4
