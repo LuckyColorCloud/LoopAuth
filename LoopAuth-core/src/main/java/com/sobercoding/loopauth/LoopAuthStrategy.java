@@ -169,8 +169,7 @@ public class LoopAuthStrategy {
 
     /**
      * 默认登录规则处理
-     * 新的TokenModel直接加入tokenModels
-     * 返回需要删除的Set<TokenModel>
+     * 新的tokenModel直接加入tokenModels返回需要删除的列表
      */
     public static LrFunction<Set<TokenModel>, TokenModel> loginRulesMatching = (tokenModels, tokenModel) -> {
         Set<TokenModel> removeTokenModels = new HashSet<>();

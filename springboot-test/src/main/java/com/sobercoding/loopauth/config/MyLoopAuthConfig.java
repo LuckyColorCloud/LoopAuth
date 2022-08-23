@@ -34,9 +34,9 @@ public class MyLoopAuthConfig {
 //                });
 //    }
 
-    @Bean
-    public LoopAuthDao getLoopAuthDao() {
-        return new JedisDaoImpl();
-    }
+//    @Bean
+//    public LoopAuthDao getLoopAuthDao() {
+//        return new JedisDaoImpl();
+//    }
 
 }

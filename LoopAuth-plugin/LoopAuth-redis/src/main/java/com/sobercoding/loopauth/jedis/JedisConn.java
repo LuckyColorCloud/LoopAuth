@@ -11,14 +11,8 @@ import redis.clients.jedis.DefaultJedisClientConfig.Builder;
 import redis.clients.jedis.JedisPool;
 
 /**
- * <p>
- * Description: Redis 连接
- * </p>
- *
+ * Redis 连接
  * @author: Weny
- * @date: 2022/8/13
- * @see: com.sobercoding
- * @version: v1.0.0
  */
 public class JedisConn {
 
@@ -55,8 +49,6 @@ public class JedisConn {
     /**
      * 生成连接池连接
      * 通过方法内局部变量的定义,优化系统性能(减少了主内存与线程本地内存的数据交换次数)
-     *
-     * @return
      */
     private Jedis genPoolConn() {
         JedisPool pool = jedisPool;
@@ -82,8 +74,6 @@ public class JedisConn {
 
     /**
      * 生成单连接
-     *
-     * @return
      */
     private Jedis genSingleConn() {
         if (jedisConn == null) {

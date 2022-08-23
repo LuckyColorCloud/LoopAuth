@@ -25,12 +25,14 @@ public class TestController {
     @GetMapping("/login")
     public String register(String type){
         LoopAuthFaceImpl.login("1", type);
+        LoopAuthStrategy.getLoopAuthDao().get("");
         return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
+        LoopAuthStrategy.getLoopAuthDao().get("");
         return LoopAuthFaceImpl.getTokenModel().getValue();
     }
 
