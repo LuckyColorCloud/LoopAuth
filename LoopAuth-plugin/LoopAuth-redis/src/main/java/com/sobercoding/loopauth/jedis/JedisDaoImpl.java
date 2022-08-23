@@ -11,6 +11,7 @@ import com.sobercoding.loopauth.util.JsonUtil;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
+
 import java.util.Set;
 
 /**
@@ -23,14 +24,14 @@ import java.util.Set;
  * @see: com.sobercoding
  * @version: v1.0.0
  */
-public class JedisDaoImpl implements LoopAuthDao{
+public class JedisDaoImpl implements LoopAuthDao {
 
     private volatile Jedis redisConn;
 
-    private Jedis getRedisConn(){
-        if (redisConn == null){
-            synchronized(this){
-                if (redisConn == null){
+    private Jedis getRedisConn() {
+        if (redisConn == null) {
+            synchronized (this) {
+                if (redisConn == null) {
                     redisConn = new JedisConn().getJedis();
                 }
             }
@@ -52,12 +53,12 @@ public class JedisDaoImpl implements LoopAuthDao{
         String json = getRedisConn().get(key);
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
-                return JsonUtil.jsonToObj(json,TokenModel.class);
+                return JsonUtil.jsonToObj(json, TokenModel.class);
             }
         }
         if (LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
-                return JsonUtil.<String>jsonToList(getRedisConn().get(key),String.class);
+                return JsonUtil.<String>jsonToList(getRedisConn().get(key), String.class);
             }
         }
         return null;
@@ -86,7 +87,7 @@ public class JedisDaoImpl implements LoopAuthDao{
             json = JsonUtil.objToJson(strings);
         }
         LoopAuthDaoException.isEmpty(json, LoopAuthExceptionEnum.DATA_EXCEPTION);
-        LoopAuthDaoException.isOK(getRedisConn().set(key, json, SetParams.setParams().ex(expirationTime / 1000)),
+        LoopAuthDaoException.isTrue("ok".equalsIgnoreCase(getRedisConn().set(key, json, SetParams.setParams().ex(expirationTime / 1000))),
                 LoopAuthExceptionEnum.CACHE_FAILED);
     }
 
@@ -97,9 +98,8 @@ public class JedisDaoImpl implements LoopAuthDao{
      */
     @Override
     public void remove(String key) {
-        LoopAuthDaoException.isOK(getRedisConn().del(key) == 1 ? "OK":"", LoopAuthExceptionEnum.CACHE_FAILED);
+        LoopAuthDaoException.isTrue(getRedisConn().del(key) == 1, LoopAuthExceptionEnum.CACHE_FAILED);
     }
-
 
 
 }

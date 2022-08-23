@@ -38,14 +38,9 @@ public class LoopAuthDaoException extends LoopAuthException{
      * @param obj
      * @param loopAuthExceptionEnum
      */
-    public static void isOK(Object obj, LoopAuthExceptionEnum loopAuthExceptionEnum) {
-        Optional.ofNullable(obj)
-                .filter(o -> {
-                    if (LoopAuthUtil.isEmpty(o)) {
-                        return false;
-                    }
-                    return o.equals("OK");
-                })
+    public static void isTrue(boolean obj, LoopAuthExceptionEnum loopAuthExceptionEnum) {
+        Optional.of(obj)
+                .filter(o -> o)
                 .orElseThrow(() -> new LoopAuthLoginException(loopAuthExceptionEnum));
     }
 }
