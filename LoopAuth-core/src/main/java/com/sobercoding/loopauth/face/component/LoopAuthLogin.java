@@ -177,14 +177,14 @@ public class LoopAuthLogin {
             }
         }
         // 不为空
-        LoopAuthLoginException.isEmpty(token, LoopAuthExceptionEnum.LOGIN_NOT_EXIST, "Failed to obtain Token");
+        LoopAuthLoginException.isEmpty(token, LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "Failed to obtain Token");
         // 解析token参数
         TokenModel tokenBodyModel = LoopAuthStrategy.getLoopAuthToken().getInfo(token);
-        LoopAuthLoginException.isEmpty(tokenBodyModel,LoopAuthExceptionEnum.LOGIN_NOT_EXIST, "Token illegal");
+        LoopAuthLoginException.isEmpty(tokenBodyModel,LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "Token illegal");
         // token合法验证
         LoopAuthLoginException.isTrue(
                 LoopAuthStrategy.getLoopAuthToken().verify(token, LoopAuthStrategy.getSecretKey.apply(tokenBodyModel.getLoginId())),
-                LoopAuthExceptionEnum.LOGIN_NOT_EXIST,"Token illegal");
+                LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F,"Token illegal");
         UserSession userSession = new UserSession()
                 .setTokenModelNow(tokenBodyModel);
         // 开启持久化执行
@@ -202,7 +202,7 @@ public class LoopAuthLogin {
                 getUserSession().removeToken(Collections.singleton(userSession.getTokenModelNow().getValue()));
                 // 删除cookie
                 delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
-                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST, "The token is due");
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "The token is due");
             }
         }
         // 存储

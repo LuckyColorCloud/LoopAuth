@@ -3,7 +3,7 @@ server:
   port: 8080
 
 loop-auth:
-  time-out: 10 # token有效时间(单位秒)  默认24小时
+  time-out: 5 # token有效时间(单位秒)  默认24小时
 #  token-name: token # token名称  默认LoopAuth
   mutualism: true # token共生 默认false 开启则 账号可以同时在线
   exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）

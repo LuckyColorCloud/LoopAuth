@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
     @GetMapping("/login")
-    public String register(){
-        LoopAuthFaceImpl.login(null);
+    public String register(String type){
+        LoopAuthFaceImpl.login("1",type);
         return LoopAuthFaceImpl.getTokenModel().toString();
     }
 

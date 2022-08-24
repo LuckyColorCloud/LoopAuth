@@ -8,9 +8,11 @@ public enum LoopAuthExceptionEnum {
     // HTTP请求方式不对
     HTTP_MODULE_ERROR(415, "HTTP请求方式不对"),
     // 非法请求
-    LOGIN_NOT_EXIST(401, "非法请求: %s"),
+    LOGIN_NOT_EXIST_F(401, "非法请求: %s"),
+    // 非法请求
+    LOGIN_NOT_EXIST(401, "非法请求"),
     //无权限
-    NO_PERMISSION(401, "未经许可"),
+    NO_PERMISSION(403, "未经许可"),
     //请求参数 不能为 必须有值
     PARAM_IS_NULL(100001, "必要请求参数不存在: %s"),
     // 数据异常

@@ -3,6 +3,7 @@ package com.sobercoding.loopauth.context;
 
 import com.sobercoding.loopauth.exception.LoopAuthException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthParamException;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 /**
@@ -59,7 +60,7 @@ public interface SourceContext {
      */
     public default String getParamNotNull(String paramValue) {
         if(LoopAuthUtil.isEmpty(paramValue)) {
-            throw new LoopAuthException(LoopAuthExceptionEnum.PARAM_IS_NULL.setMsg(paramValue));
+            throw new LoopAuthParamException(LoopAuthExceptionEnum.PARAM_IS_NULL, "paramValue");
         }
         return paramValue;
     }

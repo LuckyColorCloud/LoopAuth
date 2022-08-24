@@ -7,14 +7,17 @@ import java.util.Optional;
 /**
  * @author: Weny
  */
-public class LoopAuthDaoException extends LoopAuthException{
+public class LoopAuthDaoException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
     public LoopAuthDaoException(LoopAuthExceptionEnum loopAuthExceptionEnum) {
-        super(loopAuthExceptionEnum);
+        super(loopAuthExceptionEnum.getMsg());
     }
 
+    public LoopAuthDaoException(LoopAuthExceptionEnum loopAuthExceptionEnum, String detailMsg) {
+        super(String.format(loopAuthExceptionEnum.getMsg(),detailMsg));
+    }
     /**
      * 判断数据是否为空
      * @author Sober
@@ -24,7 +27,7 @@ public class LoopAuthDaoException extends LoopAuthException{
     public static void isEmpty(Object obj, LoopAuthExceptionEnum loopAuthExceptionEnum) {
         Optional.ofNullable(obj)
                 .filter(LoopAuthUtil::isNotEmpty)
-                .orElseThrow(() -> new LoopAuthLoginException(loopAuthExceptionEnum));
+                .orElseThrow(() -> new LoopAuthDaoException(loopAuthExceptionEnum));
     }
 
     /**
@@ -35,6 +38,6 @@ public class LoopAuthDaoException extends LoopAuthException{
     public static void isTrue(boolean obj, LoopAuthExceptionEnum loopAuthExceptionEnum) {
         Optional.of(obj)
                 .filter(o -> o)
-                .orElseThrow(() -> new LoopAuthLoginException(loopAuthExceptionEnum));
+                .orElseThrow(() -> new LoopAuthDaoException(loopAuthExceptionEnum));
     }
 }
