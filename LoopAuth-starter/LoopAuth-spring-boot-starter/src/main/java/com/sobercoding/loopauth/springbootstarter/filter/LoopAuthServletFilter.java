@@ -1,8 +1,10 @@
 package com.sobercoding.loopauth.springbootstarter.filter;
 
 import com.sobercoding.loopauth.springbootstarter.CheckPermissionAnnotation;
+import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -98,7 +100,18 @@ public class LoopAuthServletFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         try {
-            loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request));
+            // 存在拦截路由时启用
+            if (LoopAuthUtil.isNotEmpty(includeList)){
+                HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+                // 放行路由为空 拦截
+                if (LoopAuthUtil.isEmpty(excludeList)){
+                    loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request));
+                }
+                // 放行路由不为空 且 放行路由不包含当前路由
+                if (LoopAuthUtil.isNotEmpty(excludeList) && !excludeList.contains(httpServletRequest.getRequestURI())){
+                    loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request));
+                }
+            }
         } catch (Throwable e) {
             // 1. 获取异常处理策略结果
             String result =  String.valueOf(loopAuthErrorFilter.run(e));

@@ -47,13 +47,11 @@ public class CheckPermissionAnnotation {
 
         LoopAuthRole checkRole = (LoopAuthRole) CheckPermissionAnnotation.getAnnotation.apply(target, LoopAuthRole.class);
         if (checkRole != null) {
-            LoopAuthFaceImpl.isLogin();
             LoopAuthFaceImpl.checkByRole(checkRole.mode(), checkRole.value());
         }
 
         LoopAuthPermission checkPermission = (LoopAuthPermission) CheckPermissionAnnotation.getAnnotation.apply(target, LoopAuthPermission.class);
         if (checkPermission != null) {
-            LoopAuthFaceImpl.isLogin();
             LoopAuthFaceImpl.checkByPermission(checkPermission.mode(), checkPermission.value());
         }
 
