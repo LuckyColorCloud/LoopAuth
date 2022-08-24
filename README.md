@@ -1,11 +1,30 @@
-# LoopAuth
+- 注解鉴权
+- 代码鉴权
+- 登录功能
+- 有/无状态登录
+- Redis登录业务存储分离
 
-## 目录结构
->- LoopAuth #项目总目录
->  - LoopAuth-core #核心代码模块
->  - LoopAuth-plugin #插件模块
->    - LoopAuth-abac #ABAC支持模块
->    - ... #更多插件
->  - LoopAuth-starter #多种框架启动器
->    - LoopAuth-spring-boot-starter #SpringBoot项目启动器
->    - ... #更多框架兼容启动器
+master分支中有一个springboot-test可参考使用，文档会在8.26前完成发布。
+
+```xml
+    <dependency>
+        <groupId>com.sobercoding</groupId>
+        <artifactId>LoopAuth-spring-boot-starter</artifactId>
+        <version>1.0.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sobercoding</groupId>
+        <artifactId>LoopAuth-redis</artifactId>
+        <version>1.0.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sobercoding</groupId>
+        <artifactId>LoopAuth-servlet</artifactId>
+        <version>1.0.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.sobercoding</groupId>
+        <artifactId>LoopAuth-core</artifactId>
+        <version>1.0.1</version>
+    </dependency>
+```
