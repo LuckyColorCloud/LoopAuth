@@ -1,7 +1,5 @@
 package com.sobercoding.loopauth.util;
 
-import com.sun.istack.internal.Nullable;
-
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
