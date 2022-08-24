@@ -7,7 +7,6 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.TimeZone;
 
 /**
  * Cookie生成
@@ -135,8 +134,8 @@ public class LoopAuthCookie {
      * @return java.lang.String
      */
     public String toCookieString() {
-        LoopAuthParamException.isNotEmpty(name, LoopAuthExceptionEnum.PARAM_IS_NULL);
-        LoopAuthParamException.isNotEmpty(value, LoopAuthExceptionEnum.PARAM_IS_NULL);
+        LoopAuthParamException.isNotEmpty(name, LoopAuthExceptionEnum.PARAM_IS_NULL, "Cookie Name");
+        LoopAuthParamException.isNotEmpty(value, LoopAuthExceptionEnum.PARAM_IS_NULL, "Cookie Value");
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name).append("=").append(value);

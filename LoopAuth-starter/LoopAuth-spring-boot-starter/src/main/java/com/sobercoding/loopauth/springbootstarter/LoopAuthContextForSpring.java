@@ -37,6 +37,6 @@ public class LoopAuthContextForSpring implements LoopAuthContext {
     private ServletRequestAttributes getServletRequestAttributes(){
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return Optional.ofNullable(servletRequestAttributes)
-                .orElseThrow(() -> new LoopAuthParamException(LoopAuthExceptionEnum.PARAM_IS_NULL));
+                .orElseThrow(() -> new LoopAuthParamException(LoopAuthExceptionEnum.PARAM_IS_NULL, "ServletRequestAttributes Failed to get"));
     }
 }

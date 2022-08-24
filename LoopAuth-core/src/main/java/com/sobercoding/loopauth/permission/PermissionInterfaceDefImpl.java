@@ -14,11 +14,11 @@ import java.util.Set;
 public class PermissionInterfaceDefImpl implements PermissionInterface {
     @Override
     public Set<String> getPermissionSet(String userId, String loginType) {
-        throw new LoopAuthConfigException(LoopAuthExceptionEnum.INITIALIZATION_FAILURE);
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED,"PermissionInterface.getPermissionSet()");
     }
 
     @Override
     public Set<String> getRoleSet(String userId, String loginType) {
-        throw new LoopAuthConfigException(LoopAuthExceptionEnum.INITIALIZATION_FAILURE);
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "PermissionInterface.getRoleSet()");
     }
 }

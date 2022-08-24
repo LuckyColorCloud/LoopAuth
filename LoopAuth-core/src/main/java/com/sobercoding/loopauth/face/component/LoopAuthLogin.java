@@ -61,12 +61,11 @@ public class LoopAuthLogin {
     /**
      * 注销某Token登录
      * @author Sober
-     * @param tokenModelValues token列表
      */
-    public void logout(String... tokenModelValues) {
+    public void logout() {
         // 开启持久化才执行
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
-            getUserSession().removeToken(Arrays.asList(tokenModelValues));
+            getUserSession().removeToken(Collections.singleton(getTokenModel().getValue()));
         }
         // 删除cookie
         delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
@@ -178,14 +177,14 @@ public class LoopAuthLogin {
             }
         }
         // 不为空
-        LoopAuthLoginException.isEmpty(token,LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
+        LoopAuthLoginException.isEmpty(token, LoopAuthExceptionEnum.LOGIN_NOT_EXIST, "Failed to obtain Token");
         // 解析token参数
         TokenModel tokenBodyModel = LoopAuthStrategy.getLoopAuthToken().getInfo(token);
-        LoopAuthLoginException.isEmpty(tokenBodyModel,LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
+        LoopAuthLoginException.isEmpty(tokenBodyModel,LoopAuthExceptionEnum.LOGIN_NOT_EXIST, "Token illegal");
         // token合法验证
         LoopAuthLoginException.isTrue(
                 LoopAuthStrategy.getLoopAuthToken().verify(token, LoopAuthStrategy.getSecretKey.apply(tokenBodyModel.getLoginId())),
-                LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
+                LoopAuthExceptionEnum.LOGIN_NOT_EXIST,"Token illegal");
         UserSession userSession = new UserSession()
                 .setTokenModelNow(tokenBodyModel);
         // 开启持久化执行
@@ -203,7 +202,7 @@ public class LoopAuthLogin {
                 getUserSession().removeToken(Collections.singleton(userSession.getTokenModelNow().getValue()));
                 // 删除cookie
                 delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
-                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_EXPIRE);
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST, "The token is due");
             }
         }
         // 存储

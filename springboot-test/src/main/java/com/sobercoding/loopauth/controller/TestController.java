@@ -1,13 +1,10 @@
 package com.sobercoding.loopauth.controller;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;
 import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/login")
     public String register(){
-        LoopAuthFaceImpl.login("1");
+        LoopAuthFaceImpl.login(null);
         return LoopAuthFaceImpl.getTokenModel().toString();
     }
 

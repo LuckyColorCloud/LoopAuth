@@ -28,7 +28,6 @@ public class LoopAuthFaceImpl {
      * @param loginId 登录id
      */
     public static void login(String loginId) {
-        LoopAuthParamException.isNotEmpty(loginId, LoopAuthExceptionEnum.PARAM_IS_NULL);
         LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility("LoopAuth")
@@ -46,8 +45,6 @@ public class LoopAuthFaceImpl {
      */
 
     public static void login(String loginId, String facility) {
-        LoopAuthParamException.isNotEmpty(loginId, LoopAuthExceptionEnum.PARAM_IS_NULL);
-        LoopAuthParamException.isNotEmpty(facility, LoopAuthExceptionEnum.PARAM_IS_NULL);
         LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility(facility)
@@ -58,13 +55,11 @@ public class LoopAuthFaceImpl {
     }
 
     /**
-     * 注销某Token登录
+     * 注销登录
      * @author Sober
-     * @param tokenModelValues token列表
      */
-    public static void logout(String... tokenModelValues) {
-        LoopAuthParamException.isNotEmpty(tokenModelValues, LoopAuthExceptionEnum.PARAM_IS_NULL);
-        LOOP_AUTH_LOGIN.logout(tokenModelValues);
+    public static void logout() {
+        LOOP_AUTH_LOGIN.logout();
     }
 
 
@@ -110,9 +105,9 @@ public class LoopAuthFaceImpl {
      * @param roles 角色列表
      */
     public static void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
-        LoopAuthParamException.isNotEmpty(roles, LoopAuthExceptionEnum.PARAM_IS_NULL);
         LOOP_AUTH_PERMISSION.checkByRole(loopAuthVerifyMode,roles);
     }
+
 
     /**
      * 权限认证

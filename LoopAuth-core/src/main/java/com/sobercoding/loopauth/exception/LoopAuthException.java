@@ -19,5 +19,10 @@ public class LoopAuthException extends RuntimeException{
         this.code = loopAuthExceptionEnum.getCode();
     }
 
+    public LoopAuthException(LoopAuthExceptionEnum loopAuthExceptionEnum, String detailMsg){
+        super(String.format(loopAuthExceptionEnum.getMsg(),detailMsg));
+        this.code = loopAuthExceptionEnum.getCode();
+    }
+
 
 }
