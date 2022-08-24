@@ -4,11 +4,8 @@ import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.config.RedisConfig;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import redis.clients.jedis.DefaultJedisClientConfig;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisClientConfig;
+import redis.clients.jedis.*;
 import redis.clients.jedis.DefaultJedisClientConfig.Builder;
-import redis.clients.jedis.JedisPool;
 
 /**
  * Redis 连接
@@ -79,13 +76,14 @@ public class JedisConn {
         if (jedisConn == null) {
             Builder config = DefaultJedisClientConfig.builder()
                     .database(DATABASE_NO)
-                    .timeoutMillis(TIMEOUT);
+                    .socketTimeoutMillis(TIMEOUT)
+                    .connectionTimeoutMillis(TIMEOUT);
             // 密码不为空时候设置密码
             if (PASSWORD != null && !"".equals(PASSWORD)) {
                 config.password(PASSWORD);
             }
             JedisClientConfig jedisClientConfig = config.build();
-            jedisConn = new Jedis(HOST, PORT, jedisClientConfig);
+            jedisConn = new Jedis(new HostAndPort(HOST, PORT), jedisClientConfig);
         }
         return jedisConn;
     }

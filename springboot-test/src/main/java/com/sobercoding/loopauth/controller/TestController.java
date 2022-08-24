@@ -28,7 +28,7 @@ public class TestController {
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
-        return LoopAuthFaceImpl.getUserSession().toString();
+        return LoopAuthFaceImpl.getUserSession().getTokenModelNow().toString();
     }
 
 
