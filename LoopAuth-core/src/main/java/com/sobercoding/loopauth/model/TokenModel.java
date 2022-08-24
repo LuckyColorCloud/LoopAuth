@@ -86,12 +86,12 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
 
     /**
      * 对内存的直接操作
-     * 获取内存中当前token的TokenModel
+     * 获取内存中当前token的loginId
      * @author Sober
-     * @return com.sobercoding.loopauth.model.TokenModel
+     * @return long
      */
-    public TokenModel gainTokenModel(){
-        return (TokenModel) LoopAuthStrategy.getLoopAuthDao()
+    public String gainLongId(){
+        return (String) LoopAuthStrategy.getLoopAuthDao()
                 .get(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
                         ":" +
                         value);
@@ -101,11 +101,11 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
      * 对内存的直接操作
      * 获取内存中当前token的TokenModel
      */
-    public void setTokenModel(){
+    public void depositTokenModel(){
         LoopAuthStrategy.getLoopAuthDao()
                 .set(
                         LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + value,
-                        this,
+                        loginId,
                         timeOut
                 );
     }

@@ -81,7 +81,9 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      */
     @Override
     public void set(String key, Object value, long expirationTime) {
+        // 插入数据
         this.dataPersistenceMap.put(key,value);
+        // 插入过期时间
         this.expirationTime.put(key,String.valueOf(System.currentTimeMillis() + expirationTime));
     }
 
@@ -93,7 +95,10 @@ public class LoopAuthDaoImpl implements LoopAuthDao {
      */
     @Override
     public void remove(String key) {
+        // 删除数据
         this.dataPersistenceMap.remove(key);
+        // 删除过期时间
+        this.expirationTime.remove(key);
     }
 
 

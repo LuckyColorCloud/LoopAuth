@@ -27,10 +27,13 @@ public class LoopAuthLogin {
      */
     public void login(TokenModel tokenModel) {
         // 创建会话
-        creationSession(tokenModel);
+        UserSession userSession = creationSession(tokenModel);
 
         // 写入上下文
         setContext(tokenModel);
+
+        // 写入会话Context存储器
+        LoopAuthStrategy.getLoopAuthContext().getStorage().set("userSession",userSession);
 
     }
 
@@ -74,7 +77,12 @@ public class LoopAuthLogin {
      * @author Sober
      */
     public void isLogin() {
-        getTokenModel();
+        // 从请求体载入当前会话
+        getBodyToken();
+        // token续期
+        if (LoopAuthStrategy.getLoopAuthConfig().getRenew()){
+            loginRenew();
+        }
     }
 
     /**
@@ -83,7 +91,8 @@ public class LoopAuthLogin {
      * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession getUserSession() {
-        return getUserSessionByLoginId(getTokenModel().getLoginId());
+        return (UserSession) LoopAuthStrategy
+                .getLoopAuthContext().getStorage().get("userSession");
     }
 
     /**
@@ -92,40 +101,7 @@ public class LoopAuthLogin {
      * @return com.sobercoding.loopauth.model.TokenModel
      */
     public TokenModel getTokenModel() {
-        // 优先从会话存储获取
-        TokenModel strategyTokenModel = (TokenModel) LoopAuthStrategy.getLoopAuthContext().getStorage()
-                .get("tokenModel");
-        // 会话存储不存在则从上下文请求体获取
-        if (LoopAuthUtil.isEmpty(strategyTokenModel)){
-            // 从请求体获取携带的token
-            String token = getBodyToken();
-            // 解析token参数
-            TokenModel tokenModel = LoopAuthStrategy.getLoopAuthToken().getInfo(token);
-            LoopAuthLoginException.isEmpty(tokenModel,LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
-            // 开启持久化才执行
-            if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
-                // 验证存储中是否存在
-                tokenModel = Optional.ofNullable(tokenModel.gainTokenModel())
-                        .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
-                // 查看是否过期
-                if (isExpire(tokenModel)){
-                    // 注销 当前token
-                    getUserSession().removeToken(Collections.singleton(tokenModel.getValue()));
-                    // 删除cookie
-                    delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
-                    throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_EXPIRE);
-                }
-                // 写入当前会话Context存储器
-            }
-            // 写入当前会话Context存储器
-            LoopAuthStrategy.getLoopAuthContext().getStorage().set("tokenModel",tokenModel);
-            // token续期
-            if (LoopAuthStrategy.getLoopAuthConfig().getRenew()){
-                loginRenew();
-            }
-            return tokenModel;
-        }
-        return strategyTokenModel;
+        return getUserSession().getTokenModelNow();
     }
 
     // 可重写结束
@@ -138,16 +114,17 @@ public class LoopAuthLogin {
      * @return com.sobercoding.loopauth.model.UserSession
      */
     private UserSession creationSession(TokenModel tokenModel) {
+        UserSession userSession = new UserSession();
         // 生成token
         creationToken(tokenModel);
         // 开启持久化才存储userSession
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
             // 获取存储用户的所有会话   写入当前会话   刷新会话
-            UserSession userSession = getUserSessionByLoginId(tokenModel.getLoginId());
+            userSession = getUserSessionByLoginId(tokenModel.getLoginId());
             userSession.setToken(tokenModel);
-            return userSession;
         }
-        return null;
+        userSession.setTokenModelNow(tokenModel);
+        return userSession;
     }
 
     private void creationToken(TokenModel tokenModel){
@@ -173,7 +150,7 @@ public class LoopAuthLogin {
 
 
     /**
-     * 从请求体获取token  通过合法认证的token但未必有效
+     * 从请求体获取token  通过合法认证的token
      * @author Sober
      * @return java.lang.String
      */
@@ -209,6 +186,30 @@ public class LoopAuthLogin {
         LoopAuthLoginException.isTrue(
                 LoopAuthStrategy.getLoopAuthToken().verify(token, LoopAuthStrategy.getSecretKey.apply(tokenBodyModel.getLoginId())),
                 LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
+        UserSession userSession = new UserSession()
+                .setTokenModelNow(tokenBodyModel);
+        // 开启持久化执行
+        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
+            // 从内存获取loginId  后  刷新userSession存储 最后刷新当前TokenModel 生成持久化的合法会话
+            userSession.setLoginId(userSession.getTokenModelNow().gainLongId())
+                    .gainUserSession()
+                    .gainModelByToken(userSession.getTokenModelNow().getValue());
+            // 验证存储中是否存在
+            Optional.ofNullable(userSession.getTokenModelNow())
+                    .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));
+            // 查看是否过期
+            if (isExpire(userSession.getTokenModelNow())){
+                // 注销 当前token
+                getUserSession().removeToken(Collections.singleton(userSession.getTokenModelNow().getValue()));
+                // 删除cookie
+                delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_EXPIRE);
+            }
+        }
+        // 存储
+        LoopAuthStrategy.getLoopAuthContext().getStorage().set(
+                "userSession",
+                userSession);
         return token;
     }
 
@@ -229,7 +230,6 @@ public class LoopAuthLogin {
     /**
      * @author Sober
      * @param tokenModel token模型
-     * @return void
      */
     private void setContext(TokenModel tokenModel){
         // 如果选择了COOKIE获取  则 写入Response的Cookie存储
@@ -257,8 +257,6 @@ public class LoopAuthLogin {
                     tokenModel.getValue()
             );
         }
-        // 写入当前会话Context存储器
-        LoopAuthStrategy.getLoopAuthContext().getStorage().set("tokenModel",tokenModel);
     }
 
     /**

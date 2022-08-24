@@ -1,13 +1,13 @@
 package com.sobercoding.loopauth.controller;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.config.LoopAuthConfig;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;
 import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import org.springframework.util.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,26 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
-
     @GetMapping("/login")
-    public String register(String type){
-        LoopAuthFaceImpl.login("1", type);
-//        LoopAuthStrategy.getLoopAuthDao().get("asd");
-        return LoopAuthFaceImpl.getTokenModel().getValue();
+    public String register(){
+        LoopAuthFaceImpl.login("1");
+        return LoopAuthFaceImpl.getTokenModel().toString();
     }
 
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
-//        LoopAuthStrategy.getLoopAuthDao().get("");
-        return LoopAuthFaceImpl.getTokenModel().getValue();
+        return LoopAuthFaceImpl.getUserSession().toString();
     }
 
 
     @GetMapping("/out")
     public String register1(){
+        LoopAuthFaceImpl.isLogin();
         LoopAuthFaceImpl.logout();
-        return "注销成功";
+        return LoopAuthFaceImpl.getUserSession().toString();
     }
 
     @LoopAutoCheckLogin

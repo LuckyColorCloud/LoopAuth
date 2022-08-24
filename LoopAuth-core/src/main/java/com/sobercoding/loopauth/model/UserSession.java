@@ -1,7 +1,6 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.io.Serializable;
 import java.util.*;
@@ -26,6 +25,20 @@ public class UserSession implements Serializable {
      */
     private Set<TokenModel> tokens;
 
+    /**
+     * 当前tokenModel
+     */
+    private TokenModel tokenModelNow;
+
+    public TokenModel getTokenModelNow() {
+        return tokenModelNow;
+    }
+
+    public UserSession setTokenModelNow(TokenModel tokenModelNow) {
+        this.tokenModelNow = tokenModelNow;
+        return this;
+    }
+
     public UserSession setLoginId(String loginId) {
         this.loginId = loginId;
         return this;
@@ -42,20 +55,21 @@ public class UserSession implements Serializable {
 
     /**
      * 建立会话
-     * @author Sober
+     *
      * @param tokenModel token模型
-     * @return com.sobercoding.loopauth.model.UserSession
+     * @author Sober
      */
     public UserSession setToken(TokenModel tokenModel) {
+        // 登录规则检测
         Set<TokenModel> removeTokenModels = LoopAuthStrategy.loginRulesMatching.exe(tokens, tokenModel);
+        // 删除不符合规则的过去token
         removeTokenModels.forEach(TokenModel::remove);
         // 存入token
-        tokenModel.setTokenModel();
+        tokenModel.depositTokenModel();
         // 更新userSession的tokens
         tokens.add(tokenModel);
         // 存入loginId
-        setUserSession();
-        // 登录规则检测
+        depositUserSession();
         return this;
     }
 
@@ -67,19 +81,32 @@ public class UserSession implements Serializable {
      * @return com.sobercoding.loopauth.model.UserSession
      */
     public UserSession gainUserSession(){
-        Set<String> tokenSet = (Set<String>) LoopAuthStrategy.getLoopAuthDao()
+        tokens = (Set<TokenModel>) LoopAuthStrategy.getLoopAuthDao()
                 .get(LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() +
                         ":" +
                         loginId);
-        Set<TokenModel> tokenModels = new HashSet<>();
-        if (LoopAuthUtil.isNotEmpty(tokenSet)){
-            // 过滤过期空值之后组装 Set<TokenModel>
-            tokenSet.stream().filter(LoopAuthUtil::isNotEmpty).forEach(token ->
-                    tokenModels.add(new TokenModel().setValue(token).gainTokenModel())
-            );
+        if (Optional.ofNullable(tokens).isPresent()){
+            long timeMillis = System.currentTimeMillis();
+            tokens = tokens.stream()
+                    .filter(item -> (item.getCreateTime() + item.getTimeOut()) > timeMillis)
+                    .collect(Collectors.toSet());
+        }else {
+            tokens = new HashSet<>();
         }
-        this.tokens = tokenModels.stream().filter(LoopAuthUtil::isNotEmpty).collect(Collectors.toSet());
         return this;
+    }
+
+    /**
+     * UserSession中指定tokenModel
+     * @author Sober
+     * @return com.sobercoding.loopauth.model.TokenModel
+     */
+    public TokenModel gainModelByToken(String token){
+        tokenModelNow = tokens.stream()
+                .filter(item -> token.equals(item.getValue()))
+                .findAny()
+                .orElse(null);
+        return tokenModelNow;
     }
 
     /**
@@ -102,9 +129,9 @@ public class UserSession implements Serializable {
 
     /**
      * 删除会话token
-     * @author Sober
+     *
      * @param tokenModelValues token值
-     * @return com.sobercoding.loopauth.model.UserSession
+     * @author Sober
      */
     public UserSession removeToken(Collection<String> tokenModelValues) {
         // 找到符合的tokenModel删除
@@ -116,7 +143,7 @@ public class UserSession implements Serializable {
                 .filter(tokenModel -> !tokenModelValues.contains(tokenModel.getValue()))
                 .collect(Collectors.toSet());
         // 存入loginId
-        setUserSession();
+        depositUserSession();
         return this;
     }
 
@@ -124,31 +151,27 @@ public class UserSession implements Serializable {
      * 对内存的直接操作 刷新loginId存储
      * @author Sober
      */
-    private void setUserSession(){
+    private void depositUserSession(){
         // 如果已经不存在会话则删除用户所有会话存储
         if (tokens.size() <= 0){
             // 删除会话
             remove();
         }else {
-            Set<String> tokenValues = new HashSet<>();
             // 原子化
             AtomicLong maxExpirationTime = new AtomicLong(0);
-            // 写入token对应模型
             tokens.forEach(tokenModel -> {
                 // 加载过期时间
-                long expirationTime = tokenModel.getTimeOut();
+                long expirationTime = tokenModel.getTimeOut() + tokenModel.getCreateTime() - System.currentTimeMillis();
                 // 判断所以会话最晚过期时间
                 if (expirationTime > maxExpirationTime.get()){
                     maxExpirationTime.set(expirationTime);
                 }
-                // 组装tokens
-                tokenValues.add(tokenModel.getValue());
             });
             // 写入loginId对应tokens
             LoopAuthStrategy.getLoopAuthDao()
                     .set(
                             LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix() + ":" + loginId,
-                            tokenValues,
+                            tokens,
                             maxExpirationTime.get()
                     );
         }

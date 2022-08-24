@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public Result handlerException(Exception e) {
+    public Result handlerException(LoopAuthException e) {
         e.printStackTrace();
         return Result.error(e.getMessage());
     }
