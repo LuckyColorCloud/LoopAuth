@@ -35,12 +35,12 @@
         <dependency>
             <groupId>com.sobercoding</groupId>
             <artifactId>LoopAuth-spring-boot-starter</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1.dev</version>
         </dependency>
         <dependency>
             <groupId>com.sobercoding</groupId>
             <artifactId>LoopAuth-redis</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1.dev</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
