@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.springbootstarter.filter;
 
+import com.sobercoding.loopauth.router.LoopAuthHttpMode;
 import com.sobercoding.loopauth.springbootstarter.CheckPermissionAnnotation;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Yun
@@ -19,24 +21,24 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * 拦截路由
      */
-    private Set<String> includeList = new HashSet<>();
+    private ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> includeList = new ConcurrentHashMap<>();
 
     /**
      * 放行路由
      */
-    private Set<String> excludeList = new HashSet<>();
+    private ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> excludeList = new ConcurrentHashMap<>();
 
 
     /**
      * ===================添加拦截路由=====================
      */
-    public LoopAuthServletFilter addInclude(String... paths) {
-        includeList.addAll(Arrays.asList(paths));
+    public LoopAuthServletFilter addInclude(String path, LoopAuthHttpMode... mode) {
+        includeList.put(path, new HashSet<LoopAuthHttpMode>(Arrays.asList(mode)));
         return this;
     }
 
-    public LoopAuthServletFilter addInclude(Collection<String> paths) {
-        includeList.addAll(paths);
+    public LoopAuthServletFilter addIncludes(String path, LoopAuthHttpMode... loopAuthHttpModes) {
+        includeList.put(path, new HashSet<>(Arrays.asList(loopAuthHttpModes)));
         return this;
     }
     /**====================================================*/
@@ -44,13 +46,13 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * ===================添加放行路由=====================
      */
-    public LoopAuthServletFilter addExclude(String... paths) {
-        excludeList.addAll(Arrays.asList(paths));
+    public LoopAuthServletFilter addExclude(String path, LoopAuthHttpMode... mode) {
+        excludeList.put(path, new HashSet<LoopAuthHttpMode>(Arrays.asList(mode)));
         return this;
     }
 
-    public LoopAuthServletFilter addExclude(Collection<String> paths) {
-        excludeList.addAll(paths);
+    public LoopAuthServletFilter addExcludes(String path, LoopAuthHttpMode... loopAuthHttpModes) {
+        excludeList.put(path, new HashSet<>(Arrays.asList(loopAuthHttpModes)));
         return this;
     }
     /**====================================================*/
@@ -58,11 +60,11 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * ===================获取放行路由=====================
      */
-    public Set<String> getIncludeList() {
+    public ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> getIncludeList() {
         return includeList;
     }
 
-    Set<String> getExcludeList() {
+    ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> getExcludeList() {
         return excludeList;
     }
     /**====================================================*/
@@ -70,7 +72,8 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * 过滤路由
      */
-    public LoopAuthFilter loopAuthFilter = r -> {};
+    public LoopAuthFilter loopAuthFilter = r -> {
+    };
     /**
      * 过滤异常 处理
      */
@@ -78,6 +81,7 @@ public class LoopAuthServletFilter implements Filter {
 
     /**
      * 设置 过滤规则
+     *
      * @param loopAuthFilter 拦截器
      * @return com.sobercoding.loopauth.springbootstarter.filter.LoopAuthServletFilter
      */
@@ -88,6 +92,7 @@ public class LoopAuthServletFilter implements Filter {
 
     /**
      * 设置异常处理规则
+     *
      * @param loopAuthErrorFilter 拦截器异常执行
      * @return com.sobercoding.loopauth.springbootstarter.filter.LoopAuthServletFilter
      */
@@ -101,22 +106,22 @@ public class LoopAuthServletFilter implements Filter {
 
         try {
             // 存在拦截路由时启用
-            if (LoopAuthUtil.isNotEmpty(includeList)){
+            if (LoopAuthUtil.isNotEmpty(includeList)) {
                 HttpServletRequest httpServletRequest = (HttpServletRequest) request;
                 // 放行路由为空 拦截
-                if (LoopAuthUtil.isEmpty(excludeList)){
-                    loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request));
+                if (LoopAuthUtil.isEmpty(excludeList)) {
+                    loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request, includeList));
                 }
                 // 放行路由不为空 且 放行路由不包含当前路由
-                if (LoopAuthUtil.isNotEmpty(excludeList) && !excludeList.contains(httpServletRequest.getRequestURI())){
+                if (LoopAuthUtil.isNotEmpty(excludeList) && !excludeList.contains(httpServletRequest.getRequestURI())) {
                     loopAuthFilter.run(CheckPermissionAnnotation.matchPaths(excludeList, request));
                 }
             }
         } catch (Throwable e) {
             // 1. 获取异常处理策略结果
-            String result =  String.valueOf(loopAuthErrorFilter.run(e));
+            String result = String.valueOf(loopAuthErrorFilter.run(e));
             // 2. 写入输出流
-            if(response.getContentType() == null) {
+            if (response.getContentType() == null) {
                 response.setContentType("text/plain; charset=utf-8");
             }
             response.getWriter().print(result);
