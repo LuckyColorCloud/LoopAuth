@@ -29,7 +29,8 @@ public class LoopAuthToken {
         String original = tokenModel.getLoginId() +
                 "," + tokenModel.getCreateTime() +
                 "," + tokenModel.getTimeOut() +
-                "," + tokenModel.getFacility();
+                "," + tokenModel.getFacility() +
+                "," + tokenModel.getFacilityName();
         return getBase64(original) +
                 // 添加分隔符
                 "_" +
@@ -80,7 +81,8 @@ public class LoopAuthToken {
                     .setLoginId(infos[0])
                     .setCreateTime(Long.parseLong(infos[1]))
                     .setTimeOut(Long.parseLong(infos[2]))
-                    .setFacility(infos[3]);
+                    .setFacility(infos[3])
+                    .setFacilityName(infos[4]);
         }catch (RuntimeException e){
             return null;
         }
