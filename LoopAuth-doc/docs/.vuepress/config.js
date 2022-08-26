@@ -9,6 +9,7 @@ module.exports = {
             { text: '首页', link: '/' },
             { text: '文档', link: '/doc/' },
             { text: '交流群', link: '/doc/#交流群' },
+            { text: '行为准则', link: '/doc/behavior/' },
             { text: 'Gitee', link: 'https://gitee.com/lucky-color/loop-auth' },
             { text: 'GitHub', link: 'https://github.com/ChangZou/LoopAuth' },
         ],
