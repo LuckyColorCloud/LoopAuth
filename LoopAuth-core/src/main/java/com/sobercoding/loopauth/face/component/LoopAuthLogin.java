@@ -33,7 +33,8 @@ public class LoopAuthLogin {
         setContext(tokenModel);
 
         // 写入会话Context存储器
-        LoopAuthStrategy.getLoopAuthContext().getStorage().set("userSession",userSession);
+        LoopAuthStrategy.getLoopAuthContext().getStorage().set("userSession", userSession);
+        LoopAuthStrategy.getLoopAuthContext().getStorage().set("isLogin", true);
 
     }
 
@@ -80,7 +81,7 @@ public class LoopAuthLogin {
      * @author Sober
      */
     public void isLogin() {
-        if (LoopAuthStrategy.getLoopAuthContext().getStorage().get("isLogin") != null){
+        if (LoopAuthStrategy.getLoopAuthContext().getStorage().get("isLogin") == null){
             // 从请求体载入当前会话
             loadUserSession();
             // token续期
@@ -242,16 +243,11 @@ public class LoopAuthLogin {
         if (LoopAuthStrategy.getLoopAuthConfig()
                 .getAccessModes().stream()
                 .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.COOKIE)){
-            // 如果选择了COOKIE获取  则 写入Response的Cookie存储
-            if (LoopAuthStrategy.getLoopAuthConfig()
-                    .getAccessModes().stream()
-                    .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.COOKIE)){
-                LoopAuthCookie cookie = new LoopAuthCookie()
-                        .setName(LoopAuthStrategy.getLoopAuthConfig().getTokenName())
-                        .setValue(tokenModel.getValue());
-                LoopAuthStrategy.getLoopAuthContext().getResponse()
-                        .addHeader("Set-Cookie",cookie.toCookieString());
-            }
+            LoopAuthCookie cookie = new LoopAuthCookie()
+                    .setName(LoopAuthStrategy.getLoopAuthConfig().getTokenName())
+                    .setValue(tokenModel.getValue());
+            LoopAuthStrategy.getLoopAuthContext().getResponse()
+                    .addHeader("Set-Cookie",cookie.toCookieString());
         }
 
         // 如果选择了HEADER获取  则 写入Response头返回
@@ -271,7 +267,7 @@ public class LoopAuthLogin {
      * @param name 名字
      */
     private void delCookie(String name){
-        // 如果选择了COOKIE获取  则 写入Response的Cookie存储
+        // 如果选择了COOKIE获取  则 删除
         if (LoopAuthStrategy.getLoopAuthConfig()
                 .getAccessModes().stream()
                 .anyMatch(tokenAccessMode -> tokenAccessMode == TokenAccessMode.COOKIE)){

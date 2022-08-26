@@ -84,6 +84,7 @@ public class LoopAuthToken {
                     .setFacility(infos[3])
                     .setFacilityName(infos[4]);
         }catch (RuntimeException e){
+            e.printStackTrace();
             return null;
         }
     }

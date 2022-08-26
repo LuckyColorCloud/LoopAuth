@@ -4,21 +4,14 @@ import com.sobercoding.loopauth.annotation.LoopAuthPermission;
 import com.sobercoding.loopauth.annotation.LoopAuthRole;
 import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import com.sobercoding.loopauth.router.LoopAuthHttpMode;
-import com.sobercoding.loopauth.util.LoopAuthUtil;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
+ * 注解匹配类
  * @author Yun
  */
 public class CheckPermissionAnnotation {
@@ -70,70 +63,4 @@ public class CheckPermissionAnnotation {
         return element.getAnnotation(annotationClass);
     };
 
-
-    public static boolean matchPaths(Collection<String> paths, ServletRequest request) {
-        if (request == null || paths.isEmpty()) {
-            return false;
-        }
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String path = httpServletRequest.getServletPath();
-        for (String temp : paths) {
-            if (LoopAuthUtil.fuzzyMatching(temp, path)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean matchPaths(ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> map, ServletRequest request) {
-        if (request == null || map.isEmpty()) {
-            return false;
-        }
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String path = httpServletRequest.getServletPath();
-        String method = httpServletRequest.getMethod();
-        LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(method);
-        ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> strings = map.keySet();
-        for (String temp : strings) {
-            if (LoopAuthUtil.fuzzyMatching(temp, path)) {
-                HashSet<LoopAuthHttpMode> loopAuthHttpModes = map.get(temp);
-                if (loopAuthHttpModes.contains(loopAuthHttpMode) || loopAuthHttpModes.contains(LoopAuthHttpMode.ALL)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean matchPaths(ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> excludeList, ServletRequest request, ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> includeList) {
-        if (request == null || excludeList.isEmpty() && includeList.isEmpty()) {
-            return false;
-        }
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String path = httpServletRequest.getServletPath();
-        String method = httpServletRequest.getMethod();
-        LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(method);
-        if (excludeList.isEmpty()) {
-            ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> strings = includeList.keySet();
-            for (String temp : strings) {
-                if (LoopAuthUtil.fuzzyMatching(temp, path)) {
-                    HashSet<LoopAuthHttpMode> loopAuthHttpModes = includeList.get(temp);
-                    if (loopAuthHttpModes.contains(loopAuthHttpMode) || loopAuthHttpModes.contains(LoopAuthHttpMode.ALL)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> strings = excludeList.keySet();
-        for (String temp : strings) {
-            if (LoopAuthUtil.fuzzyMatching(temp, path)) {
-                HashSet<LoopAuthHttpMode> loopAuthHttpModes = excludeList.get(temp);
-                if (loopAuthHttpModes.contains(loopAuthHttpMode)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }

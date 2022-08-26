@@ -20,6 +20,6 @@ public interface LoopAuthRouteFunction {
 	 * @param response Response包装对象
 	 * @param handler  处理对象
 	 */
-	public void run(LoopAuthRequest request, LoopAuthResponse response, Object handler);
+	void run(LoopAuthRequest request, LoopAuthResponse response, Object handler);
 
 }

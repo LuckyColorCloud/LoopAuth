@@ -25,12 +25,12 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     /**
      * 设备类型
      */
-    private String facility = "";
+    private String facility = "def";
 
     /**
      * 设备名称
      */
-    private String facilityName = "";
+    private String facilityName = "def";
 
     /**
      * 创建时间
@@ -161,6 +161,7 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
                 "value='" + value + '\'' +
                 ", loginId='" + loginId + '\'' +
                 ", facility='" + facility + '\'' +
+                ", facilityName='" + facilityName + '\'' +
                 ", createTime=" + createTime +
                 ", timeOut=" + timeOut +
                 '}';
