@@ -22,7 +22,7 @@ LoopAuth一款低侵入、精简、轻量、细粒度的Java Web权限管理框�
 - QQ群：460304421
 - 微信群：请扫下图二维码，备注`LoopAuth加群`
 
-  <img src="LoopAuth-doc/docs/.vuepress/public/img/mywx.jpg" style="width: 200px" alt="img" />
+  <img src="LoopAuth-doc/docs/.vuepress/public/img/mywx.jpg" alt="img" />
 
 ## 抛弃繁琐的权限框架配置，甚至无需配置`yml`即可简单启动
 
