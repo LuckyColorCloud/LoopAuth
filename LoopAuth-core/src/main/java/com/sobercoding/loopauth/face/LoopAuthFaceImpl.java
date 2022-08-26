@@ -75,6 +75,7 @@ public class LoopAuthFaceImpl {
      * @author Sober
      */
     public static void logout() {
+        isLogin();
         LOOP_AUTH_LOGIN.logout();
     }
 
@@ -85,6 +86,7 @@ public class LoopAuthFaceImpl {
      * @return com.sobercoding.loopauth.model.TokenModel
      */
     public static TokenModel getTokenModel(){
+        isLogin();
         return LOOP_AUTH_LOGIN.getTokenModel();
     }
 
@@ -94,6 +96,7 @@ public class LoopAuthFaceImpl {
      * @return com.sobercoding.loopauth.model.UserSession
      */
     public static UserSession getUserSession(){
+        isLogin();
         return LOOP_AUTH_LOGIN.getUserSession();
     }
 
@@ -111,6 +114,7 @@ public class LoopAuthFaceImpl {
      * @author Sober
      */
     public static void loginRenew(){
+        isLogin();
         LOOP_AUTH_LOGIN.loginRenew();
     }
 
@@ -121,6 +125,7 @@ public class LoopAuthFaceImpl {
      * @param roles 角色列表
      */
     public static void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
+        isLogin();
         LOOP_AUTH_PERMISSION.checkByRole(loopAuthVerifyMode,roles);
     }
 
@@ -132,6 +137,7 @@ public class LoopAuthFaceImpl {
      * @param permissions 权限代码列表
      */
     public static void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
+        isLogin();
         LOOP_AUTH_PERMISSION.checkByPermission(loopAuthVerifyMode,permissions);
     }
 }

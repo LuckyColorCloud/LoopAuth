@@ -67,6 +67,10 @@ public class LoopAuthLogin {
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
             getUserSession().removeToken(Collections.singleton(getTokenModel().getValue()));
         }
+        // 删除会话存储
+        LoopAuthStrategy.getLoopAuthContext().getStorage().delete("userSession");
+        // 删除登录状态
+        LoopAuthStrategy.getLoopAuthContext().getStorage().delete("isLogin");
         // 删除cookie
         delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
     }
@@ -76,11 +80,13 @@ public class LoopAuthLogin {
      * @author Sober
      */
     public void isLogin() {
-        // 从请求体载入当前会话
-        getBodyToken();
-        // token续期
-        if (LoopAuthStrategy.getLoopAuthConfig().getRenew()){
-            loginRenew();
+        if (LoopAuthStrategy.getLoopAuthContext().getStorage().get("isLogin") != null){
+            // 从请求体载入当前会话
+            loadUserSession();
+            // token续期
+            if (LoopAuthStrategy.getLoopAuthConfig().getRenew()){
+                loginRenew();
+            }
         }
     }
 
@@ -153,7 +159,7 @@ public class LoopAuthLogin {
      * @author Sober
      * @return java.lang.String
      */
-    private String getBodyToken() {
+    private void loadUserSession() {
         // 从请求体获取携带的token
         String token = null;
         for (TokenAccessMode tokenAccessMode : LoopAuthStrategy.getLoopAuthConfig().getAccessModes()){
@@ -205,11 +211,12 @@ public class LoopAuthLogin {
                 throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "The token is due");
             }
         }
-        // 存储
+        // 存储会话
         LoopAuthStrategy.getLoopAuthContext().getStorage().set(
                 "userSession",
                 userSession);
-        return token;
+        // 写入登录状态
+        LoopAuthStrategy.getLoopAuthContext().getStorage().set("isLogin", true);
     }
 
 

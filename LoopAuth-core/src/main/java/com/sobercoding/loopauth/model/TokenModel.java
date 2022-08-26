@@ -2,7 +2,6 @@ package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
 
 /**
