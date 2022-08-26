@@ -97,7 +97,7 @@ public class CheckPermissionAnnotation {
         for (String temp : strings) {
             if (LoopAuthUtil.fuzzyMatching(temp, path)) {
                 HashSet<LoopAuthHttpMode> loopAuthHttpModes = map.get(temp);
-                if (loopAuthHttpModes.contains(loopAuthHttpMode)) {
+                if (loopAuthHttpModes.contains(loopAuthHttpMode) || loopAuthHttpModes.contains(LoopAuthHttpMode.ALL)) {
                     return true;
                 }
             }
@@ -118,7 +118,7 @@ public class CheckPermissionAnnotation {
             for (String temp : strings) {
                 if (LoopAuthUtil.fuzzyMatching(temp, path)) {
                     HashSet<LoopAuthHttpMode> loopAuthHttpModes = includeList.get(temp);
-                    if (loopAuthHttpModes.contains(loopAuthHttpMode)) {
+                    if (loopAuthHttpModes.contains(loopAuthHttpMode) || loopAuthHttpModes.contains(LoopAuthHttpMode.ALL)) {
                         return true;
                     }
                 }
