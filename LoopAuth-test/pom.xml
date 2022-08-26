@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.sobercoding</groupId>
             <artifactId>LoopAuth-core</artifactId>
-            <version>1.0.1.dev</version>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 
