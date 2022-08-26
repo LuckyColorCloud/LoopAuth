@@ -1,8 +1,6 @@
 package com.sobercoding.loopauth.face;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.exception.LoopAuthParamException;
 import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.face.component.LoopAuthPermission;
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
@@ -25,12 +23,11 @@ public class LoopAuthFaceImpl {
     /**
      * 登录, 设置终端
      * @author Sober
-     * @param loginId 登录id
+     * @param loginId 用户Id
      */
     public static void login(String loginId) {
         LOOP_AUTH_LOGIN.login(
                 new TokenModel()
-                        .setFacility("LoopAuth")
                         .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
@@ -48,6 +45,25 @@ public class LoopAuthFaceImpl {
         LOOP_AUTH_LOGIN.login(
                 new TokenModel()
                         .setFacility(facility)
+                        .setLoginId(loginId)
+                        .setCreateTime(System.currentTimeMillis())
+                        .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())
+        );
+    }
+
+    /**
+     * 登录, 设置终端
+     * @author Sober
+     * @param loginId 登录id
+     * @param facility 终端类型
+     * @param facilityName 终端设备名称
+     */
+
+    public static void login(String loginId, String facility, String facilityName) {
+        LOOP_AUTH_LOGIN.login(
+                new TokenModel()
+                        .setFacility(facility)
+                        .setFacilityName(facilityName)
                         .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
                         .setTimeOut(LoopAuthStrategy.getLoopAuthConfig().getTimeOut())

@@ -1,9 +1,8 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.util.LoopAuthUtil;
-
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -25,9 +24,14 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
     private String loginId;
 
     /**
-     * 设备值
+     * 设备类型
      */
-    private String facility;
+    private String facility = "";
+
+    /**
+     * 设备名称
+     */
+    private String facilityName = "";
 
     /**
      * 创建时间
@@ -38,6 +42,15 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
      * token有效期(单位毫秒)
      */
     private long timeOut;
+
+    public String getFacilityName() {
+        return facilityName;
+    }
+
+    public TokenModel setFacilityName(String facilityName) {
+        this.facilityName = facilityName;
+        return this;
+    }
 
     public String getLoginId() {
         return loginId;
