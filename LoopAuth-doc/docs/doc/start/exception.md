@@ -16,7 +16,7 @@ try {
 }
 ```
 
-## 全局拦截
+## 全局拦截处理
 
 - 使用Springboot的`@RestControllerAdvice`拦截全局异常
 
@@ -34,4 +34,17 @@ public class GlobalExceptionHandler {
     }
 
 }
+```
+
+## 过滤器异常处理
+
+```java
+.setLoopAuthErrorFilter(e -> {
+    if (e instanceof LoopAuthException){
+        System.out.println(((LoopAuthException) e).getCode());
+        System.out.println(e.getMessage());
+    }
+    // 此处请根据你自己的返回类型 返回异常code、msg，或处理异常等操作
+    return XXX;
+});
 ```

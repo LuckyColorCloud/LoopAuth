@@ -58,24 +58,25 @@ LoopAuthStrategy.setPermissionInterface(new PermissionInterfaceImpl());
 - `OR`代表或
 - `AND`代表与
 - `NON`代表非
+- 所有需要填写`LoopAuthVerifyMode`的方法，不填写则默认`AND`
 
 ## 代码鉴权
 
-- 所有需要登录的方法都需要先调用一次`LoopAuthFaceImpl.isLogin();`
+- 所有需要登录的方法都会内部默认先调用一次`LoopAuthFaceImpl.isLogin();`，即`checkByRole`等方法使用时你无需手动调用`isLogin`
 
 ```java
 // 判断是否登录
 LoopAuthFaceImpl.isLogin();
 // 判断用户是否拥有user角色
-LoopAuthFaceImpl.checkByRole(LoopAuthVerifyMode.OR, "user")
+LoopAuthFaceImpl.checkByRole("user")
 // 判断用户是否拥有user-**或者order-get中权限代码
 LoopAuthFaceImpl.checkByPermission(LoopAuthVerifyMode.OR, "user-**","order-get")
-
 ```
 
 ## 注解鉴权
 
-- 所有需要登录的方法都需要加上注解`@LoopAutoCheckLogin`，当然你也可以将注解加在类上来避免重复工作
+- 所有需要登录的方法都会默认执行`@LoopAutoCheckLogin`，即`@LoopAuthPermission`上无需使用`@LoopAutoCheckLogin`
+- 注解可以加在类上来避免重复工作
 - 注解鉴权需要依赖拦截器
 
 ### 注入拦截器
@@ -109,12 +110,49 @@ public String testPermission(){
 // 验证登录
 @LoopAutoCheckLogin
 // 判断用户是否拥有user角色
-@LoopAuthRole(value="user",mode = LoopAuthVerifyMode.OR)
+@LoopAuthRole(value="user")
 @GetMapping("/testRole")
 public String testRole(){
     return "检测成功";
 }   
 ```
+
+## 路由鉴权
+
+- 同时我们也提供了`servlet`的过滤器路由鉴权方式
+- 过滤器无法获取到业务方法或者类上的注解，因此需要自行在过滤器写代码鉴权
+- `spring`的全局异常处理也获取不到过滤器的异常，因此需要自行在过滤器配置
+- `isIntercept`参数代表是否需要拦截，`route`为当前路由
+- `LoopAuthHttpMode`为请求类型的枚举，包括`GET`、`PUT`、`POST`或`ALL`等等所有常见的请求类型
+- `addInclude`或`addExclude`不填写`LoopAuthHttpMode`则默认`ALL`
+
+```java
+/**
+ * 注册 [LoopAuth 全局过滤器] 此优先级高于  注解  如这里报错就不在进入注解
+ */
+@Bean
+public LoopAuthServletFilter getSaServletFilter() {
+    return new LoopAuthServletFilter()
+        .addInclude("/**")
+        .addExclude("/test/login", LoopAuthHttpMode.GET)
+        // 认证函数: 每次请求执行
+        .setLoopAuthFilter((isIntercept,route) -> {
+            if (isIntercept){
+                // 拦截代码块
+                LoopAuthFaceImpl.isLogin();
+            }else {
+                // 放行代码块
+            }
+        })
+        // 异常处理函数：每次认证函数发生异常时执行此函数
+        .setLoopAuthErrorFilter(e -> {
+            e.printStackTrace();
+            return e.getMessage();
+        });
+}
+
+```
+
 
 ## 模糊匹配
 
