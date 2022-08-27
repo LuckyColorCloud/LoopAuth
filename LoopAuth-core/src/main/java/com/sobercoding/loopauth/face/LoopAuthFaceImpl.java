@@ -129,6 +129,17 @@ public class LoopAuthFaceImpl {
         LOOP_AUTH_PERMISSION.checkByRole(loopAuthVerifyMode,roles);
     }
 
+    /**
+     * 角色认证
+     * @author: Sober
+     * @param roles 角色列表
+     */
+    public static void checkByRole(String... roles) {
+        isLogin();
+        // 默认AND
+        LOOP_AUTH_PERMISSION.checkByRole(LoopAuthVerifyMode.AND,roles);
+    }
+
 
     /**
      * 权限认证
@@ -139,5 +150,16 @@ public class LoopAuthFaceImpl {
     public static void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
         isLogin();
         LOOP_AUTH_PERMISSION.checkByPermission(loopAuthVerifyMode,permissions);
+    }
+
+    /**
+     * 权限认证
+     * @author: Sober
+     * @param permissions 权限代码列表
+     */
+    public static void checkByPermission(String... permissions) {
+        isLogin();
+        // 默认AND
+        LOOP_AUTH_PERMISSION.checkByPermission(LoopAuthVerifyMode.AND,permissions);
     }
 }
