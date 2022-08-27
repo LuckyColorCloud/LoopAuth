@@ -162,8 +162,9 @@ public class LoopAuthServletFilter implements Filter {
         ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> excludes = excludeList.keySet();
         // 匹配路由 和 请求方法 存在一致则直接放行
         isInclude = excludes.stream().anyMatch(item ->
-                excludeList.get(item).contains(LoopAuthHttpMode.ALL)
-                        || LoopAuthUtil.fuzzyMatching(item, path) && excludeList.get(item).contains(loopAuthHttpMode));
+                LoopAuthUtil.fuzzyMatching(item, path) &&
+                        (excludeList.get(item).contains(LoopAuthHttpMode.ALL) ||
+                                excludeList.get(item).contains(loopAuthHttpMode)));
         if (isInclude) {
             return false;
         }
@@ -172,8 +173,9 @@ public class LoopAuthServletFilter implements Filter {
         ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> includes = includeList.keySet();
         // 匹配路由 和 请求方法 存在一致则直接拦截
         isInclude = includes.stream().anyMatch(item ->
-                includeList.get(item).contains(LoopAuthHttpMode.ALL)
-                        || LoopAuthUtil.fuzzyMatching(item, path) && includeList.get(item).contains(loopAuthHttpMode));
+                LoopAuthUtil.fuzzyMatching(item, path) &&
+                        (includeList.get(item).contains(LoopAuthHttpMode.ALL) ||
+                                includeList.get(item).contains(loopAuthHttpMode)));
         return isInclude;
     }
 }
