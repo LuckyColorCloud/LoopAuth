@@ -2,9 +2,9 @@
 title: 咋引入依赖?
 ---
 
-## Maven引入
-- 直接通过`pom.xml`文件引入即可
 - `${version}`请查看[版本历史](./version.md)
+
+## Maven引入
 
 ```xml
 
@@ -33,4 +33,16 @@ title: 咋引入依赖?
     <version>${version}</version>
 </dependency>
 
+```
+
+## Gradle引入
+
+```xml
+implementation 'com.sobercoding:LoopAuth-core:${version}'
+
+implementation 'com.sobercoding:LoopAuth-redis:${version}'
+
+implementation 'com.sobercoding:LoopAuth-servlet:${version}'
+
+implementation 'com.sobercoding:LoopAuth-spring-boot-starter:${version}'
 ```
