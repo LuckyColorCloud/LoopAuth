@@ -14,12 +14,10 @@ public class UserSession{
      * 用户id
      */
     private String loginId;
-
     /**
      * token列表
      */
     private Set<TokenModel> tokens;
-
     /**
      * 当前登录的tokenModel
      */
@@ -42,9 +40,13 @@ public class TokenModel {
      */
     private String loginId;
     /**
-     * 设备值
+     * 设备类型
      */
-    private String facility;
+    private String facility = "def";
+    /**
+     * 设备名称
+     */
+    private String facilityName = "def";
     /**
      * 创建时间
      */
