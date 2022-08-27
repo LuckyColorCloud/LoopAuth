@@ -6,7 +6,7 @@ title: 试试Redis做持久化
 
 ## 引入依赖
 
-- `${version}`请查看[版本历史](../preamble/cite.md#版本历史)，请使用最新正式版，且版本与其余拓展最好保持一致
+- `${version}`请查看[版本历史](../preamble/version.md)，请使用最新正式版，且版本与其余拓展最好保持一致
 - `jedis`包版本建议与本文一致,此版本也可同时兼容`Spring-redis`
 
 ```xml

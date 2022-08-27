@@ -22,6 +22,7 @@ module.exports = {
                 '/doc/',
                 '/doc/preamble/contribute',
                 '/doc/preamble/cite',
+                '/doc/preamble/version',
               ]
             },
             {

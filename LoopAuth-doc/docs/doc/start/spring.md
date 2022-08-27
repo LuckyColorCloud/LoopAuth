@@ -6,7 +6,7 @@ title: SpringBoot体验一下
 
 ## 添加依赖
 
-- `${version}`请查看[版本历史](../preamble/cite.md#版本历史)，请使用最新正式版，且版本与其余拓展最好保持一致
+- `${version}`请查看[版本历史](../preamble/version.md)，请使用最新正式版，且版本与其余拓展最好保持一致
 
 ```xml
 <!-- LoopAuth的Springboot插件 -->
