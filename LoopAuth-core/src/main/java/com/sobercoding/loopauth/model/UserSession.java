@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.io.Serializable;
 import java.util.*;
@@ -31,10 +32,17 @@ public class UserSession implements Serializable {
     private TokenModel tokenModelNow;
 
     public TokenModel getTokenModelNow() {
+        if (LoopAuthUtil.isNotEmpty(tokenModelNow)){
+            tokenModelNow = tokens.stream()
+                    .filter(item -> tokenModelNow.getValue().equals(item.getValue()))
+                    .findAny()
+                    .orElse(null);
+        }
         return tokenModelNow;
     }
 
     public UserSession setTokenModelNow(TokenModel tokenModelNow) {
+        setLoginId(tokenModelNow.getLoginId());
         this.tokenModelNow = tokenModelNow;
         return this;
     }
@@ -63,9 +71,9 @@ public class UserSession implements Serializable {
         // 登录规则检测
         Set<TokenModel> removeTokenModels = LoopAuthStrategy.loginRulesMatching.exe(tokens, tokenModel);
         // 删除不符合规则的过去token
-        removeTokenModels.forEach(TokenModel::remove);
+        removeTokenModels.forEach(this::removeTokenModel);
         // 存入token
-        tokenModel.depositTokenModel();
+        depositTokenModel(tokenModel);
         // 更新userSession的tokens
         tokens.add(tokenModel);
         // 存入loginId
@@ -93,21 +101,11 @@ public class UserSession implements Serializable {
         }else {
             tokens = new HashSet<>();
         }
+        // 加载一下当前会话
+        getTokenModelNow();
         return this;
     }
 
-    /**
-     * UserSession中指定tokenModel
-     * @author Sober
-     * @return com.sobercoding.loopauth.model.TokenModel
-     */
-    public TokenModel gainModelByToken(String token){
-        tokenModelNow = tokens.stream()
-                .filter(item -> token.equals(item.getValue()))
-                .findAny()
-                .orElse(null);
-        return tokenModelNow;
-    }
 
     /**
      * 对内存的直接操作，删除当前用户所有会话
@@ -120,11 +118,10 @@ public class UserSession implements Serializable {
                         ":" +
                         loginId
                 );
-        this.getTokens().forEach(TokenModel::remove);
+        this.getTokens().forEach(this::removeTokenModel);
         this.loginId = null;
         this.tokens = null;
     }
-
 
 
     /**
@@ -137,7 +134,7 @@ public class UserSession implements Serializable {
         // 找到符合的tokenModel删除
         tokens.stream()
                 .filter(tokenModel -> tokenModelValues.contains(tokenModel.getValue()))
-                .forEach(TokenModel::remove);
+                .forEach(this::removeTokenModel);
         // 更新userSession的tokens
         tokens = tokens.stream()
                 .filter(tokenModel -> !tokenModelValues.contains(tokenModel.getValue()))
@@ -148,7 +145,7 @@ public class UserSession implements Serializable {
     }
 
     /**
-     * 对内存的直接操作 刷新loginId存储
+     * 对内存的直接操作 刷新/存储LoginId
      * @author Sober
      */
     private void depositUserSession(){
@@ -175,6 +172,43 @@ public class UserSession implements Serializable {
                             maxExpirationTime.get()
                     );
         }
+    }
+
+    /**
+     * 对内存的直接操作
+     * 刷新/存储Token
+     */
+    private void depositTokenModel(TokenModel tokenModel){
+        LoopAuthStrategy.getLoopAuthDao()
+                .set(
+                        LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + tokenModel.getValue(),
+                        loginId,
+                        tokenModel.getTimeOut()
+                );
+    }
+
+    /**
+     * 对内存的直接操作，删除Token
+     * @author Sober
+     */
+    private void removeTokenModel(TokenModel tokenModel){
+        LoopAuthStrategy.getLoopAuthDao()
+                .remove(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
+                        ":" +
+                        tokenModel.getValue());
+    }
+
+    /**
+     * 对内存的直接操作
+     * 获取内存中当前token的loginId
+     * @author Sober
+     * @return long
+     */
+    private String gainLongId(TokenModel tokenModel){
+        return (String) LoopAuthStrategy.getLoopAuthDao()
+                .get(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
+                        ":" +
+                        tokenModel.getValue());
     }
 
     @Override

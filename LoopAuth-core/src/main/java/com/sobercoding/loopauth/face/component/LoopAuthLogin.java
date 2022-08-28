@@ -197,9 +197,7 @@ public class LoopAuthLogin {
         // 开启持久化执行
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
             // 从内存获取loginId  后  刷新userSession存储 最后刷新当前TokenModel 生成持久化的合法会话
-            userSession.setLoginId(userSession.getTokenModelNow().gainLongId())
-                    .gainUserSession()
-                    .gainModelByToken(userSession.getTokenModelNow().getValue());
+            userSession.gainUserSession();
             // 验证存储中是否存在
             Optional.ofNullable(userSession.getTokenModelNow())
                     .orElseThrow(() -> new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST));

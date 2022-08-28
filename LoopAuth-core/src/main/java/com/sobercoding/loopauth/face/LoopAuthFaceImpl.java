@@ -110,6 +110,17 @@ public class LoopAuthFaceImpl {
     }
 
     /**
+     * 获取指定用户所以会话
+     * @author Sober
+     * @param loginId 用户id
+     * @return com.sobercoding.loopauth.model.UserSession
+     */
+    public static UserSession getUserSessionByLoginId(String loginId){
+        return new UserSession().setLoginId(loginId).gainUserSession();
+    }
+
+
+    /**
      * 登录续期
      * @author Sober
      */
@@ -117,6 +128,7 @@ public class LoopAuthFaceImpl {
         isLogin();
         LOOP_AUTH_LOGIN.loginRenew();
     }
+
 
     /**
      * 角色认证
@@ -162,4 +174,5 @@ public class LoopAuthFaceImpl {
         // 默认AND
         LOOP_AUTH_PERMISSION.checkByPermission(LoopAuthVerifyMode.AND,permissions);
     }
+
 }

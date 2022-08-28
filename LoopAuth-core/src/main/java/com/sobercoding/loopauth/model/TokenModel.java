@@ -96,43 +96,6 @@ public class TokenModel implements Serializable,Comparable<TokenModel>  {
         return timeOut;
     }
 
-    /**
-     * 对内存的直接操作
-     * 获取内存中当前token的loginId
-     * @author Sober
-     * @return long
-     */
-    public String gainLongId(){
-        return (String) LoopAuthStrategy.getLoopAuthDao()
-                .get(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
-                        ":" +
-                        value);
-    }
-
-    /**
-     * 对内存的直接操作
-     * 获取内存中当前token的TokenModel
-     */
-    public void depositTokenModel(){
-        LoopAuthStrategy.getLoopAuthDao()
-                .set(
-                        LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() + ":" + value,
-                        loginId,
-                        timeOut
-                );
-    }
-
-    /**
-     * 对内存的直接操作，删除当前token会话
-     * @author Sober
-     */
-    public void remove(){
-        LoopAuthStrategy.getLoopAuthDao()
-                .remove(LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix() +
-                        ":" +
-                        value);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

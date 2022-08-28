@@ -22,13 +22,13 @@ public class TestController {
     @RequestMapping("/login")
     public String register(){
         LoopAuthFaceImpl.login("1");
-        return LoopAuthFaceImpl.getTokenModel().toString();
+        return LoopAuthFaceImpl.getUserSession().toString();
     }
 
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
-        return LoopAuthFaceImpl.getUserSession().getTokenModelNow().toString();
+        return LoopAuthFaceImpl.getUserSessionByLoginId(LoopAuthFaceImpl.getTokenModel().getLoginId()).toString();
     }
 
 

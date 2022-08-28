@@ -172,6 +172,9 @@ public class LoopAuthStrategy {
      * 新的tokenModel直接加入tokenModels返回需要删除的列表
      */
     public static LrFunction<Set<TokenModel>, TokenModel> loginRulesMatching = (tokenModels, tokenModel) -> {
+        if (tokenModels.contains(tokenModel)){
+            return new HashSet<>();
+        }
         Set<TokenModel> removeTokenModels = new HashSet<>();
         // 开启token共生
         if (LoopAuthStrategy.getLoopAuthConfig().getMutualism()){
