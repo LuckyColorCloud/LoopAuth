@@ -116,7 +116,7 @@ public class LoopAuthFaceImpl {
      * @return com.sobercoding.loopauth.model.UserSession
      */
     public static UserSession getUserSessionByLoginId(String loginId){
-        return new UserSession().setLoginId(loginId).gainUserSession();
+        return LOOP_AUTH_LOGIN.getUserSessionByLoginId(loginId);
     }
 
 

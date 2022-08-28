@@ -66,7 +66,7 @@ public class LoopAuthLogin {
     public void logout() {
         // 开启持久化才执行
         if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
-            getUserSession().removeToken(Collections.singleton(getTokenModel().getValue()));
+            getUserSession().removeToken(getTokenModel().getValue());
         }
         // 删除会话存储
         LoopAuthStrategy.getLoopAuthContext().getStorage().delete("userSession");
@@ -99,6 +99,17 @@ public class LoopAuthLogin {
     public UserSession getUserSession() {
         return (UserSession) LoopAuthStrategy
                 .getLoopAuthContext().getStorage().get("userSession");
+    }
+
+    /**
+     * 从存储获取指定用户所有会话
+     * @author Sober
+     * @param loginId 用户id
+     * @return com.sobercoding.loopauth.model.UserSession
+     */
+    public UserSession getUserSessionByLoginId(String loginId) {
+        return new UserSession().setLoginId(loginId)
+                .gainUserSession();
     }
 
     /**
@@ -142,18 +153,6 @@ public class LoopAuthLogin {
                 );
         tokenModel.setValue(token);
     }
-
-    /**
-     * 从存储获取用户所有会话
-     * @author Sober
-     * @param loginId 用户id
-     * @return com.sobercoding.loopauth.model.UserSession
-     */
-    private UserSession getUserSessionByLoginId(String loginId) {
-        return new UserSession().setLoginId(loginId)
-                .gainUserSession();
-    }
-
 
     /**
      * 从请求体获取token  通过合法认证的token
@@ -204,7 +203,7 @@ public class LoopAuthLogin {
             // 查看是否过期
             if (isExpire(userSession.getTokenModelNow())){
                 // 注销 当前token
-                getUserSession().removeToken(Collections.singleton(userSession.getTokenModelNow().getValue()));
+                getUserSession().removeToken(userSession.getTokenModelNow().getValue());
                 // 删除cookie
                 delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
                 throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "The token is due");

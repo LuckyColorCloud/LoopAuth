@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.model;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.io.Serializable;
@@ -130,14 +131,19 @@ public class UserSession implements Serializable {
      * @param tokenModelValues token值
      * @author Sober
      */
-    public UserSession removeToken(Collection<String> tokenModelValues) {
+    public UserSession removeToken(String... tokenModelValues) {
+        // 不存在则不操作删除
+        if (tokenModelValues.length <= 0){
+            return this;
+        }
+        Set<String> tokenSet = new HashSet<>(Arrays.asList(tokenModelValues));
         // 找到符合的tokenModel删除
         tokens.stream()
-                .filter(tokenModel -> tokenModelValues.contains(tokenModel.getValue()))
+                .filter(tokenModel -> tokenSet.contains(tokenModel.getValue()))
                 .forEach(this::removeTokenModel);
         // 更新userSession的tokens
         tokens = tokens.stream()
-                .filter(tokenModel -> !tokenModelValues.contains(tokenModel.getValue()))
+                .filter(tokenModel -> !tokenSet.contains(tokenModel.getValue()))
                 .collect(Collectors.toSet());
         // 存入loginId
         depositUserSession();
