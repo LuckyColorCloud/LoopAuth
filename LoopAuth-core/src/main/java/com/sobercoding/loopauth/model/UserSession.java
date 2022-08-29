@@ -43,7 +43,12 @@ public class UserSession implements Serializable {
     }
 
     public UserSession setTokenModelNow(TokenModel tokenModelNow) {
-        setLoginId(tokenModelNow.getLoginId());
+        // 开启持久化执行
+        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
+            setLoginId(gainLongId(tokenModelNow));
+        }else {
+            setLoginId(tokenModelNow.getLoginId());
+        }
         this.tokenModelNow = tokenModelNow;
         return this;
     }

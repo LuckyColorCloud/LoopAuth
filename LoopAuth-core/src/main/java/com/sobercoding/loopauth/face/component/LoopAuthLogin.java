@@ -77,6 +77,23 @@ public class LoopAuthLogin {
     }
 
     /**
+     * 注销当前会话所属loginId所有登录
+     * @author Sober
+     */
+    public void logoutAll() {
+        // 开启持久化才执行
+        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistence()){
+            getUserSession().remove();
+        }
+        // 删除会话存储
+        LoopAuthStrategy.getLoopAuthContext().getStorage().delete("userSession");
+        // 删除登录状态
+        LoopAuthStrategy.getLoopAuthContext().getStorage().delete("isLogin");
+        // 删除cookie
+        delCookie(LoopAuthStrategy.getLoopAuthConfig().getTokenName());
+    }
+
+    /**
      * 登录校验
      * @author Sober
      */
@@ -119,6 +136,42 @@ public class LoopAuthLogin {
      */
     public TokenModel getTokenModel() {
         return getUserSession().getTokenModelNow();
+    }
+
+    /**
+     * 获取当前请求的token模型
+     * @author Sober
+     * @return com.sobercoding.loopauth.model.TokenModel
+     */
+    public TokenModel getTokenModelByTokenValue(String token) {
+        return new UserSession()
+                .setTokenModelNow(new TokenModel().setValue(token))
+                .gainUserSession()
+                .getTokenModelNow();
+    }
+
+    /**
+     * 强制指定token离线
+     * @author Sober
+     * @param tokens token值列表
+     */
+    public void forcedOfflineByToken(String... tokens) {
+        new UserSession()
+                .setTokenModelNow(new TokenModel().setValue(tokens[0]))
+                .gainUserSession()
+                .removeToken(tokens);
+    }
+
+    /**
+     * 强制指定用户所有会话离线
+     * @author Sober
+     * @param loginId 用户id
+     */
+    public void forcedOfflineByLoginId(String loginId) {
+        new UserSession()
+                .setLoginId(loginId)
+                .gainUserSession()
+                .remove();
     }
 
     // 可重写结束
@@ -276,4 +329,5 @@ public class LoopAuthLogin {
                     .addHeader("Set-Cookie",cookie.toCookieString());
         }
     }
+
 }

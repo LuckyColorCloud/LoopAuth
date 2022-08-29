@@ -25,6 +25,18 @@ public class TestController {
         return LoopAuthFaceImpl.getUserSession().toString();
     }
 
+    @RequestMapping("/rlogin")
+    public String register1(String value){
+        LoopAuthFaceImpl.forcedOfflineByLoginId(value);
+        return "1";
+    }
+
+    @RequestMapping("/rtoken")
+    public String register2(String value){
+        LoopAuthFaceImpl.forcedOfflineByToken(value);
+        return "1";
+    }
+
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthFaceImpl.isLogin();
