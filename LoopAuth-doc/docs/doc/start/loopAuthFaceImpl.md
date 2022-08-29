@@ -16,8 +16,13 @@ title: LoopAuthFaceImpl干啥用
 | login(String loginId, String facility)                      | void        | 带设备的登录方法               |
 | login(String loginId, String facility, String facilityName) | void        | 带设备及设备名称的登录方法          |
 | logout()                                                    | void        | 注销登录                   |
+| forcedOfflineByToken(String... tokens)                      | void        | 注销指定token的登录           |
+| logoutAll()                                                 | void        | 注销当前会话所属loginId所有登录    |
+| forcedOfflineByLoginId(String loginId)                      | void        | 注销指定loginId所有登录        |
 | getTokenModel()                                             | TokenModel  | 获得当前会话Token模型          |
+| getTokenModelByTokenValue(String token)                     | TokenModel  | 获得指定token的模型           |
 | getUserSession()                                            | UserSession | 获取当前用户所有会话             |
+| getUserSessionByLoginId(String loginId)                     | UserSession | 获取指定用户所有会话             |
 | isLogin()                                                   | void        | 是否登录                   |
 | loginRenew()                                                | void        | 登录续期,刷新当前会话的TokenModel |
 
@@ -44,6 +49,6 @@ title: LoopAuthFaceImpl干啥用
 | loopAuthVerifyMode | 鉴权匹配规则 |
 
 ## 相关内容
-- [UserSession](../context/userSession.md#usersession)
+- [UserSession](../context/userSession.md)
 - [TokenModel](../context/userSession.md#tokenmodel)
 - [角色Or权限代码鉴权](../start/auth.md#tokenmodel#角色or权限代码鉴权)

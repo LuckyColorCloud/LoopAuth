@@ -26,7 +26,7 @@ public class UserSession{
 ## 会话操作
 
 - 仅在开启持久化`token-persistence: true`时有效
-- 操作都是直接对持久层的修改
+- 操作都是直接对持久层的修改或读取
 
 ### 获取指定`LoginId`的会话
 
@@ -35,6 +35,7 @@ public class UserSession{
 > 来获取当前或是指定`LoginId`的`UserSession`
 
 - 可以用来查看某用户的所有登录会话
+- 这里被`gainUserSession()`执行过的`UserSession`，等同于从`LoopAuthFaceImpl`处获取的`UserSession`
 
 ```java
 // 调用gainUserSession()前 必须保证setLoginId()
@@ -74,7 +75,6 @@ userSession.setLoginId("X")
 > 例如你的项目对外提供天气查询接口  
 > 客户需要先获取token，然后带token才可请求接口
 > 但是你需要自己定义token生成方法，并且`LoginId`必须区别于普通用户，比如可以填写`weather:1`
-> 但是你无法使用鉴权，只能判断是否当前token的会话是否有效
 
 ```java
 TokenModel tokenModel = new TokenModel()

@@ -31,6 +31,7 @@ module.exports = {
                 children: [
                     '/doc/start/spring',
                     '/doc/start/loopAuthFaceImpl',
+                    '/doc/start/forcedOffline',
                     '/doc/start/auth',
                     '/doc/start/exception',
                     '/doc/start/redis',
