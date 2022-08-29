@@ -4,6 +4,14 @@ title: 看看版本
 
 # 版本历史
 
+## 1.0.5
+
+- 修复过滤器路由匹配`ALL`问题
+- 修复续期时默认登录规则判断规则的逻辑
+- `LoopAuthFaceImpl`增加获取指定的`UserSession`和`TokenModel`方法
+- `LoopAuthFaceImpl`增加指定用户或Token的强制离线方法
+- 更新`UserSession`文档说明
+
 ## 1.0.2
 
 - 优化了isLogin()触发条件，内部需要登陆的方法会自行调用（包括代码/注解鉴权）
