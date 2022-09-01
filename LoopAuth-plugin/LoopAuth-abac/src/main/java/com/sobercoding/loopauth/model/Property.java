@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.model;
 
-import com.sobercoding.loopauth.PolicyFun;
+import com.sobercoding.loopauth.function.PolicyFun;
 
 /**
  * 属性模型，所有属性匹配方式通过此存储
@@ -19,6 +19,11 @@ public class Property {
     private Object property;
 
     /**
+     * 属性规则
+     */
+    private Object propertyRule;
+
+    /**
      * 策略执行方法
      */
     private PolicyFun policyFun;
@@ -27,6 +32,16 @@ public class Property {
      * 判断类型 默认true  true即属性规则通过则可访问  false即不通过可访问
      */
     private boolean judge = true;
+
+
+    public Object getPropertyRule() {
+        return propertyRule;
+    }
+
+    public Property setPropertyRule(Object propertyRule) {
+        this.propertyRule = propertyRule;
+        return this;
+    }
 
     public String getName() {
         return name;

@@ -10,6 +10,7 @@ import com.sobercoding.loopauth.face.component.LoopAuthLogin;
 import com.sobercoding.loopauth.face.component.LoopAuthPermission;
 import com.sobercoding.loopauth.face.component.LoopAuthToken;
 import com.sobercoding.loopauth.function.LrFunction;
+import com.sobercoding.loopauth.function.PolicyFun;
 import com.sobercoding.loopauth.model.TokenModel;
 import com.sobercoding.loopauth.permission.PermissionInterface;
 import com.sobercoding.loopauth.permission.PermissionInterfaceDefImpl;
@@ -158,6 +159,24 @@ public class LoopAuthStrategy {
             }
         }
         return permissionInterface;
+    }
+
+    /**
+     * ABAC鉴权匹配方式
+     */
+    private volatile static Map<String, PolicyFun> policyFunMap;
+
+    /**
+     * 写入ABAC自定义匹配方法
+     * @param key
+     * @param policyFun
+     */
+    public static void setPolicyFun(String key, PolicyFun policyFun) {
+        policyFunMap.put(key, policyFun);
+    }
+
+    public static PolicyFun getPolicyFunMap(String key) {
+        return policyFunMap.get(key);
     }
 
 
