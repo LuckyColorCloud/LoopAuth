@@ -43,6 +43,11 @@
             <version>1.0.5</version>
         </dependency>
         <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-abac</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>3.6.3</version>

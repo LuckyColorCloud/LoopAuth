@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
+import com.sobercoding.loopauth.util.AuthUtil;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.util.Set;
@@ -25,12 +26,16 @@ public class LoopAuthPermission {
         String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
         //TODO  缺少登入类型 暂做扩展
         String loginType = "";
+        boolean pass;
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {
-            checkAnd(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+            pass = AuthUtil.checkAnd(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
         } else if (loopAuthVerifyMode == LoopAuthVerifyMode.OR) {
-            checkOr(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+            pass = AuthUtil.checkOr(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
         } else {
-            checkNon(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+            pass = AuthUtil.checkNon(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+        }
+        if (!pass){
+            throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
         }
     }
 
@@ -44,58 +49,17 @@ public class LoopAuthPermission {
         String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
         //TODO  缺少登入类型 暂做扩展
         String loginType = "";
+        boolean pass;
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {
-            checkAnd(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+            pass = AuthUtil.checkAnd(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
         } else if (loopAuthVerifyMode == LoopAuthVerifyMode.OR) {
-            checkOr(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+            pass = AuthUtil.checkOr(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
         } else {
-            checkNon(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+            pass = AuthUtil.checkNon(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+        }
+        if (!pass){
+            throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
         }
     }
 
-    private static void checkNon(Set<String> roleSet, String... roles) {
-        for (String role : roles) {
-            if (hasElement(roleSet, role)) {
-                throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-            }
-        }
-    }
-
-    private static void checkOr(Set<String> roleSet, String... roles) {
-        for (String role : roles) {
-            if (hasElement(roleSet, role)) {
-                return;
-            }
-        }
-        throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-    }
-
-    private static void checkAnd(Set<String> roleSet, String... roles) {
-        for (String role : roles) {
-            if (!hasElement(roleSet, role)) {
-                throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-            }
-        }
-    }
-
-    /**
-     * 匹配元素是否存在
-     */
-    private static boolean hasElement(Set<String> roleSet, String role) {
-        // 空集合直接返回false
-        if (LoopAuthUtil.isEmpty(roleSet)) {
-            return false;
-        }
-        // 先尝试一下简单匹配，如果可以匹配成功则无需继续模糊匹配
-        if (roleSet.contains(role)) {
-            return true;
-        }
-        // 开始模糊匹配
-        for (String path : roleSet) {
-            if (LoopAuthUtil.fuzzyMatching(path, role)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

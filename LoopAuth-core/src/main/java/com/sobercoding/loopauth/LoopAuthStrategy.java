@@ -142,7 +142,6 @@ public class LoopAuthStrategy {
         return loopAuthContext;
     }
 
-
     /**
      * 权限认证 Bean 获取角色/权限代码
      */
@@ -150,6 +149,7 @@ public class LoopAuthStrategy {
     public static void setPermissionInterface(PermissionInterface permissionInterface) {
         LoopAuthStrategy.permissionInterface = permissionInterface;
     }
+
     public static PermissionInterface getPermissionInterface() {
         if (permissionInterface == null) {
             synchronized (LoopAuthStrategy.class) {
@@ -164,21 +164,7 @@ public class LoopAuthStrategy {
     /**
      * ABAC鉴权匹配方式
      */
-    private volatile static Map<String, PolicyFun> policyFunMap;
-
-    /**
-     * 写入ABAC自定义匹配方法
-     * @param key
-     * @param policyFun
-     */
-    public static void setPolicyFun(String key, PolicyFun policyFun) {
-        policyFunMap.put(key, policyFun);
-    }
-
-    public static PolicyFun getPolicyFunMap(String key) {
-        return policyFunMap.get(key);
-    }
-
+    public volatile static Map<String, PolicyFun> policyFunMap = new HashMap<>();
 
     /**
      * 获取盐默认方法

@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -55,6 +56,27 @@ public class LoopAuthUtil {
 
     public static boolean isEmpty(Object[] array) {
         return array == null || array.length == 0;
+    }
+
+    /**
+     * 匹配元素是否存在
+     */
+    public static boolean hasElement(Set<String> roleSet, String role) {
+        // 空集合直接返回false
+        if (LoopAuthUtil.isEmpty(roleSet)) {
+            return false;
+        }
+        // 先尝试一下简单匹配，如果可以匹配成功则无需继续模糊匹配
+        if (roleSet.contains(role)) {
+            return true;
+        }
+        // 开始模糊匹配
+        for (String path : roleSet) {
+            if (LoopAuthUtil.fuzzyMatching(path, role)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

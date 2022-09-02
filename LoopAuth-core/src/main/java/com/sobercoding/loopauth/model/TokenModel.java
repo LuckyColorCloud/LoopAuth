@@ -8,7 +8,7 @@ import java.util.Objects;
  * token模型
  * @author: Sober
  */
-public class TokenModel implements Serializable,Comparable<TokenModel>  {
+public class TokenModel implements Serializable,Comparable<TokenModel> {
 
     private static final long serialVersionUID = 1L;
 

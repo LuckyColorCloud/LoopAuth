@@ -1,10 +1,9 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.dao.LoopAuthDao;
-import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import com.sobercoding.loopauth.jedis.JedisDaoImpl;
-import com.sobercoding.loopauth.router.LoopAuthHttpMode;
-import com.sobercoding.loopauth.servlet.filter.LoopAuthServletFilter;
+import com.sobercoding.loopauth.LoopAuthStrategy;
+import com.sobercoding.loopauth.model.builder.AbacPolicyFunBuilder;
+import com.sobercoding.loopauth.model.builder.RoleMateBuilder;
+import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import org.springframework.context.annotation.*;
 
 /**
@@ -42,5 +41,15 @@ public class MyLoopAuthConfig {
 //    public LoopAuthDao getLoopAuthDao() {
 //        return new JedisDaoImpl();
 //    }
+
+    @Bean
+    public void policyFun() {
+        LoopAuthStrategy.policyFunMap = new AbacPolicyFunBuilder()
+                .setPolicyFun("roleOr",new RoleMateBuilder()
+                        .setLoopAuthVerifyMode(LoopAuthVerifyMode.OR)
+                        .build()
+                )
+                .build();
+    }
 
 }
