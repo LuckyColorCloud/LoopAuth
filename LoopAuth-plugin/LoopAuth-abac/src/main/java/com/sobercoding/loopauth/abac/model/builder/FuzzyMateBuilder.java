@@ -1,27 +1,25 @@
-package com.sobercoding.loopauth.model.builder;
+package com.sobercoding.loopauth.abac.model.builder;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.function.PolicyFun;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.util.AuthUtil;
 import javafx.util.Builder;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Sober
  */
-public class RoleMateBuilder implements Builder<PolicyFun> {
+public class FuzzyMateBuilder implements Builder<PolicyFun> {
 
     /**
-     * 验证模式：AND | OR | non，默认AND
+     * 验证模式：AND | OR | NON，默认AND
      *
      * @return 验证模式
      */
     private LoopAuthVerifyMode loopAuthVerifyMode = LoopAuthVerifyMode.AND;
 
-    public RoleMateBuilder setLoopAuthVerifyMode(LoopAuthVerifyMode loopAuthVerifyMode) {
+    public FuzzyMateBuilder setLoopAuthVerifyMode(LoopAuthVerifyMode loopAuthVerifyMode) {
         this.loopAuthVerifyMode = loopAuthVerifyMode;
         return this;
     }

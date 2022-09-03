@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.model.authProperty;
+package com.sobercoding.loopauth.abac.model.authProperty;
 
 /**
  * 时间区间属性类型

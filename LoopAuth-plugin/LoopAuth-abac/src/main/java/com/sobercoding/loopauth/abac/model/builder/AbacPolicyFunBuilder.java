@@ -1,15 +1,12 @@
-package com.sobercoding.loopauth.model.builder;
+package com.sobercoding.loopauth.abac.model.builder;
 
 import com.sobercoding.loopauth.function.PolicyFun;
-import com.sobercoding.loopauth.model.authProperty.TimeInterval;
-import com.sobercoding.loopauth.util.AuthUtil;
-import com.sobercoding.loopauth.util.LoopAuthUtil;
+import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import javafx.util.Builder;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Sober
@@ -18,8 +15,8 @@ public class AbacPolicyFunBuilder implements Builder<Map<String, PolicyFun>> {
 
     private Map<String, PolicyFun> policyFunMap = new HashMap<>();
 
-    public AbacPolicyFunBuilder loginId(String key) {
-        policyFunMap.put(key,(value, rule) -> {
+    public AbacPolicyFunBuilder loginId() {
+        policyFunMap.put("loginId",(value, rule) -> {
             String loginId = (String) value;
             String[] loginIdRules = ((String) rule).split(",");
             return Arrays.asList(loginIdRules).contains(loginId);
@@ -27,12 +24,26 @@ public class AbacPolicyFunBuilder implements Builder<Map<String, PolicyFun>> {
         return this;
     }
 
-    public AbacPolicyFunBuilder loginIdNot(String key) {
-        policyFunMap.put(key,(value, rule) -> {
+    public AbacPolicyFunBuilder loginIdNot() {
+        policyFunMap.put("loginIdNON",(value, rule) -> {
             String loginId = (String) value;
             String[] loginIdRules = ((String) rule).split(",");
             return Arrays.stream(loginIdRules).noneMatch(item -> item.equals(loginId));
         });
+        return this;
+    }
+
+    public AbacPolicyFunBuilder role(LoopAuthVerifyMode loopAuthVerifyMode) {
+        policyFunMap.put("role" + loopAuthVerifyMode.name(), new FuzzyMateBuilder()
+                .setLoopAuthVerifyMode(loopAuthVerifyMode)
+                .build());
+        return this;
+    }
+
+    public AbacPolicyFunBuilder permission(LoopAuthVerifyMode loopAuthVerifyMode) {
+        policyFunMap.put("permission" + loopAuthVerifyMode.name(), new FuzzyMateBuilder()
+                .setLoopAuthVerifyMode(loopAuthVerifyMode)
+                .build());
         return this;
     }
 

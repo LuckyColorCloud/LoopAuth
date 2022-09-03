@@ -1,8 +1,8 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.model.builder.AbacPolicyFunBuilder;
-import com.sobercoding.loopauth.model.builder.RoleMateBuilder;
+import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
+import com.sobercoding.loopauth.abac.model.builder.FuzzyMateBuilder;
 import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
 import org.springframework.context.annotation.*;
 
@@ -45,10 +45,10 @@ public class MyLoopAuthConfig {
     @Bean
     public void policyFun() {
         LoopAuthStrategy.policyFunMap = new AbacPolicyFunBuilder()
-                .setPolicyFun("roleOr",new RoleMateBuilder()
-                        .setLoopAuthVerifyMode(LoopAuthVerifyMode.OR)
-                        .build()
-                )
+                .loginId()
+                .loginIdNot()
+                .role(LoopAuthVerifyMode.OR)
+                .permission(LoopAuthVerifyMode.OR)
                 .build();
     }
 

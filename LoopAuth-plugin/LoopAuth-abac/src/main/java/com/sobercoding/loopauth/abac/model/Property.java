@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.model;
+package com.sobercoding.loopauth.abac.model;
 
 import com.sobercoding.loopauth.function.PolicyFun;
 

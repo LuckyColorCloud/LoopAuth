@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.util;
+package com.sobercoding.loopauth.abac.util;
 
 /**
  * ip匹配
