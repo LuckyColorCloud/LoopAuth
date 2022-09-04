@@ -1,5 +1,8 @@
 package com.sobercoding.loopauth.abac.model.authProperty;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 /**
  * 时间区间属性类型
  * @author Sober
@@ -10,8 +13,8 @@ public enum IntervalType {
      */
     NONE{
         @Override
-        public boolean mate(long start, long end){
-            return true;
+        public long creation(){
+            return System.currentTimeMillis();
         }
     },
     /**
@@ -19,17 +22,8 @@ public enum IntervalType {
      */
     DAY{
         @Override
-        public boolean mate(long start, long end){
-            return true;
-        }
-    },
-    /**
-     * 一月中的时间
-     */
-    MONTH{
-        @Override
-        public boolean mate(long start, long end){
-            return true;
+        public long creation(){
+            return System.currentTimeMillis() % 86400000L;
         }
     },
     /**
@@ -37,8 +31,17 @@ public enum IntervalType {
      */
     WEEK{
         @Override
-        public boolean mate(long start, long end){
-            return true;
+        public long creation(){
+            return (System.currentTimeMillis() - 259200000L) % 604800000L;
+        }
+    },
+    /**
+     * 一月中的时间
+     */
+    MONTH{
+        @Override
+        public long creation(){
+            return 0;
         }
     },
     /**
@@ -46,11 +49,16 @@ public enum IntervalType {
      */
     YEAR{
         @Override
-        public boolean mate(long start, long end){
-            return true;
+        public long creation(){
+            return 0;
         }
     };
 
-    public abstract boolean mate(long start, long end);
+    /**
+     * 返回类型时间
+     * @author Sober
+     * @return long
+     */
+    public abstract long creation();
 
 }
