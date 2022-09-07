@@ -22,8 +22,4 @@ public class TimeMate {
 
         return false;
     }
-
-    public static void main(String[] args) {
-        System.out.println(IntervalType.WEEK.creation());
-    }
 }
