@@ -12,14 +12,20 @@ import java.time.*;
  */
 public class TimeMate {
 
+    /**
+     * 匹配时间是否属于区间
+     * @author Sober
+     * @param start 开始时间
+     * @param end 结束时间
+     * @param intervalType 时间区间类型
+     * @return boolean
+     */
     public static boolean section(long start, long end, IntervalType intervalType) {
         long time = intervalType.creation();
         if (start != 0 && end != 0){
-//            if (start <  &&  < end){
-//                return true;
-//            }
+            return start < time && time < end;
+        }else {
+            return start == 0 ? time < end : start < time;
         }
-
-        return false;
     }
 }
