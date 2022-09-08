@@ -27,6 +27,10 @@ public class LoopAuthConfig implements Serializable {
      */
     private long timeOut = 60 * 60 * 24 * 1000;
 
+    /**
+     * abac鉴权  默认不开启
+     */
+    private Boolean isAbac = false;
 
     /**
      * token共生  默认不开启
@@ -87,6 +91,15 @@ public class LoopAuthConfig implements Serializable {
      * cookie配置
      */
     private CookieConfig cookieConfig = new CookieConfig();
+
+    public Boolean getAbac() {
+        return isAbac;
+    }
+
+    public LoopAuthConfig setAbac(Boolean abac) {
+        isAbac = abac;
+        return this;
+    }
 
     public Boolean getTokenPersistence() {
         return isTokenPersistence;
