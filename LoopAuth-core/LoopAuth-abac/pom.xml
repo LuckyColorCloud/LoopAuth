@@ -12,6 +12,10 @@
     <artifactId>LoopAuth-abac</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-base</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

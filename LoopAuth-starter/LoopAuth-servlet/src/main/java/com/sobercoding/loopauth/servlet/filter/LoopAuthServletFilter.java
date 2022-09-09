@@ -1,7 +1,6 @@
 package com.sobercoding.loopauth.servlet.filter;
 
-import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import com.sobercoding.loopauth.router.LoopAuthHttpMode;
+import com.sobercoding.loopauth.rbac.router.LoopAuthHttpMode;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import javax.servlet.*;

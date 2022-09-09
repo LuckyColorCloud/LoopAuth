@@ -1,7 +1,7 @@
 package com.sobercoding.loopauth.abac.model.builder;
 
-import com.sobercoding.loopauth.function.PolicyFun;
-import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
+import com.sobercoding.loopauth.function.MaFunction;
+import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.util.AuthUtil;
 import javafx.util.Builder;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * @author Sober
  */
-public class FuzzyMateBuilder implements Builder<PolicyFun> {
+public class FuzzyMateBuilder implements Builder<MaFunction> {
 
     /**
      * 验证模式：AND | OR | NON，默认AND
@@ -25,7 +25,7 @@ public class FuzzyMateBuilder implements Builder<PolicyFun> {
     }
 
     @Override
-    public PolicyFun build() {
+    public MaFunction build() {
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;

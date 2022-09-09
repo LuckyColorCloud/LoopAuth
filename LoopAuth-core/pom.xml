@@ -13,6 +13,7 @@
         <module>LoopAuth-abac</module>
         <module>LoopAuth-rbac</module>
         <module>LoopAuth-session</module>
+        <module>LoopAuth-base</module>
     </modules>
     <artifactId>LoopAuth-core</artifactId>
     <dependencies>

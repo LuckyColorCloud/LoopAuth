@@ -1,6 +1,5 @@
 package com.sobercoding.loopauth.rbac.annotation;
 
-import com.sobercoding.loopauth.rbac.model.LoopAuthVerifyMode;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

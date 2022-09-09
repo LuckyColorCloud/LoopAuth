@@ -8,8 +8,8 @@ import java.util.Set;
  * abac获取规则
  * @author Sober
  */
-public interface AbacInterface {
 
+public interface AbacInterface {
     /**
      *  获取一个或多个路由/权限代码所属的 规则
      * @param route 路由

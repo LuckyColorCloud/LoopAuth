@@ -1,12 +1,9 @@
 package com.sobercoding.loopauth.abac.model;
 
-import com.sobercoding.loopauth.model.TokenModel;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * ABAC策略模型

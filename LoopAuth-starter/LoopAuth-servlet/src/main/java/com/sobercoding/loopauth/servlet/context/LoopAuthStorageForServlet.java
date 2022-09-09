@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.servlet.context;
 
-import com.sobercoding.loopauth.context.LoopAuthStorage;
+import com.sobercoding.loopauth.session.context.LoopAuthStorage;
 
 import javax.servlet.http.HttpServletRequest;
 
