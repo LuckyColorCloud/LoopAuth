@@ -1,8 +1,8 @@
 package com.sobercoding.loopauth.session.context;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthParamException;
+import com.sobercoding.loopauth.session.SessionStrategy;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import java.time.Instant;
@@ -28,27 +28,27 @@ public class LoopAuthCookie {
     /**
      * 过期时间
      */
-    private long maxAge = LoopAuthStrategy.getLoopAuthConfig().getTimeOut() / 1000L;
+    private long maxAge = SessionStrategy.getLoopAuthConfig().getTimeOut() / 1000L;
 
     /**
      * 域
      */
-    private String domain = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getDomain();
+    private String domain = SessionStrategy.getLoopAuthConfig().getCookieConfig().getDomain();
 
     /**
      * 路径
      */
-    private String path = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getPath();
+    private String path = SessionStrategy.getLoopAuthConfig().getCookieConfig().getPath();
 
     /**
      * 是否允许js操作
      */
-    private boolean httpOnly = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().isHttpOnly();
+    private boolean httpOnly = SessionStrategy.getLoopAuthConfig().getCookieConfig().isHttpOnly();
 
     /**
      * 是否只在https安全协议传输
      */
-    private boolean secure = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().isSecure();
+    private boolean secure = SessionStrategy.getLoopAuthConfig().getCookieConfig().isSecure();
 
     /**
      * 安全等级
@@ -56,7 +56,7 @@ public class LoopAuthCookie {
      * Lax 不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外
      * None
      */
-    private String sameSite = LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().getSameSite();
+    private String sameSite = SessionStrategy.getLoopAuthConfig().getCookieConfig().getSameSite();
 
     public String getName() {
         return name;
@@ -141,7 +141,7 @@ public class LoopAuthCookie {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name).append("=").append(value);
 
-        if (LoopAuthStrategy.getLoopAuthConfig().getCookieConfig().isRemember()){
+        if (SessionStrategy.getLoopAuthConfig().getCookieConfig().isRemember()){
             if(maxAge >= 0) {
                 stringBuilder.append("; Max-Age=").append(maxAge);
                 String expires;

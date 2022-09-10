@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.session.face.component;
+package com.sobercoding.loopauth.session.carryout.component;
 
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthLoginException;

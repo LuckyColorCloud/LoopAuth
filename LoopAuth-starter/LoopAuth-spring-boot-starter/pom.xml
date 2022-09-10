@@ -35,6 +35,24 @@
             <artifactId>LoopAuth-servlet</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-session</artifactId>
+            <version>${revision}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-rbac</artifactId>
+            <version>${revision}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-abac</artifactId>
+            <version>${revision}</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

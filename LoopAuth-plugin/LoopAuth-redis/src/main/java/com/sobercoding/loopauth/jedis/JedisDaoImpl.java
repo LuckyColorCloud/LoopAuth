@@ -1,16 +1,18 @@
 package com.sobercoding.loopauth.jedis;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.dao.LoopAuthDao;
+
 import com.sobercoding.loopauth.exception.LoopAuthDaoException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.session.SessionStrategy;
+import com.sobercoding.loopauth.session.dao.LoopAuthDao;
+import com.sobercoding.loopauth.session.model.TokenModel;
 import com.sobercoding.loopauth.util.JsonUtil;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;
 
 import java.util.Set;
+
 
 /**
  * Redis 操作助手
@@ -40,12 +42,12 @@ public class JedisDaoImpl implements LoopAuthDao {
     @Override
     public Object get(String key) {
         String json = getRedisConn().get(key);
-        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
+        if (SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
                 return json;
             }
         }
-        if (LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
+        if (SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
                 return JsonUtil.<TokenModel>jsonToList(getRedisConn().get(key), TokenModel.class);
             }
@@ -74,10 +76,10 @@ public class JedisDaoImpl implements LoopAuthDao {
     @Override
     public void set(String key, Object value, long expirationTime) {
         String json = null;
-        if (LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
+        if (SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
             json = (String) value;
         }
-        if (LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, LoopAuthStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
+        if (SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
             Set<TokenModel> tokenModels = (Set<TokenModel>) value;
             json = JsonUtil.objToJson(tokenModels);
         }

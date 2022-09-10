@@ -1,10 +1,10 @@
-package com.sobercoding.loopauth.session.face;
+package com.sobercoding.loopauth.session.carryout;
 
 
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.session.SessionStrategy;
-import com.sobercoding.loopauth.session.face.component.LoopAuthLogin;
-import com.sobercoding.loopauth.session.face.component.LoopAuthToken;
+import com.sobercoding.loopauth.session.carryout.component.LoopAuthLogin;
+import com.sobercoding.loopauth.session.carryout.component.LoopAuthToken;
 import com.sobercoding.loopauth.session.model.TokenModel;
 import com.sobercoding.loopauth.session.model.UserSession;
 
@@ -17,8 +17,6 @@ public class LoopAuthSession {
     public static LoopAuthLogin LOOP_AUTH_LOGIN = SessionStrategy.getLoopAuthLogin();
 
     public static LoopAuthToken LOOP_AUTH_TOKEN = SessionStrategy.getLoopAuthToken();
-
-    public static LoopAuthPermission LOOP_AUTH_PERMISSION = LoopAuthStrategy.getLoopAuthPermission();
 
     /**
      * 登录, 设置终端
@@ -162,52 +160,6 @@ public class LoopAuthSession {
      */
     public static void forcedOfflineByLoginId(String loginId){
         LOOP_AUTH_LOGIN.forcedOfflineByLoginId(loginId);
-    }
-
-
-    /**
-     * 角色认证
-     * @author: Sober
-     * @param loopAuthVerifyMode 认证方式
-     * @param roles 角色列表
-     */
-    public static void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
-        isLogin();
-        LOOP_AUTH_PERMISSION.checkByRole(loopAuthVerifyMode,roles);
-    }
-
-    /**
-     * 角色认证
-     * @author: Sober
-     * @param roles 角色列表
-     */
-    public static void checkByRole(String... roles) {
-        isLogin();
-        // 默认AND
-        LOOP_AUTH_PERMISSION.checkByRole(LoopAuthVerifyMode.AND,roles);
-    }
-
-
-    /**
-     * 权限认证
-     * @author: Sober
-     * @param loopAuthVerifyMode 认证方式
-     * @param permissions 权限代码列表
-     */
-    public static void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
-        isLogin();
-        LOOP_AUTH_PERMISSION.checkByPermission(loopAuthVerifyMode,permissions);
-    }
-
-    /**
-     * 权限认证
-     * @author: Sober
-     * @param permissions 权限代码列表
-     */
-    public static void checkByPermission(String... permissions) {
-        isLogin();
-        // 默认AND
-        LOOP_AUTH_PERMISSION.checkByPermission(LoopAuthVerifyMode.AND,permissions);
     }
 
 }

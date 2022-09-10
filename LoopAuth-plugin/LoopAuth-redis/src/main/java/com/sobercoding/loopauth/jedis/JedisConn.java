@@ -1,7 +1,7 @@
 package com.sobercoding.loopauth.jedis;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.config.RedisConfig;
+import com.sobercoding.loopauth.session.SessionStrategy;
+import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.*;
@@ -16,7 +16,7 @@ public class JedisConn {
     private volatile JedisPool jedisPool;
     private volatile Jedis jedisConn;
 
-    private final RedisConfig redisConfig = LoopAuthStrategy.getLoopAuthConfig().getRedisConfig();
+    private final RedisConfig redisConfig = SessionStrategy.getLoopAuthConfig().getRedisConfig();
 
     private final String HOST = redisConfig.getHost();
     private final String PASSWORD = redisConfig.getPassword();

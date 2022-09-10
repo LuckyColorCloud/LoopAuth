@@ -2,7 +2,9 @@ package com.sobercoding.loopauth.springbootstarter;
 
 import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
 import com.sobercoding.loopauth.rbac.annotation.CheckRole;
+import com.sobercoding.loopauth.rbac.carryout.LoopAuthRbac;
 import com.sobercoding.loopauth.session.annotation.CheckLogin;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -36,19 +38,19 @@ public class CheckPermissionAnnotation {
      */
     public static Consumer<AnnotatedElement> checkElementAnnotation = (target) -> {
 
-        CheckLogin checkLogin = (CheckLogin) CheckPermissionAnnotation.getAnnotation.apply(target, LoopAutoCheckLogin.class);
+        CheckLogin checkLogin = (CheckLogin) CheckPermissionAnnotation.getAnnotation.apply(target, CheckLogin.class);
         if (checkLogin != null) {
-            LoopAuthFaceImpl.isLogin();
+            LoopAuthSession.isLogin();
         }
 
-        CheckRole checkRole = (CheckRole) CheckPermissionAnnotation.getAnnotation.apply(target, LoopAuthRole.class);
+        CheckRole checkRole = (CheckRole) CheckPermissionAnnotation.getAnnotation.apply(target, CheckRole.class);
         if (checkRole != null) {
-            LoopAuthFaceImpl.checkByRole(checkRole.mode(), checkRole.value());
+            LoopAuthRbac.checkByRole(checkRole.mode(), checkRole.value());
         }
 
-        CheckPermission checkPermission = (CheckPermission) CheckPermissionAnnotation.getAnnotation.apply(target, LoopAuthPermission.class);
+        CheckPermission checkPermission = (CheckPermission) CheckPermissionAnnotation.getAnnotation.apply(target, CheckPermission.class);
         if (checkPermission != null) {
-            LoopAuthFaceImpl.checkByPermission(checkPermission.mode(), checkPermission.value());
+            LoopAuthRbac.checkByPermission(checkPermission.mode(), checkPermission.value());
         }
 
     };

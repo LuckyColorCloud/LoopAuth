@@ -1,14 +1,15 @@
-package com.sobercoding.loopauth.rbac;
+package com.sobercoding.loopauth.rbac.carryout;
 
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
+import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.util.AuthUtil;
 
 /**
  * @author: Sober
  */
-public class LoopAuthRbac {
+public class LoopAuthPermission {
 
 
     /**
@@ -18,16 +19,16 @@ public class LoopAuthRbac {
      * @param roles 角色列表
      */
     public void checkByRole(LoopAuthVerifyMode loopAuthVerifyMode, String... roles) {
-        String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
+        String loginId = RbacStrategy.getLoginId.get();
         //TODO  缺少登入类型 暂做扩展
         String loginType = "";
         boolean pass;
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {
-            pass = AuthUtil.checkAnd(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+            pass = AuthUtil.checkAnd(RbacStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
         } else if (loopAuthVerifyMode == LoopAuthVerifyMode.OR) {
-            pass = AuthUtil.checkOr(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+            pass = AuthUtil.checkOr(RbacStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
         } else {
-            pass = AuthUtil.checkNon(LoopAuthStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
+            pass = AuthUtil.checkNon(RbacStrategy.getPermissionInterface().getRoleSet(loginId, loginType), roles);
         }
         if (!pass){
             throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
@@ -41,16 +42,16 @@ public class LoopAuthRbac {
      * @param permissions 权限代码列表
      */
     public void checkByPermission(LoopAuthVerifyMode loopAuthVerifyMode, String... permissions) {
-        String loginId = LoopAuthFaceImpl.getTokenModel().getLoginId();
+        String loginId = RbacStrategy.getLoginId.get();
         //TODO  缺少登入类型 暂做扩展
         String loginType = "";
         boolean pass;
         if (loopAuthVerifyMode == LoopAuthVerifyMode.AND) {
-            pass = AuthUtil.checkAnd(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+            pass = AuthUtil.checkAnd(RbacStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
         } else if (loopAuthVerifyMode == LoopAuthVerifyMode.OR) {
-            pass = AuthUtil.checkOr(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+            pass = AuthUtil.checkOr(RbacStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
         } else {
-            pass = AuthUtil.checkNon(LoopAuthStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
+            pass = AuthUtil.checkNon(RbacStrategy.getPermissionInterface().getPermissionSet(loginId, loginType), permissions);
         }
         if (!pass){
             throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);

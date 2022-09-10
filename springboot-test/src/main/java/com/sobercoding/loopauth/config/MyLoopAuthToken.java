@@ -1,7 +1,7 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.face.component.LoopAuthToken;
-import com.sobercoding.loopauth.model.TokenModel;
+import com.sobercoding.loopauth.session.carryout.component.LoopAuthToken;
+import com.sobercoding.loopauth.session.model.TokenModel;
 
 /**
  * @program: LoopAuth

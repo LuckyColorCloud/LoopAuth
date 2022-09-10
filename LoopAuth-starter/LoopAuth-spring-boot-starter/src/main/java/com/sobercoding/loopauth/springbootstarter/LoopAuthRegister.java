@@ -1,7 +1,10 @@
 package com.sobercoding.loopauth.springbootstarter;
 
-import com.sobercoding.loopauth.config.LoopAuthConfig;
-import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.rbac.RbacStrategy;
+import com.sobercoding.loopauth.session.SessionStrategy;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import com.sobercoding.loopauth.session.config.SessionConfig;
+import com.sobercoding.loopauth.session.context.LoopAuthContext;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -18,8 +21,8 @@ public class LoopAuthRegister {
      */
     @Bean
     @ConfigurationProperties(prefix = "loop-auth")
-    public LoopAuthConfig getLoopAuthConfig() {
-        return new LoopAuthConfig();
+    public SessionConfig getLoopAuthConfig() {
+        return new SessionConfig();
     }
 
     /**
@@ -32,5 +35,9 @@ public class LoopAuthRegister {
         return new LoopAuthContextForSpring();
     }
 
+    @Bean
+    public void otherConfig(){
+        RbacStrategy.getLoginId = () -> LoopAuthSession.getTokenModel().getLoginId();
+    }
 
 }

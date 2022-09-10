@@ -1,9 +1,9 @@
 package com.sobercoding.loopauth.springbootstarter.interceptor;
 
-import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
-import com.sobercoding.loopauth.router.LoopAuthRouteFunction;
 import com.sobercoding.loopauth.servlet.context.LoopAuthRequestForServlet;
 import com.sobercoding.loopauth.servlet.context.LoopAuthResponseForServlet;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import com.sobercoding.loopauth.springbootstarter.LoopAuthRouteFunction;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class LoopAuthRouteInterceptor implements HandlerInterceptor {
 	/**
 	 * 每次进入拦截器的[执行函数]，默认为登录校验
 	 */
-	public LoopAuthRouteFunction function = (req, res, handler) -> LoopAuthFaceImpl.isLogin();
+	public LoopAuthRouteFunction function = (req, res, handler) -> LoopAuthSession.isLogin();
 
 	/**
 	 * 创建一个路由拦截器

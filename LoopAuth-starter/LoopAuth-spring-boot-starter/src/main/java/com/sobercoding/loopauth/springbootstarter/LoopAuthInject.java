@@ -1,14 +1,13 @@
 package com.sobercoding.loopauth.springbootstarter;
 
-import com.sobercoding.loopauth.LoopAuthStrategy;
-import com.sobercoding.loopauth.config.LoopAuthConfig;
-import com.sobercoding.loopauth.context.LoopAuthContext;
-import com.sobercoding.loopauth.dao.LoopAuthDao;
-import com.sobercoding.loopauth.permission.PermissionInterface;
+import com.sobercoding.loopauth.rbac.RbacStrategy;
+import com.sobercoding.loopauth.rbac.face.PermissionInterface;
+import com.sobercoding.loopauth.session.SessionStrategy;
+import com.sobercoding.loopauth.session.config.SessionConfig;
+import com.sobercoding.loopauth.session.context.LoopAuthContext;
+import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 
-import javax.annotation.Resource;
 
 
 /**
@@ -17,13 +16,13 @@ import javax.annotation.Resource;
 public class LoopAuthInject {
 
     @Autowired(required = false)
-    public void setLoopAuthConfig(LoopAuthConfig loopAuthConfig) {
-        LoopAuthStrategy.setLoopAuthConfig(loopAuthConfig);
+    public void setLoopAuthConfig(SessionConfig loopAuthConfig) {
+        SessionStrategy.setLoopAuthConfig(loopAuthConfig);
     }
 
     @Autowired(required = false)
     public void setLoopAuthContext(LoopAuthContext loopAuthContext){
-        LoopAuthStrategy.setLoopAuthContext(loopAuthContext);
+        SessionStrategy.setLoopAuthContext(loopAuthContext);
     }
 
     /**
@@ -33,7 +32,7 @@ public class LoopAuthInject {
      */
     @Autowired(required = false)
     public void setPermissionInterface(PermissionInterface permissionInterface) {
-        LoopAuthStrategy.setPermissionInterface(permissionInterface);
+        RbacStrategy.setPermissionInterface(permissionInterface);
     }
 
     /**
@@ -43,7 +42,7 @@ public class LoopAuthInject {
      */
     @Autowired(required = false)
     public void setLoopAuthDao(LoopAuthDao loopAuthDao) {
-        LoopAuthStrategy.setLoopAuthDao(loopAuthDao);
+        SessionStrategy.setLoopAuthDao(loopAuthDao);
     }
 
 }

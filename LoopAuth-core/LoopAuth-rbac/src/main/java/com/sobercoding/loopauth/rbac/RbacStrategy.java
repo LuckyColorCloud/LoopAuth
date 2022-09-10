@@ -1,25 +1,13 @@
 package com.sobercoding.loopauth.rbac;
 
 
-import com.sobercoding.loopauth.config.LoopAuthConfig;
-import com.sobercoding.loopauth.context.LoopAuthContext;
-import com.sobercoding.loopauth.context.LoopAuthContextDefaultImpl;
-import com.sobercoding.loopauth.dao.LoopAuthDao;
-import com.sobercoding.loopauth.dao.LoopAuthDaoImpl;
-import com.sobercoding.loopauth.face.component.LoopAuthLogin;
-import com.sobercoding.loopauth.face.component.LoopAuthPermission;
-import com.sobercoding.loopauth.face.component.LoopAuthToken;
-import com.sobercoding.loopauth.function.LrFunction;
-import com.sobercoding.loopauth.function.PolicyFun;
-import com.sobercoding.loopauth.model.TokenModel;
-import com.sobercoding.loopauth.permission.PermissionInterface;
-import com.sobercoding.loopauth.permission.PermissionInterfaceDefImpl;
+import com.sobercoding.loopauth.exception.LoopAuthConfigException;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.function.MeFunction;
+import com.sobercoding.loopauth.rbac.carryout.LoopAuthPermission;
 import com.sobercoding.loopauth.rbac.face.PermissionInterface;
 import com.sobercoding.loopauth.rbac.face.PermissionInterfaceDefImpl;
-
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
 
 /**
  * LoopAuth  Bean管理器
@@ -32,21 +20,21 @@ public class RbacStrategy {
     /**
      * 验证权限策略
      */
-    private volatile static LoopAuthRbac loopAuthRbac;
+    private volatile static LoopAuthPermission loopAuthPermission;
 
-    public static void setLoopAuthPermission(LoopAuthRbac loopAuthPermission) {
-        RbacStrategy.loopAuthRbac = loopAuthPermission;
+    public static void setLoopAuthPermission(LoopAuthPermission loopAuthPermission) {
+        RbacStrategy.loopAuthPermission = loopAuthPermission;
     }
 
-    public static LoopAuthRbac getLoopAuthPermission() {
-        if (RbacStrategy.loopAuthRbac == null){
+    public static LoopAuthPermission getLoopAuthPermission() {
+        if (RbacStrategy.loopAuthPermission == null){
             synchronized(RbacStrategy.class){
-                if (RbacStrategy.loopAuthRbac == null){
-                    setLoopAuthPermission(new LoopAuthRbac());
+                if (RbacStrategy.loopAuthPermission == null){
+                    setLoopAuthPermission(new LoopAuthPermission());
                 }
             }
         }
-        return RbacStrategy.loopAuthRbac;
+        return RbacStrategy.loopAuthPermission;
     }
 
 
@@ -68,6 +56,13 @@ public class RbacStrategy {
         }
         return permissionInterface;
     }
+
+    /**
+     * 获取loginId
+     */
+    public static Supplier<String> getLoginId = () -> {
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "RbacStrategy.getLoginId");
+    };
 
 
 

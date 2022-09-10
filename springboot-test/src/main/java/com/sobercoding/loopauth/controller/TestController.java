@@ -1,10 +1,10 @@
 package com.sobercoding.loopauth.controller;
 
-import com.sobercoding.loopauth.model.constant.LoopAuthVerifyMode;
-import com.sobercoding.loopauth.annotation.LoopAuthPermission;
-import com.sobercoding.loopauth.annotation.LoopAuthRole;
-import com.sobercoding.loopauth.annotation.LoopAutoCheckLogin;
-import com.sobercoding.loopauth.face.LoopAuthFaceImpl;
+import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
+import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
+import com.sobercoding.loopauth.rbac.annotation.CheckRole;
+import com.sobercoding.loopauth.session.annotation.CheckLogin;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,49 +21,49 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @RequestMapping("/login")
     public String register(){
-        LoopAuthFaceImpl.login("1");
-        return LoopAuthFaceImpl.getUserSession().toString();
+        LoopAuthSession.login("1");
+        return LoopAuthSession.getUserSession().toString();
     }
 
     @RequestMapping("/rlogin")
     public String register1(String value){
-        LoopAuthFaceImpl.forcedOfflineByLoginId(value);
+        LoopAuthSession.forcedOfflineByLoginId(value);
         return "1";
     }
 
     @RequestMapping("/rtoken")
     public String register2(String value){
-        LoopAuthFaceImpl.forcedOfflineByToken(value);
+        LoopAuthSession.forcedOfflineByToken(value);
         return "1";
     }
 
     @GetMapping("/islogin")
     public String islogin(){
-        LoopAuthFaceImpl.isLogin();
-        return LoopAuthFaceImpl.getUserSessionByLoginId(LoopAuthFaceImpl.getTokenModel().getLoginId()).toString();
+        LoopAuthSession.isLogin();
+        return LoopAuthSession.getUserSessionByLoginId(LoopAuthSession.getTokenModel().getLoginId()).toString();
     }
 
 
     @GetMapping("/out")
     public String register1(){
-        LoopAuthFaceImpl.isLogin();
-        LoopAuthFaceImpl.logout();
-        return LoopAuthFaceImpl.getUserSession().toString();
+        LoopAuthSession.isLogin();
+        LoopAuthSession.logout();
+        return "登出了";
     }
 
-    @LoopAutoCheckLogin
+    @CheckLogin
     @GetMapping("/testLogin")
     public String testLogin(){
         return "检测成功";
     }
 
-    @LoopAuthPermission(value="user-add",mode = LoopAuthVerifyMode.OR)
+    @CheckPermission(value="user-add", mode = LoopAuthVerifyMode.OR)
     @GetMapping("/testPermission")
     public String testPermission(){
         return "检测成功";
     }
 
-    @LoopAuthRole(value="user",mode = LoopAuthVerifyMode.OR)
+    @CheckRole(value="user",mode = LoopAuthVerifyMode.OR)
     @GetMapping("/testRole")
     public String testRole(){
         return "检测成功";

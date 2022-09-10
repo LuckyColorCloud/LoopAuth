@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.loopAuth;
 
-import com.sobercoding.loopauth.permission.PermissionInterface;
+import com.sobercoding.loopauth.rbac.face.PermissionInterface;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

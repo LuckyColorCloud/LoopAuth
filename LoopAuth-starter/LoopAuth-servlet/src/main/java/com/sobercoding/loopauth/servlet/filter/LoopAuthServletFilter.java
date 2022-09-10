@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.servlet.filter;
 
-import com.sobercoding.loopauth.rbac.router.LoopAuthHttpMode;
+import com.sobercoding.loopauth.model.LoopAuthHttpMode;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
 
 import javax.servlet.*;
@@ -71,7 +72,7 @@ public class LoopAuthServletFilter implements Filter {
     public LoopAuthFilter loopAuthFilter = (boolean isIntercept, String route) -> {
         if (isIntercept){
             // 拦截
-            LoopAuthFaceImpl.isLogin();
+            LoopAuthSession.isLogin();
         }
     };
     /**

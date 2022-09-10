@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.rbac.router;
+package com.sobercoding.loopauth.model;
 
 import java.util.HashMap;
 import java.util.Map;
