@@ -17,6 +17,7 @@ public class AbacInterfaceImpl implements AbacInterface{
      * @param permission 权限代码
      * @return 去重后的集合
      */
+    @Override
     public Set<Policy> getPolicySet(String route, String permission){
         throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
     }
