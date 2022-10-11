@@ -1,9 +1,6 @@
 package com.sobercoding.loopauth.abac.model.authProperty;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * 时间区间属性类型

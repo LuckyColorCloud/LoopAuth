@@ -14,11 +14,11 @@ public enum LoopAuthHttpMode {
      */
     ALL;
 
-    private static final Map<String, LoopAuthHttpMode> map = new HashMap<>();
+    private static final Map<String, LoopAuthHttpMode> MAP = new HashMap<>();
 
     static {
         for (LoopAuthHttpMode reqMethod : values()) {
-            map.put(reqMethod.name(), reqMethod);
+            MAP.put(reqMethod.name(), reqMethod);
         }
     }
 
@@ -28,6 +28,6 @@ public enum LoopAuthHttpMode {
     }
 
     public static LoopAuthHttpMode toEnum(String method) {
-        return map.get(method);
+        return MAP.get(method);
     }
 }
