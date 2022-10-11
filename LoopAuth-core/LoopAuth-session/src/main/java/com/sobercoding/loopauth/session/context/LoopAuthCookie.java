@@ -28,27 +28,27 @@ public class LoopAuthCookie {
     /**
      * 过期时间
      */
-    private long maxAge = SessionStrategy.getLoopAuthConfig().getTimeOut() / 1000L;
+    private long maxAge = SessionStrategy.getSessionConfig().getTimeOut() / 1000L;
 
     /**
      * 域
      */
-    private String domain = SessionStrategy.getLoopAuthConfig().getCookieConfig().getDomain();
+    private String domain = SessionStrategy.getCookieConfig().getDomain();
 
     /**
      * 路径
      */
-    private String path = SessionStrategy.getLoopAuthConfig().getCookieConfig().getPath();
+    private String path = SessionStrategy.getCookieConfig().getPath();
 
     /**
      * 是否允许js操作
      */
-    private boolean httpOnly = SessionStrategy.getLoopAuthConfig().getCookieConfig().isHttpOnly();
+    private boolean httpOnly = SessionStrategy.getCookieConfig().isHttpOnly();
 
     /**
      * 是否只在https安全协议传输
      */
-    private boolean secure = SessionStrategy.getLoopAuthConfig().getCookieConfig().isSecure();
+    private boolean secure = SessionStrategy.getCookieConfig().isSecure();
 
     /**
      * 安全等级
@@ -56,7 +56,7 @@ public class LoopAuthCookie {
      * Lax 不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外
      * None
      */
-    private String sameSite = SessionStrategy.getLoopAuthConfig().getCookieConfig().getSameSite();
+    private String sameSite = SessionStrategy.getCookieConfig().getSameSite();
 
     public String getName() {
         return name;
@@ -141,7 +141,7 @@ public class LoopAuthCookie {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(name).append("=").append(value);
 
-        if (SessionStrategy.getLoopAuthConfig().getCookieConfig().isRemember()){
+        if (SessionStrategy.getCookieConfig().isRemember()){
             if(maxAge >= 0) {
                 stringBuilder.append("; Max-Age=").append(maxAge);
                 String expires;

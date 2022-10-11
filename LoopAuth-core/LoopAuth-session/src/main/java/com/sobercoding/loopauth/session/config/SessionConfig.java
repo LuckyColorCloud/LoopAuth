@@ -81,15 +81,6 @@ public class SessionConfig implements Serializable {
      */
     private String loginIdPersistencePrefix = "LoopAuthLoginId";
 
-    /**
-     * redis配置
-     */
-    private RedisConfig redisConfig = new RedisConfig();
-
-    /**
-     * cookie配置
-     */
-    private CookieConfig cookieConfig = new CookieConfig();
 
     public Boolean getAbac() {
         return isAbac;
@@ -109,19 +100,6 @@ public class SessionConfig implements Serializable {
         return this;
     }
 
-    public CookieConfig getCookieConfig() {
-        return cookieConfig;
-    }
-
-    public SessionConfig setCookieConfig(CookieConfig cookieConfig) {
-        this.cookieConfig = cookieConfig;
-        return this;
-    }
-
-    public SessionConfig setRedisConfig(RedisConfig redisConfig) {
-        this.redisConfig = redisConfig;
-        return this;
-    }
 
     public String getTokenPersistencePrefix() {
         return tokenPersistencePrefix;
@@ -213,10 +191,6 @@ public class SessionConfig implements Serializable {
         return accessModes;
     }
 
-    public RedisConfig getRedisConfig() {
-        return redisConfig;
-    }
-
     @Override
     public String toString() {
         return "LoopAuthConfig{" +
@@ -231,8 +205,6 @@ public class SessionConfig implements Serializable {
                 ", secretKey='" + secretKey + '\'' +
                 ", tokenPersistencePrefix='" + tokenPersistencePrefix + '\'' +
                 ", loginIdPersistencePrefix='" + loginIdPersistencePrefix + '\'' +
-                ", redisConfig=" + redisConfig +
-                ", cookieConfig=" + cookieConfig +
                 '}';
     }
 }

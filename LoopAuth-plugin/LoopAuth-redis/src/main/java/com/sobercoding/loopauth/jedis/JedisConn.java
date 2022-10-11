@@ -16,7 +16,7 @@ public class JedisConn {
     private volatile JedisPool jedisPool;
     private volatile Jedis jedisConn;
 
-    private final RedisConfig redisConfig = SessionStrategy.getLoopAuthConfig().getRedisConfig();
+    private final RedisConfig redisConfig = SessionStrategy.getRedisConfig();
 
     private final String HOST = redisConfig.getHost();
     private final String PASSWORD = redisConfig.getPassword();

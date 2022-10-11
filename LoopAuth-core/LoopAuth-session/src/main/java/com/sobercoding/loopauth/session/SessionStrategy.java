@@ -2,6 +2,8 @@ package com.sobercoding.loopauth.session;
 
 
 import com.sobercoding.loopauth.function.LrFunction;
+import com.sobercoding.loopauth.session.config.CookieConfig;
+import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.session.config.SessionConfig;
 import com.sobercoding.loopauth.session.context.LoopAuthContext;
 import com.sobercoding.loopauth.session.context.LoopAuthContextDefaultImpl;
@@ -27,20 +29,55 @@ public class SessionStrategy {
      */
     private volatile static SessionConfig sessionConfig;
 
-    public static void setLoopAuthConfig(SessionConfig sessionConfig) {
+    public static void setSessionConfig(SessionConfig sessionConfig) {
         SessionStrategy.sessionConfig = sessionConfig;
     }
 
-    public static SessionConfig getLoopAuthConfig() {
+    public static SessionConfig getSessionConfig() {
         if (SessionStrategy.sessionConfig == null){
             synchronized(SessionStrategy.class){
                 if (SessionStrategy.sessionConfig == null){
-                    setLoopAuthConfig(new SessionConfig());
+                    setSessionConfig(new SessionConfig());
                 }
             }
         }
         return SessionStrategy.sessionConfig;
     }
+
+    private volatile static RedisConfig redisConfig;
+
+    public static void setRedisConfig(RedisConfig redisConfig) {
+        SessionStrategy.redisConfig = redisConfig;
+    }
+
+    public static RedisConfig getRedisConfig() {
+        if (SessionStrategy.redisConfig == null){
+            synchronized(SessionStrategy.class){
+                if (SessionStrategy.redisConfig == null){
+                    setRedisConfig(new RedisConfig());
+                }
+            }
+        }
+        return SessionStrategy.redisConfig;
+    }
+
+    private volatile static CookieConfig cookieConfig;
+
+    public static void setCookieConfig(CookieConfig cookieConfig) {
+        SessionStrategy.cookieConfig = cookieConfig;
+    }
+
+    public static CookieConfig getCookieConfig() {
+        if (SessionStrategy.cookieConfig == null){
+            synchronized(SessionStrategy.class){
+                if (SessionStrategy.cookieConfig == null){
+                    setCookieConfig(new CookieConfig());
+                }
+            }
+        }
+        return SessionStrategy.cookieConfig;
+    }
+
 
     /**
      * Token策略
@@ -123,7 +160,7 @@ public class SessionStrategy {
      * 获取盐默认方法
      */
     public static Function<String,String> getSecretKey = userId -> SessionStrategy
-            .getLoopAuthConfig().getSecretKey();
+            .getSessionConfig().getSecretKey();
 
     /**
      * 默认登录规则处理
@@ -135,9 +172,9 @@ public class SessionStrategy {
         }
         Set<TokenModel> removeTokenModels = new HashSet<>();
         // 开启token共生
-        if (SessionStrategy.getLoopAuthConfig().getMutualism()){
+        if (SessionStrategy.getSessionConfig().getMutualism()){
             // 同端互斥开启  删除相同端的登录
-            if (SessionStrategy.getLoopAuthConfig().getExclusion()){
+            if (SessionStrategy.getSessionConfig().getExclusion()){
                 // 查看是否有同端口
                 Optional<TokenModel> optionalTokenModel = tokenModels.stream()
                         .filter(item -> item.getFacility().equals(tokenModel.getFacility()))
@@ -149,7 +186,7 @@ public class SessionStrategy {
                 }
             }
             // 登录数量超出限制  删除较早的会话
-            int maxLoginCount = SessionStrategy.getLoopAuthConfig().getMaxLoginCount();
+            int maxLoginCount = SessionStrategy.getSessionConfig().getMaxLoginCount();
             if (maxLoginCount != -1 && tokenModels.size() >= maxLoginCount){
                 List<TokenModel> tokenModelList = new ArrayList<>(tokenModels);
                 // 排序

@@ -28,7 +28,7 @@ public class LoopAuthSession {
                 new TokenModel()
                         .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
-                        .setTimeOut(SessionStrategy.getLoopAuthConfig().getTimeOut())
+                        .setTimeOut(SessionStrategy.getSessionConfig().getTimeOut())
         );
     }
 
@@ -45,7 +45,7 @@ public class LoopAuthSession {
                         .setFacility(facility)
                         .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
-                        .setTimeOut(SessionStrategy.getLoopAuthConfig().getTimeOut())
+                        .setTimeOut(SessionStrategy.getSessionConfig().getTimeOut())
         );
     }
 
@@ -64,7 +64,7 @@ public class LoopAuthSession {
                         .setFacilityName(facilityName)
                         .setLoginId(loginId)
                         .setCreateTime(System.currentTimeMillis())
-                        .setTimeOut(SessionStrategy.getLoopAuthConfig().getTimeOut())
+                        .setTimeOut(SessionStrategy.getSessionConfig().getTimeOut())
         );
     }
 

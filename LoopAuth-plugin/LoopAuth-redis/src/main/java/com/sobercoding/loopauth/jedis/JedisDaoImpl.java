@@ -42,12 +42,12 @@ public class JedisDaoImpl implements LoopAuthDao {
     @Override
     public Object get(String key) {
         String json = getRedisConn().get(key);
-        if (SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
+        if (SessionStrategy.getSessionConfig().getTokenPersistencePrefix().equals(key.substring(0, SessionStrategy.getSessionConfig().getTokenPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
                 return json;
             }
         }
-        if (SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
+        if (SessionStrategy.getSessionConfig().getLoginIdPersistencePrefix().equals(key.substring(0, SessionStrategy.getSessionConfig().getLoginIdPersistencePrefix().length()))) {
             if (LoopAuthUtil.isNotEmpty(json)) {
                 return JsonUtil.<TokenModel>jsonToList(getRedisConn().get(key), TokenModel.class);
             }
@@ -76,10 +76,10 @@ public class JedisDaoImpl implements LoopAuthDao {
     @Override
     public void set(String key, Object value, long expirationTime) {
         String json = null;
-        if (SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getTokenPersistencePrefix().length()))) {
+        if (SessionStrategy.getSessionConfig().getTokenPersistencePrefix().equals(key.substring(0, SessionStrategy.getSessionConfig().getTokenPersistencePrefix().length()))) {
             json = (String) value;
         }
-        if (SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().equals(key.substring(0, SessionStrategy.getLoopAuthConfig().getLoginIdPersistencePrefix().length()))) {
+        if (SessionStrategy.getSessionConfig().getLoginIdPersistencePrefix().equals(key.substring(0, SessionStrategy.getSessionConfig().getLoginIdPersistencePrefix().length()))) {
             Set<TokenModel> tokenModels = (Set<TokenModel>) value;
             json = JsonUtil.objToJson(tokenModels);
         }

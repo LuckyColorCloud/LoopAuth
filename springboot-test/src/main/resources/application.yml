@@ -3,39 +3,40 @@ server:
   port: 8080
 
 loop-auth:
-#  time-out: 5 # token有效时间(单位秒)  默认24小时
-#  token-name: token # token名称  默认LoopAuth
-  mutualism: true # token共生 默认false 开启则 账号可以同时在线
-#  exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）
-  token-persistence: true # token持久化配置  默认false
-  max-login-count: 3 # 同一账号最大登录数量 默认1  -1代表不限制
-#  renew: false # 自动续签 默认true 每次isLogin操作，会自动刷新token有效期
-  access-modes: # token获取方式 默认[COOKIE,HEADER]顺序获取。即COOKIE中获取到鉴权成功，则不前往HEADER获取
-    - HEADER
-    - COOKIE
-#  secret-key: secret # 默认LoopAuth Token生成密钥
-#  token-persistence-prefix: tokenPrefix # 默认LoopAuthToken token持久层存储的前缀
-#  login-id-persistence-prefix: loginIdPrefix # 默认LoopAuthLoginId LoginId持久层存储的前缀
-  cookie-config: # cookie配置
-#    remember: true # 是否长久有效 默认false 开启则cookie的有效时间为time-out,关闭则网页关闭后cookie丢失
-    domain: localhost # 域 默认服务端域
-#    path: /test # 默认false '/' 路径
-    http-only: true # 默认false 是否允许js操作
-#    secure: true # 默认false 是否只在https安全协议传输
-    # 安全等级  Strict (完全禁止第三方Cookie,跨站点时,任何情况下都不会发送Cookie) 默认不限制
-    # Lax 不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外
-    # None 不限制
-    same-site: Strict
-  redis-config: # redis配置 需要加载LoopAuth-redis包才生效
-#    host: xxxxxxxx # 服务器地址 默认127.0.0.1
-#    password: xxxxxxx # 密码  默认空
-#    port: 8910 # 端口号， 默认是6379
-    database-no: 1 # 链接的数据库 默认0
-    time-out: 1000 # 超时时间(单位毫秒) 默认2000
-    max-total: 10 # 最大连接数 默认16
-    max-idle: 5 # 最大空闲连接数 默认8
-    min-idle: 2 # 最小空闲连接数 默认4
-    need-pool: true # 是否需要连接池 默认false
+  session:
+#    time-out: 5 # token有效时间(单位秒)  默认24小时
+    #  token-name: token # token名称  默认LoopAuth
+    mutualism: true # token共生 默认false 开启则 账号可以同时在线
+    #  exclusion: true # 互斥登录， 默认false  开启则 多人操作相同设备登录 会互相挤掉线（只有在 mutualism=true 时此配置才有效）
+    token-persistence: true # token持久化配置  默认false
+    max-login-count: 3 # 同一账号最大登录数量 默认1  -1代表不限制
+    #  renew: false # 自动续签 默认true 每次isLogin操作，会自动刷新token有效期
+    access-modes: # token获取方式 默认[COOKIE,HEADER]顺序获取。即COOKIE中获取到鉴权成功，则不前往HEADER获取
+      - HEADER
+      - COOKIE
+    #  secret-key: secret # 默认LoopAuth Token生成密钥
+    #  token-persistence-prefix: tokenPrefix # 默认LoopAuthToken token持久层存储的前缀
+    #  login-id-persistence-prefix: loginIdPrefix # 默认LoopAuthLoginId LoginId持久层存储的前缀
+    cookie: # cookie配置
+      remember: true # 是否长久有效 默认false 开启则cookie的有效时间为time-out,关闭则网页关闭后cookie丢失
+      domain: localhost # 域 默认服务端域
+      #    path: /test # 默认false '/' 路径
+      http-only: true # 默认false 是否允许js操作
+      #    secure: true # 默认false 是否只在https安全协议传输
+      # 安全等级  Strict (完全禁止第三方Cookie,跨站点时,任何情况下都不会发送Cookie) 默认不限制
+      # Lax 不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外
+      # None 不限制
+      same-site: Strict
+    redis: # redis配置 需要加载LoopAuth-redis包才生效
+      #    host: xxxxxxxx # 服务器地址 默认127.0.0.1
+      #    password: xxxxxxx # 密码  默认空
+      #    port: 8910 # 端口号， 默认是6379
+      database-no: 1 # 链接的数据库 默认0
+      time-out: 1000 # 超时时间(单位毫秒) 默认2000
+      max-total: 10 # 最大连接数 默认16
+      max-idle: 5 # 最大空闲连接数 默认8
+      min-idle: 2 # 最小空闲连接数 默认4
+      need-pool: true # 是否需要连接池 默认false
 
 
 

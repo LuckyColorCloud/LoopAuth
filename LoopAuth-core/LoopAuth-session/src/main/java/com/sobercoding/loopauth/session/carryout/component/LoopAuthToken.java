@@ -54,7 +54,7 @@ public class LoopAuthToken {
             String originalText = AesUtil.decode(tokens[1],secretKey);
             // 验证是否过期
             TokenModel tokenModel = getInfo(token);
-            if (!SessionStrategy.getLoopAuthConfig().getTokenPersistence() && SessionStrategy.getLoopAuthConfig().getTimeOut() != -1 && (tokenModel.getCreateTime() + tokenModel.getTimeOut()) < System.currentTimeMillis()){
+            if (!SessionStrategy.getSessionConfig().getTokenPersistence() && SessionStrategy.getSessionConfig().getTimeOut() != -1 && (tokenModel.getCreateTime() + tokenModel.getTimeOut()) < System.currentTimeMillis()){
                 throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "The token is due");
             }
             return info.equals(originalText);

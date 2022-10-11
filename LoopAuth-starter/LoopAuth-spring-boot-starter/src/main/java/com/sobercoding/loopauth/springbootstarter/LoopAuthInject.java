@@ -3,11 +3,14 @@ package com.sobercoding.loopauth.springbootstarter;
 import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.rbac.face.PermissionInterface;
 import com.sobercoding.loopauth.session.SessionStrategy;
+import com.sobercoding.loopauth.session.config.CookieConfig;
+import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.session.config.SessionConfig;
 import com.sobercoding.loopauth.session.context.LoopAuthContext;
 import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.Cookie;
 
 
 /**
@@ -16,8 +19,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LoopAuthInject {
 
     @Autowired(required = false)
-    public void setLoopAuthConfig(SessionConfig loopAuthConfig) {
-        SessionStrategy.setLoopAuthConfig(loopAuthConfig);
+    public void setSessionConfig(SessionConfig loopAuthConfig) {
+        SessionStrategy.setSessionConfig(loopAuthConfig);
+    }
+
+    @Autowired(required = false)
+    public void setRedisConfig(RedisConfig redisConfig) {
+        SessionStrategy.setRedisConfig(redisConfig);
+    }
+
+    @Autowired(required = false)
+    public void setLoopAuthConfig(CookieConfig cookieConfig) {
+        SessionStrategy.setCookieConfig(cookieConfig);
     }
 
     @Autowired(required = false)

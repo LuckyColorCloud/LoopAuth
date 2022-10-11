@@ -3,6 +3,8 @@ package com.sobercoding.loopauth.springbootstarter;
 import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.session.SessionStrategy;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import com.sobercoding.loopauth.session.config.CookieConfig;
+import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.session.config.SessionConfig;
 import com.sobercoding.loopauth.session.context.LoopAuthContext;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,12 +19,24 @@ public class LoopAuthRegister {
     /**
      * 注入配置类
      * @author Sober
-     * @return com.sobercoding.loopauth.config.LoopAuthConfig
+     * @return com.sobercoding.loopauth.session.config.SessionConfig
      */
     @Bean
-    @ConfigurationProperties(prefix = "loop-auth")
-    public SessionConfig getLoopAuthConfig() {
+    @ConfigurationProperties(prefix = "loop-auth.session")
+    public SessionConfig getSessionConfig() {
         return new SessionConfig();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "loop-auth.session.redis")
+    public RedisConfig getRedisConfig() {
+        return new RedisConfig();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "loop-auth.session.cookie")
+    public CookieConfig getCookieConfig() {
+        return new CookieConfig();
     }
 
     /**
