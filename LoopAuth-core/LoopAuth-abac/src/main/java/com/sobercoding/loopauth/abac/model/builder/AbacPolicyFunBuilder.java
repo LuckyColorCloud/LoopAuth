@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 组装abac规则模型
  * @author Sober
  */
 public class AbacPolicyFunBuilder implements Builder<Map<String, MaFunction>> {

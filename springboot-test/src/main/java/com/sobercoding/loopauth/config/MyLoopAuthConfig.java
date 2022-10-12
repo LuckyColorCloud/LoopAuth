@@ -1,6 +1,8 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.model.authProperty.IntervalType;
+import com.sobercoding.loopauth.abac.model.authProperty.TimeInterval;
 import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import org.springframework.context.annotation.*;
@@ -48,6 +50,12 @@ public class MyLoopAuthConfig {
                 .loginIdNot()
                 .role(LoopAuthVerifyMode.OR)
                 .permission(LoopAuthVerifyMode.OR)
+                // 时间区间范围内
+                .setPolicyFun("timeSection",(value, rule) -> {
+                    TimeInterval timeInterval = (TimeInterval) rule;
+                    long newTime = IntervalType.NONE.creation();
+                    return newTime > timeInterval.getStart() && newTime < timeInterval.getEnd();
+                })
                 .build();
     }
 

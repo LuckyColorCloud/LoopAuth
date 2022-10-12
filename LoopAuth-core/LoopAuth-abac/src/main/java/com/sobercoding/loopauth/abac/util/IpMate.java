@@ -5,4 +5,8 @@ package com.sobercoding.loopauth.abac.util;
  * @author Sober
  */
 public class IpMate {
+    /**
+     * TODO
+     * IP 匹配规则
+     */
 }

@@ -8,6 +8,7 @@ import javafx.util.Builder;
 import java.util.Set;
 
 /**
+ * 字符串匹配
  * @author Sober
  */
 public class FuzzyMateBuilder implements Builder<MaFunction> {
@@ -18,6 +19,11 @@ public class FuzzyMateBuilder implements Builder<MaFunction> {
      * @return 验证模式
      */
     private LoopAuthVerifyMode loopAuthVerifyMode = LoopAuthVerifyMode.AND;
+
+    /**
+     * TODO
+     * 需要可选是否模糊匹配
+     */
 
     public FuzzyMateBuilder setLoopAuthVerifyMode(LoopAuthVerifyMode loopAuthVerifyMode) {
         this.loopAuthVerifyMode = loopAuthVerifyMode;
