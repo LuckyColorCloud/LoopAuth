@@ -14,15 +14,15 @@ public class InterceptorBuilder {
 
     LoopAuthInterceptor loopAuthInterceptor = new LoopAuthInterceptor();
 
-    public InterceptorBuilder Abac() {
-        return this;
+    public Builder Abac() {
+        loopAuthInterceptor.function = (req, res, handler) -> {
+
+        };
     }
 
     public RbacInterceptorBuilder Rbac() {
         return new RbacInterceptorBuilder();
     }
-
-
 
     private class RbacInterceptorBuilder {
 

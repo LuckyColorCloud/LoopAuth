@@ -1,10 +1,10 @@
 package com.sobercoding.loopauth.util;
 
+import com.sobercoding.loopauth.model.LoopAuthHttpMode;
+
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -97,6 +97,48 @@ public class LoopAuthUtil {
         }
 
         return Pattern.matches(meCompetence.replaceAll("\\*", ".*"), competence);
+    }
+    /**
+     * 路由模糊匹配
+     * @author Sober
+     * @param excludeList 放行的路由
+     * @param request 请求体
+     * @param includeList 拦截的路由
+     * @return boolean
+     */
+    private static boolean matchPaths(ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> excludeList, ServletRequest request, ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> includeList) {
+        // 是否存在匹配到的路由
+        boolean isInclude;
+        if (request == null || includeList.isEmpty()) {
+            // 没有需要拦截的路由直接放行
+            return false;
+        }
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        // 当前路由
+        String path = httpServletRequest.getServletPath();
+        String method = httpServletRequest.getMethod();
+        // 当前请求方式
+        LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(method);
+
+        // 列表化需要放行的路由
+        ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> excludes = excludeList.keySet();
+        // 匹配路由 和 请求方法 存在一致则直接放行
+        isInclude = excludes.stream().anyMatch(item ->
+                LoopAuthUtil.fuzzyMatching(item, path) &&
+                        (excludeList.get(item).contains(LoopAuthHttpMode.ALL) ||
+                                excludeList.get(item).contains(loopAuthHttpMode)));
+        if (isInclude) {
+            return false;
+        }
+
+        // 列表化需要拦截的路由
+        ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> includes = includeList.keySet();
+        // 匹配路由 和 请求方法 存在一致则直接拦截
+        isInclude = includes.stream().anyMatch(item ->
+                LoopAuthUtil.fuzzyMatching(item, path) &&
+                        (includeList.get(item).contains(LoopAuthHttpMode.ALL) ||
+                                includeList.get(item).contains(loopAuthHttpMode)));
+        return isInclude;
     }
 
 }
