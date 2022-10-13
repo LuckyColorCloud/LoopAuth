@@ -25,7 +25,7 @@ public class CheckPermissionAnnotation {
      */
     public static Consumer<Method> checkMethodAnnotation = (method) -> {
 
-        // 先校验 Method 所属 Class 上的注解
+        // 先校验 Method 所属 Class 上的注解+
         CheckPermissionAnnotation.checkElementAnnotation.accept(method.getDeclaringClass());
 
         // 再校验 Method 上的注解

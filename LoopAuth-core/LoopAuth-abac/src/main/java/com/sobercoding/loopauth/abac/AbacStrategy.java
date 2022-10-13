@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.abac;
 
+import com.sobercoding.loopauth.abac.face.AbacInterface;
+import com.sobercoding.loopauth.abac.face.AbacInterfaceImpl;
 import com.sobercoding.loopauth.function.MaFunction;
 
 import java.util.*;
@@ -16,5 +18,24 @@ public class AbacStrategy {
      */
     public volatile static Map<String, MaFunction> maFunctionMap = new HashMap<>();
 
+    /**
+     * ABAC权限认证 Bean 获取一个或多个路由/权限代码所属的 规则
+     */
+    private volatile static AbacInterface abacInterface;
+
+    public static void setAbacInterface(AbacInterface abacInterface) {
+        AbacStrategy.abacInterface = abacInterface;
+    }
+
+    public static AbacInterface getAbacInterface() {
+        if (abacInterface == null) {
+            synchronized (AbacStrategy.class) {
+                if (abacInterface == null) {
+                    setAbacInterface(new AbacInterfaceImpl());
+                }
+            }
+        }
+        return abacInterface;
+    }
 
 }

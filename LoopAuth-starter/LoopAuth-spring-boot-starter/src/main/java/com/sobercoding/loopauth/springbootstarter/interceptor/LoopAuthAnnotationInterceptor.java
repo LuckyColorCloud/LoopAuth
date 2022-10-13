@@ -25,8 +25,7 @@ public class LoopAuthAnnotationInterceptor implements HandlerInterceptor {
 	 * 每次请求之前触发的方法
 	 */
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		// 获取处理method
 		if (!(handler instanceof HandlerMethod)) {
 			return true;
