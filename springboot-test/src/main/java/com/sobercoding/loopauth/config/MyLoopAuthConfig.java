@@ -1,9 +1,12 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.abac.model.authProperty.IntervalType;
 import com.sobercoding.loopauth.abac.model.authProperty.TimeInterval;
 import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.servlet.filter.LoopAuthServletFilter;
@@ -48,17 +51,24 @@ public class MyLoopAuthConfig {
 
     @Bean
     public void policyFun() {
-        AbacStrategy.maFunctionMap = new AbacPolicyFunBuilder()
+        AbacStrategy.abacPoAndSuMap = new AbacPolicyFunBuilder()
                 .loginId()
+                .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
                 .loginIdNot()
                 .role(LoopAuthVerifyMode.OR)
                 .permission(LoopAuthVerifyMode.OR)
                 // 时间区间范围内
-                .setPolicyFun("timeSection",(value, rule) -> {
-                    TimeInterval timeInterval = (TimeInterval) rule;
-                    long newTime = IntervalType.NONE.creation();
-                    return newTime > timeInterval.getStart() && newTime < timeInterval.getEnd();
-                })
+                .setPolicyFun("timeSection",
+                        new AbacPoAndSu()
+                                .setMaFunction((value, rule) -> {
+                                    TimeInterval timeInterval = (TimeInterval) rule;
+                                    long newTime = (long) value;
+                                    if (!(newTime > timeInterval.getStart() && newTime < timeInterval.getEnd())) {
+                                        throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
+                                    }
+                                })
+                                .setSupplierMap(IntervalType.NONE::creation)
+                )
                 .build();
     }
 

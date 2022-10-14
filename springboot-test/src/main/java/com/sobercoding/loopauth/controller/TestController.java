@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @RequestMapping("/login")
     public String register(){
-        LoopAuthSession.login("1");
+        LoopAuthSession.login("2");
         return LoopAuthSession.getUserSession().toString();
     }
 

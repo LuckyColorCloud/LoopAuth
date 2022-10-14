@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.abac.model.builder;
 
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.util.AuthUtil;
@@ -36,19 +38,25 @@ public class FuzzyMateBuilder implements Builder<MaFunction> {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;
                 String[] rules = ((String) rule).split(",");
-                return AuthUtil.checkAnd(values,rules);
+                if (!AuthUtil.checkAnd(values,rules)) {
+                    throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
+                }
             };
         } else if (loopAuthVerifyMode == LoopAuthVerifyMode.OR) {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;
                 String[] rules = ((String) rule).split(",");
-                return AuthUtil.checkOr(values,rules);
+                if (!AuthUtil.checkOr(values,rules)) {
+                    throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
+                }
             };
         } else {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;
                 String[] rules = ((String) rule).split(",");
-                return AuthUtil.checkNon(values,rules);
+                if (!AuthUtil.checkNon(values,rules)) {
+                    throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
+                }
             };
         }
     }

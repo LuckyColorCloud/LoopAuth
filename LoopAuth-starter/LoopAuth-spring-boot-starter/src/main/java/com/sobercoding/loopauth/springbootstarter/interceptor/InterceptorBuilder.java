@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.springbootstarter.interceptor;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
@@ -34,9 +35,10 @@ public class InterceptorBuilder {
                 policy.get().forEach(item -> {
                     Set<String> keySet = item.getPropertyMap().keySet();
                     keySet.forEach(key -> {
-                        AbacStrategy.maFunctionMap
-                                .get(key)
-                                .mate(LoopAuthSession.getTokenModel().getLoginId(),item.getPropertyMap().get(key));
+                        AbacPoAndSu abacPoAndSu = AbacStrategy.abacPoAndSuMap
+                                .get(key);
+                        abacPoAndSu.getMaFunction()
+                                .mate(abacPoAndSu.getSupplierMap().get(),item.getPropertyMap().get(key));
                     });
                 });
             }
