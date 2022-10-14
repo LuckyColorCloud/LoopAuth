@@ -3,7 +3,6 @@ package com.sobercoding.loopauth.springbootstarter.interceptor;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.springbootstarter.CheckPermissionAnnotation;
 import org.springframework.web.method.HandlerMethod;
-
 import java.lang.reflect.Method;
 
 /**

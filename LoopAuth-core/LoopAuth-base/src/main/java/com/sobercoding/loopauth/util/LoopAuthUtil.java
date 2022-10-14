@@ -102,29 +102,27 @@ public class LoopAuthUtil {
      * 路由模糊匹配
      * @author Sober
      * @param excludeList 放行的路由
-     * @param request 请求体
      * @param includeList 拦截的路由
+     * @param route 当前路由
+     * @param loopAuthHttpMode 请求方式
      * @return boolean
      */
-    private static boolean matchPaths(ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> excludeList, ServletRequest request, ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> includeList) {
+    public static boolean matchPaths(ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> excludeList,
+                                      ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> includeList,
+                                      String route,
+                                      LoopAuthHttpMode loopAuthHttpMode) {
         // 是否存在匹配到的路由
         boolean isInclude;
-        if (request == null || includeList.isEmpty()) {
+        if (LoopAuthUtil.isEmpty(route) || includeList.isEmpty()) {
             // 没有需要拦截的路由直接放行
             return false;
         }
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        // 当前路由
-        String path = httpServletRequest.getServletPath();
-        String method = httpServletRequest.getMethod();
-        // 当前请求方式
-        LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(method);
 
         // 列表化需要放行的路由
         ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> excludes = excludeList.keySet();
         // 匹配路由 和 请求方法 存在一致则直接放行
         isInclude = excludes.stream().anyMatch(item ->
-                LoopAuthUtil.fuzzyMatching(item, path) &&
+                LoopAuthUtil.fuzzyMatching(item, route) &&
                         (excludeList.get(item).contains(LoopAuthHttpMode.ALL) ||
                                 excludeList.get(item).contains(loopAuthHttpMode)));
         if (isInclude) {
@@ -135,7 +133,7 @@ public class LoopAuthUtil {
         ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> includes = includeList.keySet();
         // 匹配路由 和 请求方法 存在一致则直接拦截
         isInclude = includes.stream().anyMatch(item ->
-                LoopAuthUtil.fuzzyMatching(item, path) &&
+                LoopAuthUtil.fuzzyMatching(item, route) &&
                         (includeList.get(item).contains(LoopAuthHttpMode.ALL) ||
                                 includeList.get(item).contains(loopAuthHttpMode)));
         return isInclude;

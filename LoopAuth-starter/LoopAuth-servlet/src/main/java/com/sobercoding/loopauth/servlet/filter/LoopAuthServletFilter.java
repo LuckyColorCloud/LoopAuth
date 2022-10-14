@@ -110,8 +110,12 @@ public class LoopAuthServletFilter implements Filter {
 
         try {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            // 路由
+            String route = httpServletRequest.getServletPath();
+            // 当前请求方式
+            LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(httpServletRequest.getMethod());
             // 执行请求进入前操作
-            loopAuthFilter.run(matchPaths(excludeList, request, includeList), httpServletRequest.getRequestURI());
+            loopAuthFilter.run(LoopAuthUtil.matchPaths(excludeList, includeList, route, loopAuthHttpMode), httpServletRequest.getRequestURI());
         } catch (Throwable e) {
             // 1. 获取异常处理策略结果
             String result = String.valueOf(loopAuthErrorFilter.run(e));
@@ -136,46 +140,4 @@ public class LoopAuthServletFilter implements Filter {
 
     }
 
-    /**
-     * 路由模糊匹配
-     * @author Sober
-     * @param excludeList 放行的路由
-     * @param request 请求体
-     * @param includeList 拦截的路由
-     * @return boolean
-     */
-    private static boolean matchPaths(ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> excludeList, ServletRequest request, ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> includeList) {
-        // 是否存在匹配到的路由
-        boolean isInclude;
-        if (request == null || includeList.isEmpty()) {
-            // 没有需要拦截的路由直接放行
-            return false;
-        }
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        // 当前路由
-        String path = httpServletRequest.getServletPath();
-        String method = httpServletRequest.getMethod();
-        // 当前请求方式
-        LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(method);
-
-        // 列表化需要放行的路由
-        ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> excludes = excludeList.keySet();
-        // 匹配路由 和 请求方法 存在一致则直接放行
-        isInclude = excludes.stream().anyMatch(item ->
-                LoopAuthUtil.fuzzyMatching(item, path) &&
-                        (excludeList.get(item).contains(LoopAuthHttpMode.ALL) ||
-                                excludeList.get(item).contains(loopAuthHttpMode)));
-        if (isInclude) {
-            return false;
-        }
-
-        // 列表化需要拦截的路由
-        ConcurrentHashMap.KeySetView<String, HashSet<LoopAuthHttpMode>> includes = includeList.keySet();
-        // 匹配路由 和 请求方法 存在一致则直接拦截
-        isInclude = includes.stream().anyMatch(item ->
-                LoopAuthUtil.fuzzyMatching(item, path) &&
-                        (includeList.get(item).contains(LoopAuthHttpMode.ALL) ||
-                                includeList.get(item).contains(loopAuthHttpMode)));
-        return isInclude;
-    }
 }
