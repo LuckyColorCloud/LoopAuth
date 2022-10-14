@@ -22,24 +22,24 @@ public class MyLoopAuthConfig {
     /**
      * 注册 [LoopAuth 全局过滤器] 此优先级高于  注解  如这里报错就不在进入注解
      */
-    @Bean
-    public LoopAuthServletFilter getSaServletFilter() {
-        return new LoopAuthServletFilter()
-                .addInclude("/**")
-                .addExclude("/test/login", LoopAuthHttpMode.GET)
-                // 认证函数: 每次请求执行
-                .setLoopAuthFilter((isIntercept,route) -> {
-                    if (isIntercept){
-                        // 拦截
-                        LoopAuthSession.isLogin();
-                    }
-                })
-                // 异常处理函数：每次认证函数发生异常时执行此函数
-                .setLoopAuthErrorFilter(e -> {
-                    e.printStackTrace();
-                    return e.getMessage();
-                });
-    }
+//    @Bean
+//    public LoopAuthServletFilter getSaServletFilter() {
+//        return new LoopAuthServletFilter()
+//                .addInclude("/**")
+//                .addExclude("/test/login", LoopAuthHttpMode.GET)
+//                // 认证函数: 每次请求执行
+//                .setLoopAuthFilter((isIntercept,route) -> {
+//                    if (isIntercept){
+//                        // 拦截
+//                        LoopAuthSession.isLogin();
+//                    }
+//                })
+//                // 异常处理函数：每次认证函数发生异常时执行此函数
+//                .setLoopAuthErrorFilter(e -> {
+//                    e.printStackTrace();
+//                    return e.getMessage();
+//                });
+//    }
 
 //    @Bean
 //    public LoopAuthDao getLoopAuthDao() {

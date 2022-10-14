@@ -1,5 +1,8 @@
 package com.sobercoding.loopauth.springbootstarter;
 
+import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.face.AbacInterface;
+import com.sobercoding.loopauth.abac.face.AbacInterfaceImpl;
 import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.rbac.face.PermissionInterface;
 import com.sobercoding.loopauth.session.SessionStrategy;
@@ -46,6 +49,16 @@ public class LoopAuthInject {
     @Autowired(required = false)
     public void setPermissionInterface(PermissionInterface permissionInterface) {
         RbacStrategy.setPermissionInterface(permissionInterface);
+    }
+
+    /**
+     * 注入ABAC认证Bean
+     * @author Sober
+     * @param abacInterface ABAC认证
+     */
+    @Autowired(required = false)
+    public void setAbacInterfaceImpl(AbacInterface abacInterface) {
+        AbacStrategy.setAbacInterface(abacInterface);
     }
 
     /**

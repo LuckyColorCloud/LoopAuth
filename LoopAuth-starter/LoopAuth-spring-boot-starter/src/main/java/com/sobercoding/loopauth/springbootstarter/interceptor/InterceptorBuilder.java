@@ -1,9 +1,19 @@
 package com.sobercoding.loopauth.springbootstarter.interceptor;
 
+import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.model.Policy;
+import com.sobercoding.loopauth.function.MaFunction;
+import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import com.sobercoding.loopauth.session.context.LoopAuthRequest;
 import com.sobercoding.loopauth.springbootstarter.CheckPermissionAnnotation;
+import com.sobercoding.loopauth.util.LoopAuthUtil;
 import org.springframework.web.method.HandlerMethod;
+
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * 拦截器组装类
@@ -15,15 +25,30 @@ public class InterceptorBuilder {
 
     public Builder Abac() {
         loopAuthInterceptor.function = (req, res, handler) -> {
-
+            // 路由
+            String route = req.getRequestPath();
+            // 当前请求方式
+            LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(req.getMethod());
+            Optional<Set<Policy>> policy = Optional.ofNullable(AbacStrategy.getAbacInterface().getPolicySet(route));
+            if (policy.isPresent()){
+                policy.get().forEach(item -> {
+                    Set<String> keySet = item.getPropertyMap().keySet();
+                    keySet.forEach(key -> {
+                        AbacStrategy.maFunctionMap
+                                .get(key)
+                                .mate(LoopAuthSession.getTokenModel().getLoginId(),item.getPropertyMap().get(key));
+                    });
+                });
+            }
         };
+        return new Builder();
     }
 
     public RbacInterceptorBuilder Rbac() {
         return new RbacInterceptorBuilder();
     }
 
-    private class RbacInterceptorBuilder {
+    public class RbacInterceptorBuilder {
 
 
         public Builder Annotation() {
@@ -45,7 +70,7 @@ public class InterceptorBuilder {
 
     }
 
-    private class Builder {
+    public class Builder {
         public LoopAuthInterceptor builder() {
             return loopAuthInterceptor;
         }

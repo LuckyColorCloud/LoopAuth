@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.abac.model;
 
+import com.sobercoding.loopauth.model.LoopAuthHttpMode;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +24,11 @@ public class Policy implements Serializable,Comparable<Policy> {
      * 路由组 默认*全匹配
      */
     private String apiGroup = "";
+
+    /**
+     * 请求方式
+     */
+    private LoopAuthHttpMode loopAuthHttpMode;
 
     /**
      * 权限代码组 默认*全匹配
@@ -66,6 +73,15 @@ public class Policy implements Serializable,Comparable<Policy> {
 
     public Policy setPermissionGroup(String permissionGroup) {
         this.permissionGroup = permissionGroup;
+        return this;
+    }
+
+    public LoopAuthHttpMode getLoopAuthHttpMode() {
+        return loopAuthHttpMode;
+    }
+
+    public Policy setLoopAuthHttpMode(LoopAuthHttpMode loopAuthHttpMode) {
+        this.loopAuthHttpMode = loopAuthHttpMode;
         return this;
     }
 

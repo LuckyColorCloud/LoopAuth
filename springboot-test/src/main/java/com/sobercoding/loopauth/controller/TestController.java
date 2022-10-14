@@ -68,4 +68,9 @@ public class TestController {
     public String testRole(){
         return "检测成功";
     }
+
+    @GetMapping("/abac1")
+    public String abac1(){
+        return "检测成功";
+    }
 }

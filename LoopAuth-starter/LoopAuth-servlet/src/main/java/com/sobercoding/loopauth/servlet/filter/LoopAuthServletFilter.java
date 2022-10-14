@@ -61,7 +61,7 @@ public class LoopAuthServletFilter implements Filter {
         return includeList;
     }
 
-    ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> getExcludeList() {
+    public ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> getExcludeList() {
         return excludeList;
     }
     /**====================================================*/

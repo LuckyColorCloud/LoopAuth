@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.abac.model.builder;
 
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
+import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import javafx.util.Builder;
@@ -19,6 +21,9 @@ public class AbacPolicyFunBuilder implements Builder<Map<String, MaFunction>> {
         MaFunctionMap.put("loginId",(value, rule) -> {
             String loginId = (String) value;
             String[] loginIdRules = ((String) rule).split(",");
+            if (!Arrays.asList(loginIdRules).contains(loginId)) {
+                throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
+            }
             return Arrays.asList(loginIdRules).contains(loginId);
         });
         return this;
