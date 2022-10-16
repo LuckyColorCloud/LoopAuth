@@ -59,8 +59,8 @@ public class MyLoopAuthConfig {
     @Bean
     public void policyFun() {
         AbacStrategy.abacPoAndSuMap = new AbacPolicyFunBuilder()
-                .loginId()
-                .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
+//                .loginId()
+//                .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
                 .loginIdNot()
                 .setLoginIdNot(() -> LoopAuthSession.getTokenModel().getLoginId())
                 .role(LoopAuthVerifyMode.OR)

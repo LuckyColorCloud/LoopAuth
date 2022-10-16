@@ -34,10 +34,12 @@ public class InterceptorBuilder {
             policy.ifPresent(policies -> policies.forEach(item -> {
                 Set<String> keySet = item.getPropertyMap().keySet();
                 keySet.forEach(key -> {
-                    AbacPoAndSu abacPoAndSu = AbacStrategy.abacPoAndSuMap
-                            .get(key);
-                    abacPoAndSu.getMaFunction()
-                            .mate(abacPoAndSu.getSupplierMap().get(), item.getPropertyMap().get(key));
+                    Optional.ofNullable(AbacStrategy.abacPoAndSuMap
+                            .get(key))
+                            .ifPresent(abacPoAndSu -> {
+                                abacPoAndSu.getMaFunction()
+                                        .mate(abacPoAndSu.getSupplierMap().get(), item.getPropertyMap().get(key));
+                            });
                 });
             }));
         };
