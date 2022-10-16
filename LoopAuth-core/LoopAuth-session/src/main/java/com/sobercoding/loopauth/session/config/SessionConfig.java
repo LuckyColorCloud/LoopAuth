@@ -27,11 +27,6 @@ public class SessionConfig implements Serializable {
     private long timeOut = 60 * 60 * 24 * 1000;
 
     /**
-     * abac鉴权  默认不开启
-     */
-    private Boolean isAbac = false;
-
-    /**
      * token共生  默认不开启
      * 开启则 账号可以同时在线
      */
@@ -80,16 +75,6 @@ public class SessionConfig implements Serializable {
      * LoginId持久层存储的前缀
      */
     private String loginIdPersistencePrefix = "LoopAuthLoginId";
-
-
-    public Boolean getAbac() {
-        return isAbac;
-    }
-
-    public SessionConfig setAbac(Boolean abac) {
-        isAbac = abac;
-        return this;
-    }
 
     public Boolean getTokenPersistence() {
         return isTokenPersistence;

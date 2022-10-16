@@ -7,11 +7,18 @@ import com.sobercoding.loopauth.abac.model.authProperty.TimeInterval;
 import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
+import com.sobercoding.loopauth.jedis.JedisDaoImpl;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
+import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.servlet.filter.LoopAuthServletFilter;
+import com.sobercoding.loopauth.session.SessionStrategy;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import com.sobercoding.loopauth.session.context.LoopAuthStorage;
+import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import org.springframework.context.annotation.*;
+
+import javax.websocket.Session;
 
 /**
  * @program: LoopAuth
@@ -55,7 +62,9 @@ public class MyLoopAuthConfig {
                 .loginId()
                 .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
                 .loginIdNot()
+                .setLoginIdNot(() -> LoopAuthSession.getTokenModel().getLoginId())
                 .role(LoopAuthVerifyMode.OR)
+                .setRole(LoopAuthVerifyMode.OR, () -> RbacStrategy.getPermissionInterface().getRoleSet(LoopAuthSession.getTokenModel().getLoginId(), ""))
                 .permission(LoopAuthVerifyMode.OR)
                 // 时间区间范围内
                 .setPolicyFun("timeSection",
@@ -70,6 +79,7 @@ public class MyLoopAuthConfig {
                                 .setSupplierMap(IntervalType.NONE::creation)
                 )
                 .build();
+
     }
 
 }

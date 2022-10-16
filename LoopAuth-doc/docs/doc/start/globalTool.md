@@ -1,14 +1,12 @@
 ---
-title: LoopAuthFaceImpl干啥用
+title: 全局工具类
 ---
 
-# 全局工具类`LoopAuthFaceImpl`
+# 全局工具类
 
-> `LoopAuthFaceImpl`是LoopAuth框架全局的操作类，用于登录/注销/权限判断等操作
+> `LoopAuthSession`是LoopAuth框架Session的全局的操作类，用于登录/注销/权限判断等操作
 
-## 方法介绍
-
-### 会话操作
+## `LoopAuthSession` 会话工具类
 
 | 方法                                                          | 返回        | 描述                     |
 |:------------------------------------------------------------| :---------- |:-----------------------|
@@ -26,7 +24,7 @@ title: LoopAuthFaceImpl干啥用
 | isLogin()                                                   | void        | 是否登录                   |
 | loginRenew()                                                | void        | 登录续期,刷新当前会话的TokenModel |
 
-### 权限判断
+## `LoopAuthRbac` RBAC鉴权工具类
 
 - 权限判断需要实现`PermissionInterface`接口
 

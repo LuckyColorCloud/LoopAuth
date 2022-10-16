@@ -12,7 +12,6 @@ public interface MaFunction<V, T> {
      * @author Sober
      * @param v 属性值
      * @param t 属性规则
-     * @return boolean
      */
     void mate(V v, T t);
 }

@@ -49,7 +49,7 @@ public class PermissionInterfaceImpl implements PermissionInterface {
 - 保证项目启动时执行下面语句即可
 
 ```java
-LoopAuthStrategy.setPermissionInterface(new PermissionInterfaceImpl());
+RbacStrategy.setPermissionInterface(new PermissionInterfaceImpl());
 ```
 
 ## LoopAuthVerifyMode
@@ -62,15 +62,15 @@ LoopAuthStrategy.setPermissionInterface(new PermissionInterfaceImpl());
 
 ## 代码鉴权
 
-- 所有需要登录的方法都会内部默认先调用一次`LoopAuthFaceImpl.isLogin();`，即`checkByRole`等方法使用时你无需手动调用`isLogin`
+- 所有需要登录的方法都会内部默认先调用一次`LoopAuthSession.isLogin();`，即`checkByRole`等方法使用时你无需手动调用`isLogin`
 
 ```java
 // 判断是否登录
-LoopAuthFaceImpl.isLogin();
+LoopAuthSession.isLogin();
 // 判断用户是否拥有user角色
-LoopAuthFaceImpl.checkByRole("user")
+LoopAuthRbac.checkByRole("user")
 // 判断用户是否拥有user-**或者order-get中权限代码
-LoopAuthFaceImpl.checkByPermission(LoopAuthVerifyMode.OR, "user-**","order-get")
+LoopAuthRbac.checkByPermission(LoopAuthVerifyMode.OR, "user-**","order-get")
 ```
 
 ## 注解鉴权
@@ -90,7 +90,7 @@ public class LoopAuthMvcConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册注解拦截器
-        registry.addInterceptor(new LoopAuthAnnotationInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new InterceptorBuilder().Annotation().builder()).addPathPatterns("/**");
     }
 }
 ```

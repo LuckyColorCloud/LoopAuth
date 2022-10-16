@@ -21,21 +21,6 @@ public class Policy implements Serializable,Comparable<Policy> {
     private String name;
 
     /**
-     * 路由组 默认*全匹配
-     */
-    private String apiGroup = "";
-
-    /**
-     * 请求方式
-     */
-    private LoopAuthHttpMode loopAuthHttpMode;
-
-    /**
-     * 权限代码组 默认*全匹配
-     */
-    private String permissionGroup = "";
-
-    /**
      * 属性列表
      */
     private Map<String, Object> propertyMap = new HashMap<>();
@@ -66,34 +51,6 @@ public class Policy implements Serializable,Comparable<Policy> {
         this.name = name;
         return this;
     }
-
-    public String getPermissionGroup() {
-        return permissionGroup;
-    }
-
-    public Policy setPermissionGroup(String permissionGroup) {
-        this.permissionGroup = permissionGroup;
-        return this;
-    }
-
-    public LoopAuthHttpMode getLoopAuthHttpMode() {
-        return loopAuthHttpMode;
-    }
-
-    public Policy setLoopAuthHttpMode(LoopAuthHttpMode loopAuthHttpMode) {
-        this.loopAuthHttpMode = loopAuthHttpMode;
-        return this;
-    }
-
-    public String getApiGroup() {
-        return apiGroup;
-    }
-
-    public Policy setApiGroup(String apiGroup) {
-        this.apiGroup = apiGroup;
-        return this;
-    }
-
 
     @Override
     public boolean equals(Object obj) {

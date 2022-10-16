@@ -40,7 +40,7 @@ public LoopAuthDao getLoopAuthDao() {
 - 保证项目启动时执行下面语句即可
 
 ```java
-LoopAuthStrategy.setLoopAuthDao(new JedisDaoImpl());
+SessionStrategy.setLoopAuthDao(new JedisDaoImpl());
 ```
 
 ## 配置
@@ -50,14 +50,15 @@ LoopAuthStrategy.setLoopAuthDao(new JedisDaoImpl());
 
 ```yml
 loop-auth:
-  redis-config: # redis配置 需要加载LoopAuth-redis包才生效
-    host: xxxxxxxx # 服务器地址 默认127.0.0.1
-    password: xxxxxxx # 密码  默认空
-    port: 8910 # 端口号， 默认是6379
-    database-no: 1 # 链接的数据库 默认0
-    time-out: 1000 # 超时时间(单位毫秒) 默认2000
-    need-pool: true # 是否需要连接池 默认false即单个长连接
-    max-total: 10 # 最大连接数 默认16
-    max-idle: 5 # 最大空闲连接数 默认8
-    min-idle: 2 # 最小空闲连接数 默认4
+  session:
+    redis: # redis配置 需要加载LoopAuth-redis包才生效
+      host: xxxxxxxx # 服务器地址 默认127.0.0.1
+      password: xxxxxxx # 密码  默认空
+      port: 8910 # 端口号， 默认是6379
+      database-no: 1 # 链接的数据库 默认0
+      time-out: 1000 # 超时时间(单位毫秒) 默认2000
+      need-pool: true # 是否需要连接池 默认false即单个长连接
+      max-total: 10 # 最大连接数 默认16
+      max-idle: 5 # 最大空闲连接数 默认8
+      min-idle: 2 # 最小空闲连接数 默认4
 ```

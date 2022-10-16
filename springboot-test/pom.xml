@@ -35,27 +35,12 @@
         <dependency>
             <groupId>com.sobercoding</groupId>
             <artifactId>LoopAuth-spring-boot-starter</artifactId>
-            <version>1.0.5</version>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.sobercoding</groupId>
             <artifactId>LoopAuth-redis</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-rbac</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-session</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-abac</artifactId>
-            <version>1.0.5</version>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>

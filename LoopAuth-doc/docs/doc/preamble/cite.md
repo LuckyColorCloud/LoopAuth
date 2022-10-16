@@ -8,7 +8,7 @@ title: 咋引入依赖?
 
 ```xml
 
-<!-- LoopAuth的Springboot插件 -->
+<!-- LoopAuth的Springboot插件, 包含session、rbac、abac模块 -->
 <dependency>
     <groupId>com.sobercoding</groupId>
     <artifactId>LoopAuth-spring-boot-starter</artifactId>
@@ -27,10 +27,23 @@ title: 咋引入依赖?
     <version>${version}</version>
 </dependency>
 <!-- LoopAuth核心功能 -->
+<!-- LoopAuth会话管理 -->
 <dependency>
     <groupId>com.sobercoding</groupId>
-    <artifactId>LoopAuth-core</artifactId>
-    <version>${version}</version>
+    <artifactId>LoopAuth-session</artifactId>
+    <version>${revision}</version>
+</dependency>
+<!-- LoopAuth-RBAC鉴权 -->
+<dependency>
+    <groupId>com.sobercoding</groupId>
+    <artifactId>LoopAuth-rbac</artifactId>
+    <version>${revision}</version>
+</dependency>
+<!-- LoopAuth-ABAC鉴权 -->
+<dependency>
+    <groupId>com.sobercoding</groupId>
+    <artifactId>LoopAuth-abac</artifactId>
+    <version>${revision}</version>
 </dependency>
 
 ```
@@ -38,7 +51,11 @@ title: 咋引入依赖?
 ## Gradle引入
 
 ```xml
-implementation 'com.sobercoding:LoopAuth-core:${version}'
+implementation 'com.sobercoding:LoopAuth-rbac:${rbac}'
+
+implementation 'com.sobercoding:LoopAuth-abac:${abac}'
+
+implementation 'com.sobercoding:LoopAuth-session:${session}'
 
 implementation 'com.sobercoding:LoopAuth-redis:${version}'
 

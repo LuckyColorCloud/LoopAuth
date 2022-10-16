@@ -60,6 +60,8 @@ public class LoopAuthUtil {
 
     /**
      * 匹配元素是否存在
+     * @param roleSet 被匹配的集合
+     * @param role 进行匹配的值
      */
     public static boolean hasElement(Set<String> roleSet, String role) {
         // 空集合直接返回false

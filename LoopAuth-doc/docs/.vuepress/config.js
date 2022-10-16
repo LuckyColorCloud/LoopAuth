@@ -30,11 +30,12 @@ module.exports = {
                 sidebarDepth: 2,
                 children: [
                     '/doc/start/spring',
-                    '/doc/start/loopAuthFaceImpl',
+                    '/doc/start/globalTool',
                     '/doc/start/forcedOffline',
                     '/doc/start/auth',
                     '/doc/start/exception',
                     '/doc/start/redis',
+                    '/doc/start/abac',
                 ],
                 collapsable: false,
             },

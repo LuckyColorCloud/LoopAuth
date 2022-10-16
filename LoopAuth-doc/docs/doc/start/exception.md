@@ -10,7 +10,7 @@ title: 鉴权失败异常咋处理
 
 ```java
 try {
-    LoopAuthFaceImpl.isLogin();
+    LoopAuthSession.isLogin();
 }catch (LoopAuthException e){
     return e.getMessage();
 }

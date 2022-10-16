@@ -4,7 +4,6 @@ server:
 
 loop-auth:
   session:
-    abac: true
 #    time-out: 5 # token有效时间(单位秒)  默认24小时
     #  token-name: token # token名称  默认LoopAuth
     mutualism: true # token共生 默认false 开启则 账号可以同时在线
