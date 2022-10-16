@@ -5,6 +5,7 @@ title: 试试ABAC鉴权
 # 试试ABAC鉴权
 
 - 以下所有代码均为示例代码，可根据步骤编写并运行，理解后可自定义规则
+- [示例项目](https://gitee.com/Chang_Zou/LoopAuth-abac-demo)
 
 ## 实现`AbacInterface`接口
 
