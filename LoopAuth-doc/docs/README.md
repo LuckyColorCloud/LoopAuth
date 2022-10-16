@@ -21,7 +21,7 @@ footer: MIT Licensed | Copyright © 2022-present | Author is Sober
 @GetMapping("/islogin")
 public String isLogin(){
     // 验证是否登录
-    LoopAuthFaceImpl.isLogin();
+    LoopAuthSession.isLogin();
     return "已经登录";
 }
 // 也可以这样
