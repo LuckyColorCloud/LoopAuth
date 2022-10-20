@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sobercoding</groupId>
-    <artifactId>loopauthtest</artifactId>
+    <artifactId>springboot-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springboot-test</name>
     <description>测试</description>
