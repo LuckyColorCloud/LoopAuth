@@ -19,7 +19,7 @@ public enum LoopAuthExceptionEnum {
     DATA_EXCEPTION(200001, "持久层数据异常"),
     CACHE_FAILED(200002, "持久层操作失败"),
     // 初始化失败
-    CONFIGURATION_UNREALIZED(500005, "项目配置异常: %s 未实现");
+    CONFIGURATION_UNREALIZED(500005, "项目配置异常: %s 未实现Or未加载");
 
     /**
      * 异常状态码

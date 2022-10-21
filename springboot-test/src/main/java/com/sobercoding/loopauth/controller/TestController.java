@@ -41,7 +41,7 @@ public class TestController {
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthSession.isLogin();
-        return LoopAuthSession.getUserSessionByLoginId(LoopAuthSession.getTokenModel().getLoginId()).toString();
+        return LoopAuthSession.getUserSession().toString();
     }
 
 

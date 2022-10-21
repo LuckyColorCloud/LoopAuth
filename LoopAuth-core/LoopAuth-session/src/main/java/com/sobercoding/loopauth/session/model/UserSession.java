@@ -27,7 +27,7 @@ public class UserSession implements Serializable {
     /**
      * token列表
      */
-    private Set<TokenModel> tokens;
+    private Set<TokenModel> tokens = new HashSet<>();
 
     /**
      * 当前tokenModel
@@ -39,7 +39,7 @@ public class UserSession implements Serializable {
             tokenModelNow = tokens.stream()
                     .filter(item -> tokenModelNow.getValue().equals(item.getValue()))
                     .findAny()
-                    .orElse(null);
+                    .orElse(tokenModelNow);
         }
         return tokenModelNow;
     }
@@ -229,6 +229,7 @@ public class UserSession implements Serializable {
         return "UserSession{" +
                 "loginId='" + loginId + '\'' +
                 ", tokens=" + tokens +
+                ", tokenModelNow=" + tokenModelNow +
                 '}';
     }
 }
