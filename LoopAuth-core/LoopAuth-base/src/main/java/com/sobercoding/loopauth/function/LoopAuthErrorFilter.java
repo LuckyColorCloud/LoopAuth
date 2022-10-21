@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.servlet.filter;
+package com.sobercoding.loopauth.function;
 
 /**
  * 全局 错误认证过滤器

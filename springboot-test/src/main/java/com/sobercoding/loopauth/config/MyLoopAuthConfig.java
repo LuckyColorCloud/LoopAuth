@@ -33,7 +33,7 @@ public class MyLoopAuthConfig {
      * 注册 [LoopAuth 全局过滤器] 此优先级高于  注解  如这里报错就不在进入注解
      */
 //    @Bean
-//    public LoopAuthServletFilter getSaServletFilter() {
+//    public LoopAuthServletFilter getLoopAuthServletFilter() {
 //        return new LoopAuthServletFilter()
 //                .addInclude("/**")
 //                .addExclude("/test/login", LoopAuthHttpMode.GET)

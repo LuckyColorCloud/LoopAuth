@@ -70,7 +70,7 @@ public class LoopAuthRequestForServlet implements LoopAuthRequest {
 	 */
 	@Override
 	public String getRequestPath() {
-		return request.getServletPath();
+		return request.getRequestURI();
 	}
 
 

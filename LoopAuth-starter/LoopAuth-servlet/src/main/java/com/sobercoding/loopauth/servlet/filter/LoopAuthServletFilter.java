@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.servlet.filter;
 
+import com.sobercoding.loopauth.function.LoopAuthErrorFilter;
+import com.sobercoding.loopauth.function.LoopAuthFilterFun;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
@@ -69,7 +71,7 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * 过滤路由
      */
-    public LoopAuthFilter loopAuthFilter = (boolean isIntercept, String route) -> {
+    public LoopAuthFilterFun loopAuthFilterFun = (boolean isIntercept, String route) -> {
         if (isIntercept){
             // 拦截
             LoopAuthSession.isLogin();
@@ -86,11 +88,11 @@ public class LoopAuthServletFilter implements Filter {
     /**
      * 设置 过滤规则
      *
-     * @param loopAuthFilter 拦截器
+     * @param loopAuthFilterFun 拦截器
      * @return com.sobercoding.loopauth.servlet.filter.LoopAuthServletFilter
      */
-    public LoopAuthServletFilter setLoopAuthFilter(LoopAuthFilter loopAuthFilter) {
-        this.loopAuthFilter = loopAuthFilter;
+    public LoopAuthServletFilter setLoopAuthFilter(LoopAuthFilterFun loopAuthFilterFun) {
+        this.loopAuthFilterFun = loopAuthFilterFun;
         return this;
     }
 
@@ -111,11 +113,11 @@ public class LoopAuthServletFilter implements Filter {
         try {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             // 路由
-            String route = httpServletRequest.getServletPath();
+            String route = httpServletRequest.getRequestURI();
             // 当前请求方式
             LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(httpServletRequest.getMethod());
             // 执行请求进入前操作
-            loopAuthFilter.run(LoopAuthUtil.matchPaths(excludeList, includeList, route, loopAuthHttpMode), httpServletRequest.getRequestURI());
+            loopAuthFilterFun.run(LoopAuthUtil.matchPaths(excludeList, includeList, route, loopAuthHttpMode), route);
         } catch (Throwable e) {
             // 1. 获取异常处理策略结果
             String result = String.valueOf(loopAuthErrorFilter.run(e));

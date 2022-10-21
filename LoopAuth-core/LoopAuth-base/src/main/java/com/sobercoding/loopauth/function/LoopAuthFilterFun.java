@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.servlet.filter;
+package com.sobercoding.loopauth.function;
 
 /**
  * 全局 认证过滤器
@@ -6,7 +6,7 @@ package com.sobercoding.loopauth.servlet.filter;
  * @author Yun
  */
 @FunctionalInterface
-public interface LoopAuthFilter {
+public interface LoopAuthFilterFun {
 
     /**
      * 认证执行方法
