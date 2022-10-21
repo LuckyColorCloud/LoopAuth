@@ -5,10 +5,10 @@ import com.sobercoding.loopauth.exception.LoopAuthParamException;
 import com.sobercoding.loopauth.servlet.context.LoopAuthRequestForServlet;
 import com.sobercoding.loopauth.servlet.context.LoopAuthResponseForServlet;
 import com.sobercoding.loopauth.servlet.context.LoopAuthStorageForServlet;
-import com.sobercoding.loopauth.session.context.LoopAuthContext;
-import com.sobercoding.loopauth.session.context.LoopAuthRequest;
-import com.sobercoding.loopauth.session.context.LoopAuthResponse;
-import com.sobercoding.loopauth.session.context.LoopAuthStorage;
+import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.context.LoopAuthRequest;
+import com.sobercoding.loopauth.context.LoopAuthResponse;
+import com.sobercoding.loopauth.context.LoopAuthStorage;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

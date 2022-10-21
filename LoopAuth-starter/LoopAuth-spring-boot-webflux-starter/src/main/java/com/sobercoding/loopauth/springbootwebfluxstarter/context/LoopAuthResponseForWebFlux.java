@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.springbootwebfluxstarter.context;
 
-import com.sobercoding.loopauth.session.context.LoopAuthResponse;
+import com.sobercoding.loopauth.context.LoopAuthResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 

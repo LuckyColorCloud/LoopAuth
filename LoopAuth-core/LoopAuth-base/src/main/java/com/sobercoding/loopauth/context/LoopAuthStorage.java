@@ -1,11 +1,13 @@
-package com.sobercoding.loopauth.session.context;
+package com.sobercoding.loopauth.context;
+
+import com.sobercoding.loopauth.context.SourceContext;
 
 /**
  * [存储器] 包装类
  * <p> 在 Request作用域里: 存值、取值
  * @author Yun
  */
-public interface LoopAuthStorage extends SourceContext  {
+public interface LoopAuthStorage extends SourceContext {
 
 	/**
 	 * 在 [Request作用域] 里写入一个值 

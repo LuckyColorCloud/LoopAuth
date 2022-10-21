@@ -8,7 +8,7 @@ import com.sobercoding.loopauth.session.SessionStrategy;
 import com.sobercoding.loopauth.session.config.CookieConfig;
 import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.session.config.SessionConfig;
-import com.sobercoding.loopauth.session.context.LoopAuthContext;
+import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import org.springframework.beans.factory.annotation.Autowired;
 

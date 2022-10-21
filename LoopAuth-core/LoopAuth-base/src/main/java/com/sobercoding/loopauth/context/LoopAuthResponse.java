@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.session.context;
+package com.sobercoding.loopauth.context;
 
 /**
  * Response 包装类 

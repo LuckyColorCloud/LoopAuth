@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.servlet.context;
 
-import com.sobercoding.loopauth.session.context.LoopAuthRequest;
+import com.sobercoding.loopauth.context.LoopAuthRequest;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

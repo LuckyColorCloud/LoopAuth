@@ -1,10 +1,12 @@
-package com.sobercoding.loopauth.session.context;
+package com.sobercoding.loopauth.context;
+
+import com.sobercoding.loopauth.context.SourceContext;
 
 /**
  * Request 包装类
  * @author Yun
  */
-public interface LoopAuthRequest extends SourceContext{
+public interface LoopAuthRequest extends SourceContext {
 	
 
 	/**

@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.carryout.LoopAuthAbac;
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.abac.model.authProperty.IntervalType;
@@ -41,20 +42,8 @@ public class MyLoopAuthConfig {
                 // 认证函数: 每次请求执行
                 .setLoopAuthFilter((isIntercept,route,exchange) -> {
                     if (isIntercept){
-                        // 当前请求方式
-                        LoopAuthHttpMode loopAuthHttpMode = LoopAuthHttpMode.toEnum(exchange.getRequest().getMethodValue());
-                        Optional<Set<Policy>> policy = Optional.ofNullable(AbacStrategy.getAbacInterface().getPolicySet(route, loopAuthHttpMode));
-                        policy.ifPresent(policies -> policies.forEach(item -> {
-                            Set<String> keySet = item.getPropertyMap().keySet();
-                            keySet.forEach(key -> {
-                                Optional.ofNullable(AbacStrategy.abacPoAndSuMap
-                                                .get(key))
-                                        .ifPresent(abacPoAndSu -> {
-                                            abacPoAndSu.getMaFunction()
-                                                    .mate(abacPoAndSu.getSupplierMap().get(), item.getPropertyMap().get(key));
-                                        });
-                            });
-                        }));
+                        // ABAC鉴权
+                        LoopAuthAbac.check(route, exchange.getRequest().getMethodValue());
                     }
                 });
     }

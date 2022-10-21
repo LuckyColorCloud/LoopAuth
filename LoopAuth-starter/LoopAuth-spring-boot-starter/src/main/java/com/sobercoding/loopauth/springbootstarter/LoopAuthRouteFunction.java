@@ -1,8 +1,8 @@
 package com.sobercoding.loopauth.springbootstarter;
 
 
-import com.sobercoding.loopauth.session.context.LoopAuthRequest;
-import com.sobercoding.loopauth.session.context.LoopAuthResponse;
+import com.sobercoding.loopauth.context.LoopAuthRequest;
+import com.sobercoding.loopauth.context.LoopAuthResponse;
 
 /**
  * 路由拦截器验证方法Lambda 

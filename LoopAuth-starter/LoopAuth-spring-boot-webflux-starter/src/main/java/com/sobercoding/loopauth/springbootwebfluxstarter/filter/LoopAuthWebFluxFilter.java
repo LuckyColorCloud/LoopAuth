@@ -1,11 +1,10 @@
 package com.sobercoding.loopauth.springbootwebfluxstarter.filter;
 
 import com.sobercoding.loopauth.function.LoopAuthErrorFilter;
-import com.sobercoding.loopauth.function.LoopAuthFilterFun;
 import com.sobercoding.loopauth.function.LoopAuthWebFluxFilterFun;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
-import com.sobercoding.loopauth.session.context.LoopAuthContextThreadLocal;
+import com.sobercoding.loopauth.context.LoopAuthContextThreadLocal;
 import com.sobercoding.loopauth.springbootwebfluxstarter.context.LoopAuthContextHolder;
 import com.sobercoding.loopauth.springbootwebfluxstarter.context.LoopAuthRequestForWebFlux;
 import com.sobercoding.loopauth.springbootwebfluxstarter.context.LoopAuthResponseForWebFlux;

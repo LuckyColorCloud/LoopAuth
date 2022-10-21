@@ -5,9 +5,8 @@ import com.sobercoding.loopauth.function.LrFunction;
 import com.sobercoding.loopauth.session.config.CookieConfig;
 import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.session.config.SessionConfig;
-import com.sobercoding.loopauth.session.context.LoopAuthContext;
-import com.sobercoding.loopauth.session.context.LoopAuthContextDefaultImpl;
-import com.sobercoding.loopauth.session.context.LoopAuthContextThreadLocal;
+import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.context.LoopAuthContextDefaultImpl;
 import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import com.sobercoding.loopauth.session.dao.LoopAuthDaoImpl;
 import com.sobercoding.loopauth.session.carryout.component.LoopAuthLogin;
@@ -143,7 +142,6 @@ public class SessionStrategy {
      */
     private volatile static LoopAuthContext loopAuthContext;
 
-    private volatile static LoopAuthContextThreadLocal loopAuthContextThreadLocal;
     public static void setLoopAuthContext(LoopAuthContext loopAuthContext) {
         SessionStrategy.loopAuthContext = loopAuthContext;
     }

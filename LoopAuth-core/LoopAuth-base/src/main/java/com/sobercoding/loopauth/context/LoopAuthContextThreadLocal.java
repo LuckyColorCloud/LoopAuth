@@ -1,16 +1,19 @@
-package com.sobercoding.loopauth.session.context;
+package com.sobercoding.loopauth.context;
 
+import com.sobercoding.loopauth.context.LoopAuthContext;
+import com.sobercoding.loopauth.context.LoopAuthRequest;
+import com.sobercoding.loopauth.context.LoopAuthResponse;
+import com.sobercoding.loopauth.context.LoopAuthStorage;
 import com.sobercoding.loopauth.exception.LoopAuthConfigException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 
-import javax.swing.*;
 import java.util.Optional;
 
 /**
  * ThreadLocal 上下文存储器
  * @author Sober
  */
-public class LoopAuthContextThreadLocal implements LoopAuthContext{
+public class LoopAuthContextThreadLocal implements LoopAuthContext {
 
     /**
      * ThreadLocal 的 存储器
@@ -56,7 +59,7 @@ public class LoopAuthContextThreadLocal implements LoopAuthContext{
     /**
      * 获取ContextBox
      * @author Sober
-     * @return com.sobercoding.loopauth.session.context.LoopAuthContextThreadLocal.ContextBox
+     * @return ContextBox
      */
     public static ContextBox getContextBox() {
         Optional<ContextBox> contextBoxOptional = Optional.ofNullable(contextBoxThreadLocal.get());

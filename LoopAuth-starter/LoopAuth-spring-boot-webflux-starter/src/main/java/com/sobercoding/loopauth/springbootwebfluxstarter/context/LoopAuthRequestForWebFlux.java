@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.springbootwebfluxstarter.context;
 
-import com.sobercoding.loopauth.session.context.LoopAuthRequest;
+import com.sobercoding.loopauth.context.LoopAuthRequest;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
