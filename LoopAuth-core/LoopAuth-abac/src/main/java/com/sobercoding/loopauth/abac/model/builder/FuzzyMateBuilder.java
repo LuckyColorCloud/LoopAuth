@@ -5,7 +5,7 @@ import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import com.sobercoding.loopauth.util.AuthUtil;
-import javafx.util.Builder;
+import com.sun.istack.internal.Builder;
 
 import java.util.Set;
 

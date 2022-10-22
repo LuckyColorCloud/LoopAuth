@@ -3,10 +3,7 @@ package com.sobercoding.loopauth.abac;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.face.AbacInterfaceImpl;
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
-import com.sobercoding.loopauth.function.MaFunction;
-
 import java.util.*;
-import java.util.function.Supplier;
 
 /**
  * LoopAuth  Bean管理器

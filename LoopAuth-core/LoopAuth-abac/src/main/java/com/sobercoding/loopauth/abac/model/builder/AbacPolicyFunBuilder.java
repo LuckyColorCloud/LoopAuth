@@ -3,9 +3,9 @@ package com.sobercoding.loopauth.abac.model.builder;
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
-import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
-import javafx.util.Builder;
+import com.sun.istack.internal.Builder;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
