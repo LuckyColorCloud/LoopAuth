@@ -1,8 +1,5 @@
 package com.sobercoding.loopauth.controller;
 
-import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
-import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
-import com.sobercoding.loopauth.rbac.annotation.CheckRole;
 import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +40,12 @@ public class TestController {
         return LoopAuthSession.getUserSession().toString();
     }
 
+    @CheckLogin
+    @GetMapping("/islogin1")
+    public String testLogin(){
+        return "登录";
+    }
+
 
     @GetMapping("/out")
     public String register1(){
@@ -51,26 +54,4 @@ public class TestController {
         return "登出了";
     }
 
-    @CheckLogin
-    @GetMapping("/testLogin")
-    public String testLogin(){
-        return "检测成功";
-    }
-
-    @CheckPermission(value="user-add", mode = LoopAuthVerifyMode.OR)
-    @GetMapping("/testPermission")
-    public String testPermission(){
-        return "检测成功";
-    }
-
-    @CheckRole(value="user",mode = LoopAuthVerifyMode.OR)
-    @GetMapping("/testRole")
-    public String testRole(){
-        return "检测成功";
-    }
-
-    @GetMapping("/abac1")
-    public String abac1(){
-        return "检测成功";
-    }
 }

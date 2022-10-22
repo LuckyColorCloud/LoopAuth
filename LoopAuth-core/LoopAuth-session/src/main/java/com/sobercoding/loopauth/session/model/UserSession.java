@@ -110,7 +110,12 @@ public class UserSession implements Serializable {
             tokens = new HashSet<>();
         }
         // 加载一下当前会话
-        getTokenModelNow();
+        if (LoopAuthUtil.isNotEmpty(tokenModelNow)){
+            tokenModelNow = tokens.stream()
+                    .filter(item -> tokenModelNow.getValue().equals(item.getValue()))
+                    .findAny()
+                    .orElse(null);
+        }
         return this;
     }
 

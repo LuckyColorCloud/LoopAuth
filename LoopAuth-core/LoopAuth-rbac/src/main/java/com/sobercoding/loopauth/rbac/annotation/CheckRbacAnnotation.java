@@ -1,10 +1,6 @@
-package com.sobercoding.loopauth.springbootstarter;
+package com.sobercoding.loopauth.rbac.annotation;
 
-import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
-import com.sobercoding.loopauth.rbac.annotation.CheckRole;
-import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.rbac.carryout.LoopAuthRbac;
-import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -16,8 +12,8 @@ import java.util.function.Consumer;
  * 注解匹配类
  * @author Yun
  */
-public class CheckPermissionAnnotation {
-    private CheckPermissionAnnotation() {
+public class CheckRbacAnnotation {
+    private CheckRbacAnnotation() {
     }
 
     /**
@@ -26,10 +22,10 @@ public class CheckPermissionAnnotation {
     public static Consumer<Method> checkMethodAnnotation = (method) -> {
 
         // 先校验 Method 所属 Class 上的注解+
-        CheckPermissionAnnotation.checkElementAnnotation.accept(method.getDeclaringClass());
+        CheckRbacAnnotation.checkElementAnnotation.accept(method.getDeclaringClass());
 
         // 再校验 Method 上的注解
-        CheckPermissionAnnotation.checkElementAnnotation.accept(method);
+        CheckRbacAnnotation.checkElementAnnotation.accept(method);
     };
 
 
@@ -38,17 +34,12 @@ public class CheckPermissionAnnotation {
      */
     public static Consumer<AnnotatedElement> checkElementAnnotation = (target) -> {
 
-        CheckLogin checkLogin = (CheckLogin) CheckPermissionAnnotation.getAnnotation.apply(target, CheckLogin.class);
-        if (checkLogin != null) {
-            LoopAuthSession.isLogin();
-        }
-
-        CheckRole checkRole = (CheckRole) CheckPermissionAnnotation.getAnnotation.apply(target, CheckRole.class);
+        CheckRole checkRole = (CheckRole) CheckRbacAnnotation.getAnnotation.apply(target, CheckRole.class);
         if (checkRole != null) {
             LoopAuthRbac.checkByRole(checkRole.mode(), checkRole.value());
         }
 
-        CheckPermission checkPermission = (CheckPermission) CheckPermissionAnnotation.getAnnotation.apply(target, CheckPermission.class);
+        CheckPermission checkPermission = (CheckPermission) CheckRbacAnnotation.getAnnotation.apply(target, CheckPermission.class);
         if (checkPermission != null) {
             LoopAuthRbac.checkByPermission(checkPermission.mode(), checkPermission.value());
         }
