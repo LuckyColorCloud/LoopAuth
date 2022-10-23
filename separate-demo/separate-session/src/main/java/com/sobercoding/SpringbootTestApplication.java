@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth;
+package com.sobercoding;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

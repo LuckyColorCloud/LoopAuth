@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.controller;
+package com.sobercoding.controller;
 
 import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
@@ -16,30 +16,47 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+
+    /**
+     * 登录测试
+     */
     @RequestMapping("/login")
     public String register(){
         LoopAuthSession.login("1");
         return LoopAuthSession.getUserSession().toString();
     }
 
+    /**
+     * 强制指定用户所有会话离线
+     */
     @RequestMapping("/rlogin")
-    public String register1(String value){
-        LoopAuthSession.forcedOfflineByLoginId(value);
+    public String register1(String loginId){
+        LoopAuthSession.forcedOfflineByLoginId(loginId);
         return "1";
     }
 
+    /**
+     * 强制指定token离线
+     */
     @RequestMapping("/rtoken")
-    public String register2(String value){
-        LoopAuthSession.forcedOfflineByToken(value);
+    public String register2(String token){
+        LoopAuthSession.forcedOfflineByToken(token);
         return "1";
     }
 
+    /**
+     * 代码验证是否登录
+     */
     @GetMapping("/islogin")
     public String islogin(){
         LoopAuthSession.isLogin();
         return LoopAuthSession.getUserSession().toString();
     }
 
+    /**
+     * 注解验证是否登录
+     */
     @CheckLogin
     @GetMapping("/islogin1")
     public String testLogin(){
