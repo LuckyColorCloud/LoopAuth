@@ -1,16 +1,15 @@
 package com.sobercoding.loopauth.springbootstarter.interceptor;
 
-import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.servlet.context.LoopAuthRequestForServlet;
 import com.sobercoding.loopauth.servlet.context.LoopAuthResponseForServlet;
 import com.sobercoding.loopauth.springbootstarter.LoopAuthRouteFunction;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
-import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @author Sober
+ */
 public class LoopAuthInterceptor implements HandlerInterceptor {
 
     /**

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Sober
+ */
 @Component
 public class AbacInterFaceImpl implements AbacInterface {
 
@@ -20,7 +23,7 @@ public class AbacInterFaceImpl implements AbacInterface {
     @Override
     public Set<Policy> getPolicySet(String route, LoopAuthHttpMode loopAuthHttpMode) {
         Set<Policy> set = new HashSet<>();
-        if (route.equals("/test/abac") && loopAuthHttpMode.equals(LoopAuthHttpMode.GET)){
+        if ("/test/abac".equals(route) && loopAuthHttpMode.equals(LoopAuthHttpMode.GET)){
             set.add(new Policy()
                     // 规则名称
                     .setName("test")

@@ -23,7 +23,7 @@ public class AbacInterFaceImpl implements AbacInterface {
         // 这里只做演示，自行编写的时候，请根据自己存储abac规则的方式查询获取
         Set<Policy> set = new HashSet<>();
         // 根据路由地址及请求方式查询 插入
-        if (route.equals("/test/abac") && loopAuthHttpMode.equals(LoopAuthHttpMode.GET)){
+        if ("/test/abac".equals(route) && loopAuthHttpMode.equals(LoopAuthHttpMode.GET)){
             set.add(new Policy()
                     // 规则名称
                     .setName("test")

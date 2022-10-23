@@ -16,7 +16,7 @@ public class InterceptorBuilder {
 
     LoopAuthInterceptor loopAuthInterceptor = new LoopAuthInterceptor();
 
-    public Builder Abac() {
+    public Builder abac() {
         loopAuthInterceptor.function = (req, res, handler) -> {
             // 路由
             String route = req.getRequestPath();
@@ -26,7 +26,7 @@ public class InterceptorBuilder {
         return new Builder();
     }
 
-    public Builder Annotation() {
+    public Builder annotation() {
         loopAuthInterceptor.function = (req, res, handler) -> {
             // 获取处理method
             if (handler instanceof HandlerMethod) {
@@ -39,7 +39,7 @@ public class InterceptorBuilder {
         };
         return new Builder();
     }
-    public Builder Route() {
+    public Builder route() {
         loopAuthInterceptor.function = (req, res, handler) -> LoopAuthSession.isLogin();
         return new Builder();
     }
