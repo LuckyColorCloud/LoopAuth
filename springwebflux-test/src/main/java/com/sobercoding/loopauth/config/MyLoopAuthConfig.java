@@ -11,6 +11,7 @@ import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
+import com.sobercoding.loopauth.model.Result;
 import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.springbootwebfluxstarter.context.LoopAuthContextHolder;
@@ -45,7 +46,8 @@ public class MyLoopAuthConfig {
                         // ABAC鉴权
                         LoopAuthAbac.check(route, exchange.getRequest().getMethodValue());
                     }
-                });
+                })
+                .setLoopAuthErrorFilter(e -> Result.error(e.getMessage()));
     }
 
     @Bean
