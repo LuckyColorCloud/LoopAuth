@@ -2,6 +2,7 @@ package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.context.LoopAuthContextForSpring;
+import com.sobercoding.loopauth.jedis.JedisDaoImpl;
 import com.sobercoding.loopauth.session.SessionStrategy;
 import com.sobercoding.loopauth.session.config.CookieConfig;
 import com.sobercoding.loopauth.session.config.RedisConfig;
@@ -37,25 +38,15 @@ public class LoopAuthConfig {
         return new CookieConfig();
     }
 
-    /**
-     * 注入 上下文
-     * @author Sober
-     * @return com.sobercoding.loopauth.context.LoopAuthContext
-     */
-    @Bean
-    public LoopAuthContext getLoopAuthContext(){
-        return new LoopAuthContextForSpring();
-    }
-
     @Autowired(required = false)
     public void setLoopAuthConfig(SessionConfig loopAuthConfig,
                                   RedisConfig redisConfig,
-                                  CookieConfig cookieConfig,
-                                  LoopAuthContext loopAuthContext) {
+                                  CookieConfig cookieConfig) {
         SessionStrategy.setSessionConfig(loopAuthConfig);
         SessionStrategy.setRedisConfig(redisConfig);
         SessionStrategy.setCookieConfig(cookieConfig);
-        SessionStrategy.setLoopAuthContext(loopAuthContext);
+        SessionStrategy.setLoopAuthContext(new LoopAuthContextForSpring());
+        SessionStrategy.setLoopAuthDao(new JedisDaoImpl());
     }
 
 

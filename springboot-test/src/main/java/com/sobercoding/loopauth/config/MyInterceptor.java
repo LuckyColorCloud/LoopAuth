@@ -6,6 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 /**
  * @author Sober
@@ -17,8 +18,11 @@ public class MyInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        // 注解拦截
-        CheckSessionAnnotation.checkMethodAnnotation.accept(((HandlerMethod) handler).getMethod());
+        if(handler instanceof HandlerMethod) {
+            Method method = ((HandlerMethod) handler).getMethod();
+            // 注解拦截
+            CheckSessionAnnotation.checkMethodAnnotation.accept(method);
+        }
         // 通过验证
         return true;
     }
