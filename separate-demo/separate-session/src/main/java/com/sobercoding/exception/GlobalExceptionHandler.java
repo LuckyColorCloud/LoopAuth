@@ -14,7 +14,6 @@ public class GlobalExceptionHandler {
     /**
      * 全局异常拦截  注解报错后 可在这里处理返回信息
      * @param e
-     * @return
      */
     @ExceptionHandler
     public Result handlerException(LoopAuthException e) {

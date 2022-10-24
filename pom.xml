@@ -16,7 +16,6 @@
         <module>LoopAuth-core</module>
         <module>LoopAuth-plugin</module>
         <module>LoopAuth-starter</module>
-        <module>separate-demo</module>
     </modules>
     <packaging>pom</packaging>
 
