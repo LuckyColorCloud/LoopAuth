@@ -14,6 +14,12 @@ title: 咋引入依赖?
     <artifactId>LoopAuth-spring-boot-starter</artifactId>
     <version>${version}</version>
 </dependency>
+<!-- LoopAuth的SpringBootWebflux插件, 包含session、rbac、abac模块 -->
+<dependency>
+    <groupId>com.sobercoding</groupId>
+    <artifactId>LoopAuth-spring-boot-webflux-starter</artifactId>
+    <version>${version}</version>
+</dependency>
 <!-- LoopAuth的Redis拓展 -->
 <dependency>
     <groupId>com.sobercoding</groupId>
@@ -62,4 +68,6 @@ implementation 'com.sobercoding:LoopAuth-redis:${version}'
 implementation 'com.sobercoding:LoopAuth-servlet:${version}'
 
 implementation 'com.sobercoding:LoopAuth-spring-boot-starter:${version}'
+
+implementation 'com.sobercoding:LoopAuth-spring-boot-webflux-starter:${version}'
 ```

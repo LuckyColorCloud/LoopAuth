@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.controller;
 
+import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.springbootwebfluxstarter.context.LoopAuthContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,10 @@ public class DemoController {
         return Mono.just(LoopAuthSession.getUserSession().toString());
     }
 
-    @GetMapping("/abac")
-    public Mono<String> abac(){
-        return Mono.just("检测通过");
+    @CheckLogin
+    @GetMapping("/islogin1")
+    public Mono<String> hello11(){
+        return Mono.just("验证成功");
     }
 
 }

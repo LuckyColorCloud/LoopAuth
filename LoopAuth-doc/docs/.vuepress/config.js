@@ -40,10 +40,26 @@ module.exports = {
                 collapsable: false,
             },
             {
+                title: '其他框架的使用',
+                sidebarDepth: 2,
+                children: [
+                    '/doc/otherstarter/webflux',
+                ],
+                collapsable: false,
+            },
+            {
                 title: '正经内容',
                 sidebarDepth: 2,
                 children: [
                     '/doc/context/userSession'
+                ],
+                collapsable: false,
+            },
+            {
+                title: '如何单独使用某模块',
+                sidebarDepth: 2,
+                children: [
+                    '/doc/separate/'
                 ],
                 collapsable: false,
             }

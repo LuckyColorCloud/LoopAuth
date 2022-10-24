@@ -1,8 +1,9 @@
-package com.sobercoding.loopauth.loopAuth;
+package com.sobercoding.loopauth.impl;
 
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
+import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

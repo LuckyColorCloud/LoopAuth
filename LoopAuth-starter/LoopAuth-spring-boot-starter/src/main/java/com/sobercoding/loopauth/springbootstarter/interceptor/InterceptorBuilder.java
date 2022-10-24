@@ -39,10 +39,6 @@ public class InterceptorBuilder {
         };
         return new Builder();
     }
-    public Builder route() {
-        loopAuthInterceptor.function = (req, res, handler) -> LoopAuthSession.isLogin();
-        return new Builder();
-    }
 
     public class Builder {
         public LoopAuthInterceptor builder() {

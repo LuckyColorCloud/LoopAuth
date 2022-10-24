@@ -1,5 +1,8 @@
 package com.sobercoding.loopauth.controller;
 
+import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
+import com.sobercoding.loopauth.rbac.annotation.CheckRole;
+import com.sobercoding.loopauth.rbac.carryout.LoopAuthRbac;
 import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,27 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
-    @RequestMapping("/login")
-    public String register(){
-        LoopAuthSession.login("1");
-        return LoopAuthSession.getUserSession().toString();
-    }
-
-    @RequestMapping("/rlogin")
-    public String register1(String value){
-        LoopAuthSession.forcedOfflineByLoginId(value);
-        return "1";
-    }
-
-    @RequestMapping("/rtoken")
-    public String register2(String value){
-        LoopAuthSession.forcedOfflineByToken(value);
-        return "1";
-    }
-
-    @GetMapping("/islogin")
-    public String islogin(){
-        LoopAuthSession.isLogin();
+    @GetMapping("/login")
+    public String register(String loginId){
+        LoopAuthSession.login(loginId);
         return LoopAuthSession.getUserSession().toString();
     }
 
@@ -46,11 +31,58 @@ public class TestController {
         return "登录";
     }
 
+    @GetMapping("/rlogin")
+    public String register1(String loginId){
+        LoopAuthSession.forcedOfflineByLoginId(loginId);
+        return "1";
+    }
 
     @GetMapping("/out")
     public String register1(){
         LoopAuthSession.logout();
         return "登出了";
+    }
+
+
+    @GetMapping("/rtoken")
+    public String register2(String loginId){
+        LoopAuthSession.forcedOfflineByToken(loginId);
+        return "1";
+    }
+
+    @GetMapping("/islogin")
+    public String islogin(){
+        LoopAuthSession.isLogin();
+        return LoopAuthSession.getUserSession().toString();
+    }
+
+    @GetMapping("/role")
+    public String role(){
+        LoopAuthRbac.checkByRole("user");
+        return "验证";
+    }
+
+    @CheckRole("user1")
+    @GetMapping("/role1")
+    public String role1(){
+        return "验证";
+    }
+
+    @GetMapping("/permission")
+    public String permission(){
+        LoopAuthRbac.checkByPermission("user-add");
+        return "验证";
+    }
+
+    @CheckPermission("user1-add")
+    @GetMapping("/permission1")
+    public String permission1(){
+        return "验证";
+    }
+
+    @GetMapping("/abac")
+    public String abac1(){
+        return "检测成功";
     }
 
 }

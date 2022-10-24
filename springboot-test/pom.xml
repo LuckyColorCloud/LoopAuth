@@ -29,10 +29,24 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- LoopAuth的Springboot插件 -->
         <dependency>
             <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-session</artifactId>
-            <version>2.0.3</version>
+            <artifactId>LoopAuth-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <!-- LoopAuth的Redis拓展 -->
+        <dependency>
+            <groupId>com.sobercoding</groupId>
+            <artifactId>LoopAuth-redis</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <!-- LoopAuth-redis依赖的Redis连接器 -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.6.3</version>
         </dependency>
 
         <dependency>

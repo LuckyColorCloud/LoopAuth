@@ -90,7 +90,7 @@ public class LoopAuthMvcConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册注解拦截器
-        registry.addInterceptor(new InterceptorBuilder().Annotation().builder()).addPathPatterns("/**");
+        registry.addInterceptor(new InterceptorBuilder().annotation().builder()).addPathPatterns("/**");
     }
 }
 ```
@@ -139,7 +139,7 @@ public LoopAuthServletFilter getLoopAuthServletFilter() {
         .setLoopAuthFilter((isIntercept,route) -> {
             if (isIntercept){
                 // 拦截代码块
-                LoopAuthFaceImpl.isLogin();
+                LoopAuthSession.isLogin();
             }else {
                 // 放行代码块
             }
