@@ -1,7 +1,7 @@
 ---
 home: true
 heroText: LoopAuth
-tagline: 精简、轻量、更细粒度的Java权限框架
+tagline: 同时支持RBAC (角色鉴权校验)、ABAC (规则流引擎鉴权)， 并提供会话管理等功能的JavaWeb鉴权框架
 actionText: 快速上手 →
 actionLink: /doc/
 features:

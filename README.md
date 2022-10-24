@@ -1,15 +1,12 @@
 # LoopAuth
 
-## 写在前面
+一款JavaWeb鉴权框架，同时支持RBAC (角色鉴权校验)、ABAC (规则流引擎鉴权)， 
+并提供会话管理等功能。
 
-项目发布初期，希望大家多多点点`Star`
-- [Gitee](https://gitee.com/lucky-color/loop-auth)
-- [GitHub](https://github.com/ChangZou/LoopAuth)
-- [官方文档](https://loopauth.sobercoding.com)
-
-## 介绍
-
-LoopAuth一款低侵入、精简、轻量、细粒度的Java Web权限管理框架
+<p align="center">
+	<img src="https://img.shields.io/badge/LoopAuth-v2.1.0-brightgreen.svg">
+	<img src="https://img.shields.io/github/license/mashape/apistatus.svg">
+</p>
 
 目前包含如下功能：
 - 注解鉴权
@@ -18,6 +15,13 @@ LoopAuth一款低侵入、精简、轻量、细粒度的Java Web权限管理框�
 - 有/无状态登录
 - Redis登录业务存储分离
 - ABAC权限
+
+## 写在前面
+
+项目发布初期，希望大家多多点点`Star`
+- [Gitee](https://gitee.com/lucky-color/loop-auth)
+- [GitHub](https://github.com/ChangZou/LoopAuth)
+- [官方文档](https://loopauth.sobercoding.com)
 
 ## 交流群
 - QQ群：460304421
@@ -115,8 +119,6 @@ public class DemoController {
 
     @GetMapping("/out")
     public String loginOut(){
-        // 验证是否登录
-        LoopAuthSession.isLogin();
         // 注销登录
         LoopAuthSession.logout();
         return "注销成功";

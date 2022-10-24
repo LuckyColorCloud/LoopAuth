@@ -55,7 +55,7 @@ public class AbacInterFaceImpl implements AbacInterface {
 - 保证项目启动时执行下面语句即可
 
 ```java
-AbacStrategy.setAbacInterface(new PermissionInterfaceImpl());
+AbacStrategy.setAbacInterface(new AbacInterFaceImpl());
 ```
 
 ## 初始化ABAC鉴权规则
