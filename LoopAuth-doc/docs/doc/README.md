@@ -8,6 +8,8 @@ title: 这是个啥？
 - [Gitee](https://gitee.com/lucky-color/loop-auth)
 - [GitHub](https://github.com/ChangZou/LoopAuth)
 
+[![LuckyColor/LoopAuth](https://gitee.com/lucky-color/loop-auth/widgets/widget_card.svg?colors=4183c4,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/lucky-color/loop-auth)
+
 ## 介绍
 
 > 目前现有功能基本都有对应的文档，后续会补充如登录规则、Token生成规则的重写。
