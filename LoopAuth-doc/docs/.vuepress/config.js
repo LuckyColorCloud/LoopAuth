@@ -1,6 +1,17 @@
 module.exports = {
     head: [
-        ['link', { rel: 'icon', href: '/logo.png' }]
+        ['link', { rel: 'icon', href: '/logo.png' }],
+        ['script', { },
+            `
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?101cc83f953823ab54b3363da9ee1df1";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+            `
+        ]
     ],
     title: 'LoopAuth',
     description: '精简、轻量、更细粒度的Java权限框架',
