@@ -14,7 +14,7 @@ module.exports = {
         ]
     ],
     title: 'LoopAuth',
-    description: '精简、轻量、更细粒度的Java权限框架',
+    description: '同时支持RBAC (角色鉴权校验)、ABAC (规则流引擎鉴权)， 并提供会话管理等功能的JavaWeb鉴权框架',
     themeConfig: {
         nav: [
             { text: '首页', link: '/' },
