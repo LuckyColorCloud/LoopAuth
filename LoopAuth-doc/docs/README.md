@@ -13,7 +13,6 @@ features:
   details: 可以自由进行动态权限变更
 - title: 细粒度
   details: 可以针对当前请求的属性进行匹配拦截,如时间等
-footer: MIT Licensed | Copyright © 2022-present | Author is Sober
 ---
 
 ### 抛弃繁琐的权限框架配置，甚至无需配置`yml`即可简单启动
@@ -38,3 +37,7 @@ public String isLogin(){
 ### 特别鸣谢
 
 - 本文档由Netlify支持：[![netlify](https://www.netlify.com/v3/img/components/full-logo-light.svg)](https://www.netlify.com)
+
+::: slot footer
+MIT Licensed | Copyright © 2022-present | Author is Sober | [苏ICP备2021054525号](https://beian.miit.gov.cn/)
+:::
