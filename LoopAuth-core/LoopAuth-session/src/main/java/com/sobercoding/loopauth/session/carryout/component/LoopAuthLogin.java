@@ -235,10 +235,10 @@ public class LoopAuthLogin {
             }
         }
         // 不为空
-        LoopAuthLoginException.isEmpty(token, LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "Failed to obtain Token");
+        LoopAuthLoginException.isEmpty(token, LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         // 解析token参数
         TokenModel tokenBodyModel = SessionStrategy.getLoopAuthToken().getInfo(token);
-        LoopAuthLoginException.isEmpty(tokenBodyModel,LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "Token illegal");
+        LoopAuthLoginException.isEmpty(tokenBodyModel, LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         // token合法验证
         LoopAuthLoginException.isTrue(
                 SessionStrategy.getLoopAuthToken().verify(token, SessionStrategy.getSecretKey.apply(tokenBodyModel.getLoginId())),
@@ -258,7 +258,7 @@ public class LoopAuthLogin {
                 getUserSession().removeToken(userSession.getTokenModelNow().getValue());
                 // 删除cookie
                 delCookie(SessionStrategy.getSessionConfig().getTokenName());
-                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "The token is due");
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
             }
         }
         // 存储会话

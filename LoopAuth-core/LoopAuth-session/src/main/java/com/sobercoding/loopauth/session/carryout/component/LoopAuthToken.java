@@ -52,14 +52,16 @@ public class LoopAuthToken {
             String info = getFromBase64(tokens[0]);
             // 获得原文
             String originalText = AesUtil.decode(tokens[1],secretKey);
-            // 验证是否过期
+            // 非持久化才检测，验证是否过期
             TokenModel tokenModel = getInfo(token);
-            if (!SessionStrategy.getSessionConfig().getTokenPersistence() && SessionStrategy.getSessionConfig().getTimeOut() != -1 && (tokenModel.getCreateTime() + tokenModel.getTimeOut()) < System.currentTimeMillis()){
-                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST_F, "The token is due");
+            if (!SessionStrategy.getSessionConfig().getTokenPersistence() &&
+                    SessionStrategy.getSessionConfig().getTimeOut() != -1 &&
+                    (tokenModel.getCreateTime() + tokenModel.getTimeOut()) < System.currentTimeMillis()){
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
             }
             return info.equals(originalText);
-        }catch (IllegalArgumentException e){
-            return false;
+        }catch (Throwable e){
+            throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         }
     }
 
@@ -82,8 +84,8 @@ public class LoopAuthToken {
                     .setTimeOut(Long.parseLong(infos[2]))
                     .setFacility(infos[3])
                     .setFacilityName(infos[4]);
-        }catch (RuntimeException e){
-            return null;
+        }catch (Throwable e){
+            throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
         }
     }
 
@@ -112,8 +114,8 @@ public class LoopAuthToken {
             try {
                 b = Base64.getDecoder().decode(str);
                 result = new String(b, StandardCharsets.UTF_8);
-            } catch (Exception e) {
-                return null;
+            } catch (Throwable e) {
+                throw new LoopAuthLoginException(LoopAuthExceptionEnum.LOGIN_NOT_EXIST);
             }
         }
         return result;
