@@ -13,6 +13,7 @@ public enum LoopAuthExceptionEnum {
     LOGIN_NOT_EXIST(401, "非法请求"),
     //无权限
     NO_PERMISSION(403, "未经许可"),
+    NO_PERMISSION_F(403, "未经许可: %s"),
     //请求参数 不能为 必须有值
     PARAM_IS_NULL(100001, "必要请求参数不存在: %s"),
     // 数据异常

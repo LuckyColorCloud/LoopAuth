@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.springbootstarter.interceptor;
 
+import com.sobercoding.loopauth.abac.annotation.CheckAbac;
+import com.sobercoding.loopauth.abac.annotation.CheckAbacAnnotation;
 import com.sobercoding.loopauth.abac.carryout.LoopAuthAbac;
 import com.sobercoding.loopauth.rbac.annotation.CheckRbacAnnotation;
 import com.sobercoding.loopauth.session.annotation.CheckSessionAnnotation;
@@ -35,6 +37,8 @@ public class InterceptorBuilder {
                 CheckSessionAnnotation.checkMethodAnnotation.accept(method);
                 // 进行验证
                 CheckRbacAnnotation.checkMethodAnnotation.accept(method);
+                // 进行验证
+                CheckAbacAnnotation.checkMethodAnnotation.accept(method);
             }
         };
         return new Builder();

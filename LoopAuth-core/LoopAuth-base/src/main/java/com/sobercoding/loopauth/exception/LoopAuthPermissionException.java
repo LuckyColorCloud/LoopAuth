@@ -11,7 +11,7 @@ public class LoopAuthPermissionException extends LoopAuthException {
         super(loopAuthExceptionEnum);
     }
     public LoopAuthPermissionException(LoopAuthExceptionEnum loopAuthExceptionEnum, String detailMsg) {
-        super(loopAuthExceptionEnum);
+        super(loopAuthExceptionEnum,detailMsg);
     }
 
 }

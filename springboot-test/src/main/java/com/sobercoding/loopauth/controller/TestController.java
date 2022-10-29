@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.controller;
 
+import com.sobercoding.loopauth.abac.annotation.AbacProperty;
+import com.sobercoding.loopauth.abac.annotation.CheckAbac;
 import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
 import com.sobercoding.loopauth.rbac.annotation.CheckRole;
 import com.sobercoding.loopauth.rbac.carryout.LoopAuthRbac;
@@ -81,6 +83,14 @@ public class TestController {
     }
 
     @GetMapping("/abac")
+    public String abac(){
+        return "检测成功";
+    }
+
+    @CheckAbac(name = "abac测试", value = {
+            @AbacProperty(name = "loginId", value = "1,2,3")
+    })
+    @GetMapping("/abac1")
     public String abac1(){
         return "检测成功";
     }

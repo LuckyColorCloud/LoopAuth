@@ -38,25 +38,19 @@ public class FuzzyMateBuilder implements Builder<MaFunction> {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;
                 String[] rules = ((String) rule).split(",");
-                if (!AuthUtil.checkAnd(values,rules)) {
-                    throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                }
+                return AuthUtil.checkAnd(values, rules);
             };
         } else if (loopAuthVerifyMode == LoopAuthVerifyMode.OR) {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;
                 String[] rules = ((String) rule).split(",");
-                if (!AuthUtil.checkOr(values,rules)) {
-                    throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                }
+                return AuthUtil.checkOr(values,rules);
             };
         } else {
             return (value, rule) -> {
                 Set<String> values = (Set<String>) value;
                 String[] rules = ((String) rule).split(",");
-                if (!AuthUtil.checkNon(values,rules)) {
-                    throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                }
+                return AuthUtil.checkNon(values,rules);
             };
         }
     }

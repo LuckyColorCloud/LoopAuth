@@ -13,5 +13,5 @@ public interface MaFunction<V, T> {
      * @param v 属性值
      * @param t 属性规则
      */
-    void mate(V v, T t);
+    boolean mate(V v, T t);
 }

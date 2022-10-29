@@ -26,9 +26,7 @@ public class AbacPolicyFunBuilder implements Builder<Map<String, AbacPoAndSu>> {
                 .setMaFunction((value, rule) -> {
                     String loginId = (String) value;
                     String[] loginIdRules = ((String) rule).split(",");
-                    if (!Arrays.asList(loginIdRules).contains(loginId)) {
-                        throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                    }
+                    return Arrays.asList(loginIdRules).contains(loginId);
                 })
         );
         return this;
@@ -44,9 +42,7 @@ public class AbacPolicyFunBuilder implements Builder<Map<String, AbacPoAndSu>> {
                 .setMaFunction((value, rule) -> {
                     String loginId = (String) value;
                     String[] loginIdRules = ((String) rule).split(",");
-                    if (!Arrays.stream(loginIdRules).noneMatch(item -> item.equals(loginId))) {
-                        throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                    }
+                    return Arrays.stream(loginIdRules).noneMatch(item -> item.equals(loginId));
                 })
         );
         return this;

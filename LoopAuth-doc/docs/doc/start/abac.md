@@ -74,9 +74,7 @@ AbacStrategy.abacPoAndSuMap = new AbacPolicyFunBuilder()
                         // rule为规则的值即 Policy setProperty 的值
                         .setMaFunction((value, rule) -> {
                             // 当前用户id需要与规则匹配才可访问  否则 抛出异常
-                            if (!value.equals(rule)){
-                                throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                            }
+                            return value.equals(rule);
                         })
                         // 获得value方式
                         .setSupplierMap(() -> "2")
@@ -110,4 +108,37 @@ public class LoopAuthMvcConfigure implements WebMvcConfigurer {
     public String abac1(){
         return "检测成功";
     }
+```
+
+## 注解方式拦截
+
+- 我们并不建议使用注解鉴权，ABAC的特点是鉴权粒度更细，但是ABAC的灵活修改也很重要。我们希望你可以在无需重启项目的前提下完成ABAC的权限变更
+- 注解鉴权ABAC的方式与上面其实大同小异
+- 唯一的区别就是无需实现`AbacInterface`接口
+- 你只需要在接口上添加注解，如下
+
+```java
+    @CheckAbac(name = "abac测试", value = {
+            @AbacProperty(name = "loginId", value = "1")
+    })
+    @GetMapping("/abac1")
+    public String abac1(){
+        return "检测成功";
+    }
+```
+
+- 然后注册注解拦截器
+
+```java
+@Component
+public class LoopAuthMvcConfigure implements WebMvcConfigurer {
+    /**
+     * 注册LoopAuth 的拦截器，打开注解式鉴权功能
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册注解拦截器
+        registry.addInterceptor(new InterceptorBuilder().annotation().builder()).addPathPatterns("/**");
+    }
+}
 ```

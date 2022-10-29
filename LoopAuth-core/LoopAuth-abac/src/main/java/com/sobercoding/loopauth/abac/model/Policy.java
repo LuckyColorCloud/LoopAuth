@@ -18,7 +18,7 @@ public class Policy implements Serializable,Comparable<Policy> {
     /**
      * 策略名称 默认空串
      */
-    private String name;
+    private String name = "";
 
     /**
      * 属性列表
@@ -67,7 +67,7 @@ public class Policy implements Serializable,Comparable<Policy> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, propertyMap);
     }
     @Override
     public int compareTo(Policy obj) {

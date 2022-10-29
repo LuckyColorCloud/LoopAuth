@@ -33,29 +33,18 @@ public class LoopAuthMvcConfigure implements WebMvcConfigurer {
         registry.addInterceptor(new InterceptorBuilder().abac().builder()).addPathPatterns("/**");
     }
 
-    @Bean
-    public LoopAuthDao getLoopAuthDao() {
-        return new JedisDaoImpl();
-    }
+//    @Bean
+//    public LoopAuthDao getLoopAuthDao() {
+//        return new JedisDaoImpl();
+//    }
 
     @Bean
     public void setAbacPoAndSuMap() {
         AbacStrategy.abacPoAndSuMap = new AbacPolicyFunBuilder()
                 // 自定义登录id校验的鉴权规则
-                .setPolicyFun("loginId",
-                        // 创建规则校验及获取当前值的方式
-                        new AbacPoAndSu()
-                                // 创建校验方式  value为当前值即setSupplierMap提供的值
-                                // rule为规则的值即 Policy setProperty 的值
-                                .setMaFunction((value, rule) -> {
-                                    // 当前用户id需要与规则匹配才可访问  否则 抛出异常
-                                    if (!value.equals(rule)){
-                                        throw new LoopAuthPermissionException(LoopAuthExceptionEnum.NO_PERMISSION);
-                                    }
-                                })
-                                // 获得value方式
-                                .setSupplierMap(() -> LoopAuthSession.getTokenModel().getLoginId())
-                ).build();
+                .loginId()
+                .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
+                .build();
     }
 
     /**
