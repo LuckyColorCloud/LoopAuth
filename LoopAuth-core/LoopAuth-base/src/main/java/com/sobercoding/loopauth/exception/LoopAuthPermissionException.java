@@ -1,7 +1,7 @@
 package com.sobercoding.loopauth.exception;
 
 /**
- * 许可异常
+ * 许可异常 权限不足
  * @author Yun
  */
 public class LoopAuthPermissionException extends LoopAuthException {

@@ -20,7 +20,6 @@ public class JsonUtil {
         try {
             obj = MAPPER.readValue(jsonStr, clazz);
         }catch (IOException e){
-            e.printStackTrace();
         }
         return obj;
     }
@@ -30,7 +29,6 @@ public class JsonUtil {
         try{
             json = MAPPER.writeValueAsString(obj);
         }catch (JsonProcessingException e){
-            e.printStackTrace();
         }
         return json;
     }
@@ -41,7 +39,6 @@ public class JsonUtil {
             CollectionType listType = MAPPER.getTypeFactory().constructCollectionType(Set.class, clazz);
             userList = MAPPER.readValue(jsonStr, listType);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return userList;
     }

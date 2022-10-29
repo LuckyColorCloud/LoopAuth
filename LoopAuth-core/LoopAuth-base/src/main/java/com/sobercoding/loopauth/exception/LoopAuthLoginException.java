@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 import java.util.Optional;
 
 /**
+ * 登录异常 非法访问
  * @author: Sober
  */
 public class LoopAuthLoginException extends LoopAuthException{

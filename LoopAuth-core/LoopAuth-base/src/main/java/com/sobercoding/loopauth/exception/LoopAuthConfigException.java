@@ -2,6 +2,7 @@ package com.sobercoding.loopauth.exception;
 
 
 /**
+ * 配置异常
  * @author: Sober
  */
 public class LoopAuthConfigException extends RuntimeException{

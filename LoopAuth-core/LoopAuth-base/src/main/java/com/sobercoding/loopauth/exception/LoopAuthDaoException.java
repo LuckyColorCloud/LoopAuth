@@ -5,6 +5,7 @@ import com.sobercoding.loopauth.util.LoopAuthUtil;
 import java.util.Optional;
 
 /**
+ * 持久层异常
  * @author: Weny
  */
 public class LoopAuthDaoException extends RuntimeException {

@@ -83,7 +83,6 @@ public class LoopAuthToken {
                     .setFacility(infos[3])
                     .setFacilityName(infos[4]);
         }catch (RuntimeException e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -114,7 +113,7 @@ public class LoopAuthToken {
                 b = Base64.getDecoder().decode(str);
                 result = new String(b, StandardCharsets.UTF_8);
             } catch (Exception e) {
-                e.printStackTrace();
+                return null;
             }
         }
         return result;

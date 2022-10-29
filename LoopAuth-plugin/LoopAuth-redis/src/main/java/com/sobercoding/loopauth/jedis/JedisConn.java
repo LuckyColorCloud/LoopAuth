@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.jedis;
 
+import com.sobercoding.loopauth.exception.LoopAuthDaoException;
+import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.session.SessionStrategy;
 import com.sobercoding.loopauth.session.config.RedisConfig;
 import com.sobercoding.loopauth.util.LoopAuthUtil;
@@ -38,8 +40,7 @@ public class JedisConn {
         try {
             return IS_NEED_POOL ? genPoolConn() : genSingleConn();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new LoopAuthDaoException(LoopAuthExceptionEnum.DATA_REDIS_LINK);
         }
     }
 
