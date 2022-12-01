@@ -31,6 +31,7 @@ public class LoopAuthMvcConfigure implements WebMvcConfigurer {
         registry.addInterceptor(new InterceptorBuilder().annotation().builder()).addPathPatterns("/**");
         // abac 拦截器
         registry.addInterceptor(new InterceptorBuilder().abac().builder()).addPathPatterns("/**");
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
     }
 
 //    @Bean

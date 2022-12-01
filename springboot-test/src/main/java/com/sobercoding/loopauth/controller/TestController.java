@@ -83,8 +83,12 @@ public class TestController {
     }
 
     @GetMapping("/abac")
-    public String abac(){
-        return "检测成功";
+    public TestEntity abac(){
+        TestEntity t = new TestEntity();
+        t.setC("c");
+        t.setB("b");
+        t.setA("a");
+        return t;
     }
 
     @CheckAbac(name = "abac测试", value = {
