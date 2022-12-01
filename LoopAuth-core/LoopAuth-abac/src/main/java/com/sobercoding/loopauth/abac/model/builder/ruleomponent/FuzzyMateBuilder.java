@@ -1,7 +1,5 @@
-package com.sobercoding.loopauth.abac.model.builder;
+package com.sobercoding.loopauth.abac.model.builder.ruleomponent;
 
-import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.function.Builder;
 import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;

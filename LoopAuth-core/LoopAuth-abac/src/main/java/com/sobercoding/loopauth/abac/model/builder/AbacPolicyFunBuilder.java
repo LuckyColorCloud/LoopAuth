@@ -1,8 +1,7 @@
 package com.sobercoding.loopauth.abac.model.builder;
 
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
-import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
+import com.sobercoding.loopauth.abac.model.builder.ruleomponent.FuzzyMateBuilder;
 import com.sobercoding.loopauth.function.Builder;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import java.util.Arrays;
