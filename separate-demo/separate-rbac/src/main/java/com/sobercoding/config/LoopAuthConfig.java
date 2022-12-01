@@ -1,7 +1,6 @@
 package com.sobercoding.config;
 
 import com.sobercoding.Impl.PermissionInterfaceImpl;
-import com.sobercoding.context.LoopAuthContextForSpring;
 import com.sobercoding.loopauth.rbac.RbacStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
