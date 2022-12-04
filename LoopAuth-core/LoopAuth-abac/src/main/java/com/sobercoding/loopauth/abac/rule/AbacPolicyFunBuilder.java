@@ -1,7 +1,7 @@
-package com.sobercoding.loopauth.abac.model.builder;
+package com.sobercoding.loopauth.abac.rule;
 
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
-import com.sobercoding.loopauth.abac.model.builder.ruleomponent.FuzzyMateBuilder;
+import com.sobercoding.loopauth.abac.model.builder.FuzzyMateBuilder;
 import com.sobercoding.loopauth.function.Builder;
 import com.sobercoding.loopauth.model.LoopAuthVerifyMode;
 import java.util.Arrays;
@@ -13,6 +13,7 @@ import java.util.function.Supplier;
  * 组装abac规则模型
  * @author Sober
  */
+@Deprecated
 public class AbacPolicyFunBuilder implements Builder<Map<String, AbacPoAndSu>> {
 
     /**
@@ -86,6 +87,11 @@ public class AbacPolicyFunBuilder implements Builder<Map<String, AbacPoAndSu>> {
 
 
     public AbacPolicyFunBuilder setPolicyFun(String key, AbacPoAndSu abacPoAndSu) {
+        abacPoAndSuMap.put(key, abacPoAndSu);
+        return this;
+    }
+
+    public AbacPolicyFunBuilder setPolicyFun(String key, AbacPoAndSu abacPoAndSu, RuleMate ruleMate) {
         abacPoAndSuMap.put(key, abacPoAndSu);
         return this;
     }

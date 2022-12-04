@@ -1,16 +1,11 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
-import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
-import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
-import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
-import com.sobercoding.loopauth.jedis.JedisDaoImpl;
+import com.sobercoding.loopauth.abac.rule.AbacPolicyFunBuilder;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.model.Result;
 import com.sobercoding.loopauth.servlet.filter.LoopAuthServletFilter;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
-import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import com.sobercoding.loopauth.springbootstarter.interceptor.InterceptorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

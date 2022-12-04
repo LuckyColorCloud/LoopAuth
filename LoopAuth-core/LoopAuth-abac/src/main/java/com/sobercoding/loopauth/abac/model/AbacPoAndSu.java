@@ -1,14 +1,12 @@
 package com.sobercoding.loopauth.abac.model;
 
 import com.sobercoding.loopauth.function.MaFunction;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 /**
  * @author Sober
  */
+@Deprecated
 public class AbacPoAndSu {
 
     /**

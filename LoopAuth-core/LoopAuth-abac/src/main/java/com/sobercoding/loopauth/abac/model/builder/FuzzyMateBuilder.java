@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.abac.model.builder.ruleomponent;
+package com.sobercoding.loopauth.abac.model.builder;
 
 import com.sobercoding.loopauth.function.Builder;
 import com.sobercoding.loopauth.function.MaFunction;

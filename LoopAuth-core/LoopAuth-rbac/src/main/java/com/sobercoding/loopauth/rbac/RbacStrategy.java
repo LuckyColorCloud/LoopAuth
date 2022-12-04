@@ -3,7 +3,6 @@ package com.sobercoding.loopauth.rbac;
 
 import com.sobercoding.loopauth.exception.LoopAuthConfigException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
-import com.sobercoding.loopauth.function.MeFunction;
 import com.sobercoding.loopauth.rbac.carryout.LoopAuthPermission;
 import com.sobercoding.loopauth.rbac.face.PermissionInterface;
 import com.sobercoding.loopauth.rbac.face.PermissionInterfaceDefImpl;
