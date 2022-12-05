@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.abac.rule;
 
+import com.sobercoding.loopauth.function.FiltrationFunction;
 import com.sobercoding.loopauth.function.MaFunction;
 
 import java.util.ArrayList;
@@ -11,28 +12,62 @@ import java.util.function.Supplier;
  * 规则验证
  * @author Sober
  */
-public class RuleMate {
+public class RuleMate<V, R> {
+
     /**
-     *  ABAC鉴权获取属性值方式
+     * value上下文预处理
+     * @param supplier
+     * @return
      */
-    Supplier<Object> supplierMap;
+    Supplier<V> supplier;
+    /**
+     * rule上下文预处理
+     * @param supplier
+     * @return
+     */
+    FiltrationFunction<R, String> filtrationFunction;
 
     /**
      * 最后组装成的规则组
      */
-    List<List<MaFunction<Object , Object>>> maFunctionList;
+    List<List<MaFunction<V , R>>> maFunctionList;
 
     /**
-     * 是否模糊匹配
+     * 载入上下文预处理方法
+     * @param supplier
+     * @return
      */
-    private Boolean isFuzzy = false;
+    public RuleMate<V, R> value(Supplier<V> supplier) {
+        this.supplier = supplier;
+        return this;
+    };
+
+    /**
+     * 载入上下文预处理方法
+     * @param filtrationFunction
+     * @return
+     */
+    public RuleMate<V, R> rule(FiltrationFunction<R, String> filtrationFunction) {
+        this.filtrationFunction = filtrationFunction;
+        return this;
+    }
 
 
     /**
      * 相等
      */
     public RuleMate eq() {
-        List<MaFunction<Object, Object>> list = new ArrayList<>();
+        List<MaFunction<V, R>> list = new ArrayList<>();
+        list.add(Object::equals);
+        maFunctionList.add(list);
+        return this;
+    }
+
+    /**
+     * 相等 模糊匹配
+     */
+    public RuleMate fuzzyEq() {
+        List<MaFunction<V, R>> list = new ArrayList<>();
         list.add(Object::equals);
         maFunctionList.add(list);
         return this;
@@ -43,7 +78,7 @@ public class RuleMate {
      * 闭区间
      */
     public RuleMate between(){
-        List<MaFunction<Object, Object>> list = new ArrayList<>();
+        List<MaFunction<V, R>> list = new ArrayList<>();
         list.add((value, rule) -> {
             String val = (String) value;
             String[] rules = ((String) rule).split("~");
@@ -57,21 +92,13 @@ public class RuleMate {
      * 包含
      */
     public RuleMate in(){
-        List<MaFunction<Object, Object>> list = new ArrayList<>();
+        List<MaFunction<V, R>> list = new ArrayList<>();
         list.add((value, rule) -> {
             String val = (String) value;
             String[] rules = ((String) rule).split(",");
             return Arrays.asList(rules).contains(val);
         });
         maFunctionList.add(list);
-        return this;
-    }
-
-    /**
-     * 开启模糊查询
-     */
-    public RuleMate fuzzy() {
-        this.isFuzzy = true;
         return this;
     }
 }
