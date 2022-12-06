@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.abac.rule;
+package com.sobercoding.loopauth.abac.policy;
 
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
 import com.sobercoding.loopauth.abac.model.builder.FuzzyMateBuilder;

@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.abac.rule;
+package com.sobercoding.loopauth.abac.policy;
 
 import com.sobercoding.loopauth.function.FiltrationFunction;
 import com.sobercoding.loopauth.function.MaFunction;
@@ -40,7 +40,7 @@ public class RuleMate<V, R> {
     public RuleMate<V, R> value(Supplier<V> supplier) {
         this.supplier = supplier;
         return this;
-    };
+    }
 
     /**
      * 载入上下文预处理方法

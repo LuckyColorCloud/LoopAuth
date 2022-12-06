@@ -1,7 +1,7 @@
 package com.sobercoding.loopauth.config;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
-import com.sobercoding.loopauth.abac.rule.AbacPolicyFunBuilder;
+import com.sobercoding.loopauth.abac.policy.AbacPolicyFunBuilder;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.model.Result;
 import com.sobercoding.loopauth.servlet.filter.LoopAuthServletFilter;
