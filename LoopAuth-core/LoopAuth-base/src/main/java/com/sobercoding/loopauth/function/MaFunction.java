@@ -4,6 +4,7 @@ package com.sobercoding.loopauth.function;
  * ABAC执行策略
  * @author Sober
  */
+@Deprecated
 @FunctionalInterface
 public interface MaFunction<V, T> {
 
