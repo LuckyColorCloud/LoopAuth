@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.abac.face;
 
 import com.sobercoding.loopauth.abac.model.Policy;
+import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 import com.sobercoding.loopauth.exception.LoopAuthConfigException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
@@ -10,7 +11,12 @@ import java.util.Set;
 /**
  * @author Sober
  */
-public class AbacInterfaceImpl implements AbacInterface{
+public class AbacInterfaceImpl implements AbacInterface<Object, Object, Object, Object> {
+
+    @Override
+    public PolicyWrapper<Object, Object, Object, Object> getPolicyWrapper() {
+        return null;
+    }
 
     /**
      *  获取一个或多个路由/权限代码所属的 规则
@@ -21,6 +27,21 @@ public class AbacInterfaceImpl implements AbacInterface{
     @Override
     public Set<Policy> getPolicySet(String route, LoopAuthHttpMode loopAuthHttpMode){
         throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
+    }
+
+    @Override
+    public Object getAction() {
+        return null;
+    }
+
+    @Override
+    public Object getContextual() {
+        return null;
+    }
+
+    @Override
+    public Object getSubject() {
+        return null;
     }
 
 }

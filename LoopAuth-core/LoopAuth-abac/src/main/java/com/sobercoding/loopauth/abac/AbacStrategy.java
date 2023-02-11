@@ -3,6 +3,7 @@ package com.sobercoding.loopauth.abac;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.face.AbacInterfaceImpl;
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
+import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 import com.sobercoding.loopauth.abac.policy.RuleMate;
 
 import java.util.*;
@@ -25,23 +26,43 @@ public class AbacStrategy {
     public volatile static Map<String, RuleMate> ruleMateMap = new HashMap<>();
 
     /**
-     * ABAC权限认证 Bean 获取一个或多个路由/权限代码所属的 规则
+     * ABAC规则包装
      */
-    private volatile static AbacInterface abacInterface;
+    private volatile static PolicyWrapper<?, ?, ?, ?> policyWrapper;
 
-    public static void setAbacInterface(AbacInterface abacInterface) {
-        AbacStrategy.abacInterface = abacInterface;
+    public static void setPolicyWrapper(PolicyWrapper<?, ?, ?, ?> policyWrapper) {
+        AbacStrategy.policyWrapper = policyWrapper;
     }
 
-    public static AbacInterface getAbacInterface() {
-        if (abacInterface == null) {
+    public static PolicyWrapper<?, ?, ?, ?> getPolicyWrapper() {
+        if (AbacStrategy.policyWrapper == null) {
             synchronized (AbacStrategy.class) {
-                if (abacInterface == null) {
-                    setAbacInterface(new AbacInterfaceImpl());
+                if (AbacStrategy.policyWrapper == null) {
+                    AbacStrategy.setPolicyWrapper(null);
                 }
             }
         }
-        return abacInterface;
+        return AbacStrategy.policyWrapper;
+    }
+
+    /**
+     * ABAC权限认证 Bean 获取一个或多个路由/权限代码所属的 规则
+     */
+    private volatile static AbacInterface<?, ?, ?, ?> abacInterface;
+
+    public static void setAbacInterface(AbacInterface<?, ?, ?, ?> abacInterface) {
+        AbacStrategy.abacInterface = abacInterface;
+    }
+
+    public static AbacInterface<?, ?, ?, ?> getAbacInterface() {
+        if (AbacStrategy.abacInterface == null) {
+            synchronized (AbacStrategy.class) {
+                if (AbacStrategy.abacInterface == null) {
+                    AbacStrategy.setAbacInterface(new AbacInterfaceImpl());
+                }
+            }
+        }
+        return AbacStrategy.abacInterface;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.sobercoding.loopauth.abac.policy;
 
-import com.sobercoding.loopauth.function.FiltrationFunction;
 import com.sobercoding.loopauth.function.MaFunction;
 
 import java.util.ArrayList;
@@ -20,12 +19,6 @@ public class RuleMate<V, R> {
      * @return
      */
     Supplier<V> supplier;
-    /**
-     * rule上下文预处理
-     * @param supplier
-     * @return
-     */
-    FiltrationFunction<R, String> filtrationFunction;
 
     /**
      * 最后组装成的规则组
@@ -41,17 +34,6 @@ public class RuleMate<V, R> {
         this.supplier = supplier;
         return this;
     }
-
-    /**
-     * 载入上下文预处理方法
-     * @param filtrationFunction
-     * @return
-     */
-    public RuleMate<V, R> rule(FiltrationFunction<R, String> filtrationFunction) {
-        this.filtrationFunction = filtrationFunction;
-        return this;
-    }
-
 
     /**
      * 相等

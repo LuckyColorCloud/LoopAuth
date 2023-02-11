@@ -1,6 +1,5 @@
 package com.sobercoding.loopauth.abac.policy.interfaces;
 
-import com.sobercoding.loopauth.function.MaFunction;
 import com.sobercoding.loopauth.function.MateFunction;
 
 import java.util.Arrays;

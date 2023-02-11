@@ -2,11 +2,13 @@ package com.sobercoding.loopauth.controller;
 
 import com.sobercoding.loopauth.abac.annotation.AbacProperty;
 import com.sobercoding.loopauth.abac.annotation.CheckAbac;
+import com.sobercoding.loopauth.impl.AbacInterFaceImpl;
 import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
 import com.sobercoding.loopauth.rbac.annotation.CheckRole;
 import com.sobercoding.loopauth.rbac.carryout.LoopAuthRbac;
 import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+    @Autowired
+    private AbacInterFaceImpl abacInterFace;
     @GetMapping("/login")
     public String register(String loginId){
         LoopAuthSession.login(loginId);

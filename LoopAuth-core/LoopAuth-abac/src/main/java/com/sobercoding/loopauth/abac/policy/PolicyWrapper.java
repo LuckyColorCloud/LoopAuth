@@ -1,25 +1,83 @@
 package com.sobercoding.loopauth.abac.policy;
 
-import com.sobercoding.loopauth.abac.policy.interfaces.ActionFace;
-import com.sobercoding.loopauth.abac.policy.interfaces.ContextualFace;
-import com.sobercoding.loopauth.abac.policy.interfaces.ResObjectFace;
-import com.sobercoding.loopauth.abac.policy.interfaces.SubjectFace;
+
+import com.sobercoding.loopauth.abac.policy.model.Action;
+import com.sobercoding.loopauth.abac.policy.model.Contextual;
+import com.sobercoding.loopauth.abac.policy.model.ResObject;
+import com.sobercoding.loopauth.abac.policy.model.Subject;
 
 /**
+ * 包装类
  * ABAC 规则包装
- * @param <Subject> 访问者的属性
- * @param <Action> 操作类型
- * @param <ResObject> 资源对象
- * @param <Contextual> 环境属性
  * @author sober
  */
-public class PolicyWrapper<Subject, Action, ResObject, Contextual>
-        implements
-        SubjectFace<Subject>,
-        ActionFace<Action>,
-        ResObjectFace<ResObject>,
-        ContextualFace<Contextual> {
+
+public class PolicyWrapper<A,C,R,S> {
+    private Action<A> actionData;
+
+    private Contextual<C> contextualData;
+
+    private ResObject<R> resObjectData;
+
+    private Subject<S> subjectData;
+
+    private PolicyWrapper() {
+
+    }
+
+    public static <A,C,R,S> PolicyWrapper<A,C,R,S> builder() {
+        return new PolicyWrapper<A,C,R,S>();
+    }
+
+
+    public PolicyWrapper<A,C,R,S> subject(Subject<S> subjectData){
+        this.subjectData = subjectData;
+        return this;
+    }
+    public PolicyWrapper<A,C,R,S> action(Action<A> actionData){
+        this.actionData = actionData;
+        return this;
+    }
+    public PolicyWrapper<A,C,R,S> contextual(Contextual<C> contextualData){
+        this.contextualData = contextualData;
+        return this;
+    }
+    public PolicyWrapper<A,C,R,S> resObject(ResObject<R> resObjectData){
+        this.resObjectData = resObjectData;
+        return this;
+    }
 
 
 
+    public Action<A> getActionData() {
+        return actionData;
+    }
+
+    public void setActionData(Action<A> actionData) {
+        this.actionData = actionData;
+    }
+
+    public Contextual<C> getContextualData() {
+        return contextualData;
+    }
+
+    public void setContextualData(Contextual<C> contextualData) {
+        this.contextualData = contextualData;
+    }
+
+    public ResObject<R> getResObjectData() {
+        return resObjectData;
+    }
+
+    public void setResObjectData(ResObject<R> resObjectData) {
+        this.resObjectData = resObjectData;
+    }
+
+    public Subject<S> getSubjectData() {
+        return subjectData;
+    }
+
+    public void setSubjectData(Subject<S> subjectData) {
+        this.subjectData = subjectData;
+    }
 }
