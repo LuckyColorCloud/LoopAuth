@@ -26,58 +26,49 @@ public class AbacInterFaceImpl implements AbacInterface<ActionModel, ContextualM
     /**
      * ABAC规则包装
      */
-    PolicyWrapper<ActionModel, ContextualModel, Object, UserModel> policyWrapper;
+    private static volatile PolicyWrapper<ActionModel, ContextualModel, Object, UserModel> policyWrapper;
 
-    public void setPolicyWrapper(PolicyWrapper<ActionModel, ContextualModel, Object, UserModel> policyWrapper) {
-        this.policyWrapper = policyWrapper;
+    static {
+        /**
+         * 访问者主题属性 通常为账户属性
+         */
+        Subject<UserModel> subject = Subject
+                .init("loginId",
+                        UserModel::getId,
+                        Object::equals)
+                .structure("userName",
+                        UserModel::getName,
+                        Object::equals);
+
+        /**
+         * 环境属性 通常为非账户的属性 如时间、ip等
+         */
+        Contextual<ContextualModel> contextual = Contextual
+                .init("time",
+                        ContextualModel::getNowTime,
+                        (v, r) -> {
+                            long time = v.get();
+                            long roletime = Long.parseLong(r);
+                            return roletime > time;
+                        }
+                );
+
+        /**
+         * 操作类型 通常问请求方式GET 或者操作code等
+         */
+        Action<ActionModel> action = Action
+                .init("model",
+                        ActionModel::getLoopAuthHttpMode,
+                        Object::equals);
+
+        policyWrapper = PolicyWrapper.<ActionModel, ContextualModel, Object, UserModel>builder()
+                        .subject(subject)
+                        .action(action)
+                        .contextual(contextual);
     }
 
     public PolicyWrapper<ActionModel, ContextualModel, Object, UserModel> getPolicyWrapper() {
-        if (this.policyWrapper == null) {
-            synchronized (AbacInterface.class) {
-                if (this.policyWrapper == null) {
-                    /**
-                     * 访问者主题属性 通常为账户属性
-                     */
-                    Subject<UserModel> subject = Subject
-                            .init("loginId",
-                                    UserModel::getId,
-                                    Object::equals)
-                            .structure("userName",
-                                    UserModel::getName,
-                                    Object::equals);
-
-                    /**
-                     * 环境属性 通常为非账户的属性 如时间、ip等
-                     */
-                    Contextual<ContextualModel> contextual = Contextual
-                            .init("time",
-                                    ContextualModel::getNowTime,
-                                    (v, r) -> {
-                                        long time = v.get();
-                                        long roletime = Long.parseLong(r);
-                                        return roletime > time;
-                                    }
-                            );
-
-                    /**
-                     * 操作类型 通常问请求方式GET 或者操作code等
-                     */
-                    Action<ActionModel> action = Action
-                            .init("model",
-                                    ActionModel::getLoopAuthHttpMode,
-                                    Object::equals);
-
-                    this.setPolicyWrapper(
-                            PolicyWrapper.<ActionModel, ContextualModel, Object, UserModel>builder()
-                                    .subject(subject)
-                                    .action(action)
-                                    .contextual(contextual)
-                    );
-                }
-            }
-        }
-        return this.policyWrapper;
+        return policyWrapper;
     }
 
     /**
@@ -123,4 +114,10 @@ public class AbacInterFaceImpl implements AbacInterface<ActionModel, ContextualM
         userModel.setName("小小用户");
         return userModel;
     }
+
+    @Override
+    public Object getResObject() {
+        return null;
+    }
+
 }

@@ -1,23 +1,9 @@
 package com.sobercoding.loopauth.config;
 
-import com.sobercoding.loopauth.abac.AbacStrategy;
-import com.sobercoding.loopauth.abac.policy.AbacPolicyFunBuilder;
-import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
-import com.sobercoding.loopauth.abac.policy.model.Action;
-import com.sobercoding.loopauth.abac.policy.model.Contextual;
-import com.sobercoding.loopauth.abac.policy.model.Subject;
-import com.sobercoding.loopauth.impl.AbacInterFaceImpl;
-import com.sobercoding.loopauth.model.ActionModel;
-import com.sobercoding.loopauth.model.ContextualModel;
-import com.sobercoding.loopauth.model.UserModel;
-import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import com.sobercoding.loopauth.springbootstarter.interceptor.InterceptorBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.function.Supplier;
 
 /**
  * @author Sober
@@ -40,15 +26,6 @@ public class LoopAuthMvcConfigure implements WebMvcConfigurer {
 //        return new JedisDaoImpl();
 //    }
 
-    @Bean
-    public void setAbacPoAndSuMap() {
-//        AbacStrategy.abacPoAndSuMap = new AbacPolicyFunBuilder()
-//                // 自定义登录id校验的鉴权规则
-//                .loginId()
-//                .setLoginId(() -> LoopAuthSession.getTokenModel().getLoginId())
-//                .build();
-
-    }
 
 //    /**
 //     * 注册 [LoopAuth 全局过滤器] 此优先级高于  注解  如这里报错就不在进入注解

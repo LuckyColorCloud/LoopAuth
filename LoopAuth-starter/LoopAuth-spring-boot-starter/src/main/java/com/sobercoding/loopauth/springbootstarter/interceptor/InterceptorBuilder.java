@@ -23,7 +23,7 @@ public class InterceptorBuilder {
             // 路由
             String route = req.getRequestPath();
             // ABAC鉴权
-            LoopAuthAbac.check1(route, req.getMethod());
+            LoopAuthAbac.check(route, req.getMethod());
         };
         return new Builder();
     }

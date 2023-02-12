@@ -87,16 +87,12 @@ public class TestController {
     }
 
     @GetMapping("/abac")
-    public TestEntity abac(){
-        TestEntity t = new TestEntity();
-        t.setC("c");
-        t.setB("b");
-        t.setA("a");
-        return t;
+    public String abac(){
+        return "检测成功";
     }
 
     @CheckAbac(name = "abac测试", value = {
-            @AbacProperty(name = "loginId", value = "1,2,3")
+            @AbacProperty(name = "time", value = "1776126656326")
     })
     @GetMapping("/abac1")
     public String abac1(){

@@ -15,7 +15,7 @@ public class AbacInterfaceImpl implements AbacInterface<Object, Object, Object, 
 
     @Override
     public PolicyWrapper<Object, Object, Object, Object> getPolicyWrapper() {
-        return null;
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
     }
 
     /**
@@ -31,17 +31,22 @@ public class AbacInterfaceImpl implements AbacInterface<Object, Object, Object, 
 
     @Override
     public Object getAction() {
-        return null;
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
     }
 
     @Override
     public Object getContextual() {
-        return null;
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
     }
 
     @Override
     public Object getSubject() {
-        return null;
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
+    }
+
+    @Override
+    public Object getResObject() {
+        throw new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "AbacInterface.getPolicySet()");
     }
 
 }
