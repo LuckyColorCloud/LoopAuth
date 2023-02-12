@@ -2,6 +2,7 @@ package com.sobercoding.loopauth.controller;
 
 import com.sobercoding.loopauth.abac.annotation.AbacProperty;
 import com.sobercoding.loopauth.abac.annotation.CheckAbac;
+import com.sobercoding.loopauth.abac.policy.model.PropertyEnum;
 import com.sobercoding.loopauth.impl.AbacInterFaceImpl;
 import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
 import com.sobercoding.loopauth.rbac.annotation.CheckRole;
@@ -92,7 +93,7 @@ public class TestController {
     }
 
     @CheckAbac(name = "abac测试", value = {
-            @AbacProperty(name = "time", value = "1776126656326")
+            @AbacProperty(name = "time", prop = PropertyEnum.CONTEXTUAL, value = "1776126656326")
     })
     @GetMapping("/abac1")
     public String abac1(){

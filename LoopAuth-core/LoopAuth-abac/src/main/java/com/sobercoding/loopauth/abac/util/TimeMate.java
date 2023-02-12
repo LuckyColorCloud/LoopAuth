@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.abac.util;
 
-import com.sobercoding.loopauth.abac.model.authProperty.IntervalType;
+import com.sobercoding.loopauth.abac.policy.model.authProperty.IntervalType;
 
 
 /**

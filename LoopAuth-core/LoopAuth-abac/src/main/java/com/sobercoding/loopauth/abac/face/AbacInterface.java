@@ -1,16 +1,14 @@
 package com.sobercoding.loopauth.abac.face;
 
-import com.sobercoding.loopauth.abac.AbacStrategy;
-import com.sobercoding.loopauth.abac.model.Policy;
-import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
+import com.sobercoding.loopauth.abac.annotation.CheckAbacAnnotation;
+import com.sobercoding.loopauth.abac.policy.model.Policy;
+import com.sobercoding.loopauth.abac.policy.model.PropertyEnum;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthPermissionException;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.abac.annotation.CheckAbac;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 /**
@@ -38,33 +36,7 @@ public interface AbacInterface<A, C, R, S> extends AbacWrapper<A, C, R, S> {
      * @author: Sober
      */
     default void check(String route, String method) {
-        // 获取当前匹配的规则
-        Optional<Set<Policy>> policy = Optional.ofNullable(
-                this.getPolicySet(route, LoopAuthHttpMode.toEnum(method))
-        );
-        // 判空
-        policy.ifPresent(
-                // 迭代所有规则
-                policies -> policies.forEach(item -> {
-                    // 迭代规则中属性
-                    Set<String> keySet = item.getPropertyMap().keySet();
-                    keySet.forEach(key -> {
-                        // 执行访问者主题属性验证
-                        Optional.ofNullable(this.getPolicyWrapper().getContextualData().getFunctionHashMap().get(key))
-                                .ifPresent(valueFunc -> {
-                                    Supplier supplier = () -> valueFunc.apply(this.getContextual());
-                                    boolean isFlag = this.getPolicyWrapper().getContextualData().getMateFunctionHashMap().get(key)
-                                            .mate(supplier, (String) item.getPropertyMap().get(key));
-                                    if (!isFlag) {
-                                        throw new LoopAuthPermissionException(
-                                                LoopAuthExceptionEnum.NO_PERMISSION_F,
-                                                item.getName() + "规则中" + "属性" + "'" + key + "'校验失败!"
-                                        );
-                                    }
-                                });
-                    });
-                })
-        );
+        this.check(this.getPolicySet(route, LoopAuthHttpMode.toEnum(method)));
     }
 
     /**
@@ -74,26 +46,121 @@ public interface AbacInterface<A, C, R, S> extends AbacWrapper<A, C, R, S> {
      * @author: Sober
      */
     default void check(CheckAbac checkAbac) {
-        Policy policy = new Policy();
-        policy.setName(checkAbac.name());
-        Arrays.stream(checkAbac.value()).forEach(abacProperty ->
-                policy.setProperty(abacProperty.name(), abacProperty.value()));
-        Set<String> keySet = policy.getPropertyMap().keySet();
-        keySet.forEach(key -> {
-            // 执行访问者主题属性验证
-            Optional.ofNullable(this.getPolicyWrapper().getContextualData().getFunctionHashMap().get(key))
-                    .ifPresent(valueFunc -> {
-                        Supplier supplier = () -> valueFunc.apply(this.getContextual());
-                        boolean isFlag = this.getPolicyWrapper().getContextualData().getMateFunctionHashMap().get(key)
-                                .mate(supplier, (String) policy.getPropertyMap().get(key));
-                        if (!isFlag) {
-                            throw new LoopAuthPermissionException(
-                                    LoopAuthExceptionEnum.NO_PERMISSION_F,
-                                    policy.getName() + "规则中" + "属性" + "'" + key + "'校验失败!"
-                            );
-                        }
+        this.check(CheckAbacAnnotation.getPolicySet(checkAbac));
+    }
+
+    default void check(Set<Policy> policySet) {
+        Optional<Set<Policy>> optionalPolicies = Optional.ofNullable(policySet);
+        // 判空
+        optionalPolicies.ifPresent(
+                // 迭代所有规则
+                policies -> {
+                    policies.forEach(item -> {
+                        this.checkContextual(item);
+                        this.checkResObject(item);
+                        this.checkSubject(item);
+                        this.checkAction(item);
                     });
-        });
+                }
+        );
+    }
+
+    default void checkContextual(Policy policy) {
+        // 环境属性校验
+        Map<String, String> maps = policy.getPropertyMap().get(PropertyEnum.CONTEXTUAL.toString());
+        Optional.ofNullable(maps)
+                .ifPresent(item -> {
+                    Set<String> keySet = item.keySet();
+                    keySet.forEach(key -> {
+                        // 执行访问者主题属性验证
+                        Optional.ofNullable(this.getPolicyWrapper().getContextualData().getFunctionHashMap().get(key))
+                                .ifPresent(valueFunc -> {
+                                    Supplier supplier = () -> valueFunc.apply(this.getContextual());
+                                    boolean isFlag = this.getPolicyWrapper().getContextualData().getMateFunctionHashMap().get(key)
+                                            .mate(supplier, item.get(key));
+                                    if (!isFlag) {
+                                        throw new LoopAuthPermissionException(
+                                                LoopAuthExceptionEnum.NO_PERMISSION_F,
+                                                policy.getName() + "规则中" + "属性" + "'" + key + "'校验失败!"
+                                        );
+                                    }
+                                });
+                    });
+                });
+    }
+
+    default void checkResObject(Policy policy) {
+        // 环境属性校验
+        Map<String, String> maps = policy.getPropertyMap().get(PropertyEnum.RES_OBJECT.toString());
+        Optional.ofNullable(maps)
+                .ifPresent(item -> {
+                    Set<String> keySet = item.keySet();
+                    keySet.forEach(key -> {
+                        // 执行访问者主题属性验证
+                        Optional.ofNullable(this.getPolicyWrapper().getResObjectData().getFunctionHashMap().get(key))
+                                .ifPresent(valueFunc -> {
+                                    Supplier supplier = () -> valueFunc.apply(this.getResObject());
+                                    boolean isFlag = this.getPolicyWrapper().getResObjectData().getMateFunctionHashMap().get(key)
+                                            .mate(supplier, item.get(key));
+                                    if (!isFlag) {
+                                        throw new LoopAuthPermissionException(
+                                                LoopAuthExceptionEnum.NO_PERMISSION_F,
+                                                policy.getName() + "规则中" + "属性" + "'" + key + "'校验失败!"
+                                        );
+                                    }
+                                });
+                    });
+                });
+
+    }
+
+    default void checkSubject(Policy policy) {
+        // 环境属性校验
+        Map<String, String> maps = policy.getPropertyMap().get(PropertyEnum.SUBJECT.toString());
+        Optional.ofNullable(maps)
+                .ifPresent(item -> {
+                    Set<String> keySet = item.keySet();
+                    keySet.forEach(key -> {
+                        // 执行访问者主题属性验证
+                        Optional.ofNullable(this.getPolicyWrapper().getSubjectData().getFunctionHashMap().get(key))
+                                .ifPresent(valueFunc -> {
+                                    Supplier supplier = () -> valueFunc.apply(this.getSubject());
+                                    boolean isFlag = this.getPolicyWrapper().getSubjectData().getMateFunctionHashMap().get(key)
+                                            .mate(supplier, item.get(key));
+                                    if (!isFlag) {
+                                        throw new LoopAuthPermissionException(
+                                                LoopAuthExceptionEnum.NO_PERMISSION_F,
+                                                policy.getName() + "规则中" + "属性" + "'" + key + "'校验失败!"
+                                        );
+                                    }
+                                });
+                    });
+                });
+
+    }
+
+    default void checkAction(Policy policy) {
+        // 环境属性校验
+        Map<String, String> maps = policy.getPropertyMap().get(PropertyEnum.ACTION.toString());
+        Optional.ofNullable(maps)
+                .ifPresent(item -> {
+                    Set<String> keySet = item.keySet();
+                    keySet.forEach(key -> {
+                        // 执行访问者主题属性验证
+                        Optional.ofNullable(this.getPolicyWrapper().getActionData().getFunctionHashMap().get(key))
+                                .ifPresent(valueFunc -> {
+                                    Supplier supplier = () -> valueFunc.apply(this.getAction());
+                                    boolean isFlag = this.getPolicyWrapper().getActionData().getMateFunctionHashMap().get(key)
+                                            .mate(supplier, item.get(key));
+                                    if (!isFlag) {
+                                        throw new LoopAuthPermissionException(
+                                                LoopAuthExceptionEnum.NO_PERMISSION_F,
+                                                policy.getName() + "规则中" + "属性" + "'" + key + "'校验失败!"
+                                        );
+                                    }
+                                });
+                    });
+                });
     }
 
 }

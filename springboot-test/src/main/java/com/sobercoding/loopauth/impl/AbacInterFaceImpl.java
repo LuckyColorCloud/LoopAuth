@@ -1,8 +1,7 @@
 package com.sobercoding.loopauth.impl;
 
-import com.sobercoding.loopauth.abac.AbacStrategy;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
-import com.sobercoding.loopauth.abac.model.Policy;
+import com.sobercoding.loopauth.abac.policy.model.Policy;
 import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 import com.sobercoding.loopauth.abac.policy.model.Action;
 import com.sobercoding.loopauth.abac.policy.model.Contextual;
@@ -67,6 +66,7 @@ public class AbacInterFaceImpl implements AbacInterface<ActionModel, ContextualM
                         .contextual(contextual);
     }
 
+    @Override
     public PolicyWrapper<ActionModel, ContextualModel, Object, UserModel> getPolicyWrapper() {
         return policyWrapper;
     }
@@ -87,7 +87,7 @@ public class AbacInterFaceImpl implements AbacInterface<ActionModel, ContextualM
                     // 规则名称
                     .setName("test")
                     // 规则中的属性名称 及 属性值 用于后续进行 规则匹配校验
-                    .setProperty("time", "1676126656326")
+                    .setContextualProperty("time", "1676126656326")
             );
         }
         return set;

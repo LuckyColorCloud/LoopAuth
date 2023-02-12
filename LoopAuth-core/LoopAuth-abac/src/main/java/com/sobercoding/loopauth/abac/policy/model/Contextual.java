@@ -28,7 +28,7 @@ public class Contextual<T> {
     public HashMap<String, MateFunction<?, String>> getMateFunctionHashMap() {
         return mateFunctionHashMap;
     }
-    public <S> Contextual(String fieldName,
+    private <S> Contextual(String fieldName,
                           Function<? super T,? extends S> func,
                           MateFunction<S, String> mateFunc) {
         this.functionHashMap.put(fieldName,func);

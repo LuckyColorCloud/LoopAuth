@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.model;
 
-import com.sobercoding.loopauth.abac.model.authProperty.IntervalType;
+import com.sobercoding.loopauth.abac.policy.model.authProperty.IntervalType;
 
 /**
  * @author Sober

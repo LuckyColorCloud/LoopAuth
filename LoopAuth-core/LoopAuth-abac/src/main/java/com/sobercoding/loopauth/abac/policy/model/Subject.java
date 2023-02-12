@@ -27,7 +27,7 @@ public class Subject<T> {
     public HashMap<String, MateFunction<?, String>> getMateFunctionHashMap() {
         return mateFunctionHashMap;
     }
-    public <S> Subject(String fieldName, Function<? super T,? extends S> func, MateFunction<S, String> mateFunc) {
+    private <S> Subject(String fieldName, Function<? super T,? extends S> func, MateFunction<S, String> mateFunc) {
         this.functionHashMap.put(fieldName,func);
         this.mateFunctionHashMap.put(fieldName,mateFunc);
     }

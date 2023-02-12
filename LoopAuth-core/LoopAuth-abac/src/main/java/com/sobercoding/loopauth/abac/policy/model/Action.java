@@ -28,7 +28,7 @@ public class Action<T> {
         return mateFunctionHashMap;
     }
 
-    public <S> Action(String fieldName,
+    private <S> Action(String fieldName,
                       Function<? super T,? extends S> func,
                       MateFunction<S, String> mateFunc) {
         this.functionHashMap.put(fieldName,func);

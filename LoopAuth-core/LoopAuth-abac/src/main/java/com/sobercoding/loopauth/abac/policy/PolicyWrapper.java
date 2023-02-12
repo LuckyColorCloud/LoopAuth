@@ -53,31 +53,16 @@ public class PolicyWrapper<A,C,R,S> {
         return actionData;
     }
 
-    public void setActionData(Action<A> actionData) {
-        this.actionData = actionData;
-    }
-
     public Contextual<C> getContextualData() {
         return contextualData;
-    }
-
-    public void setContextualData(Contextual<C> contextualData) {
-        this.contextualData = contextualData;
     }
 
     public ResObject<R> getResObjectData() {
         return resObjectData;
     }
 
-    public void setResObjectData(ResObject<R> resObjectData) {
-        this.resObjectData = resObjectData;
-    }
-
     public Subject<S> getSubjectData() {
         return subjectData;
     }
 
-    public void setSubjectData(Subject<S> subjectData) {
-        this.subjectData = subjectData;
-    }
 }

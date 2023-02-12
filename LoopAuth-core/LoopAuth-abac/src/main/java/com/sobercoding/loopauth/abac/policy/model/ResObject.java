@@ -26,7 +26,7 @@ public class ResObject<T> {
     public HashMap<String, MateFunction<?, String>> getMateFunctionHashMap() {
         return mateFunctionHashMap;
     }
-    public <S> ResObject(String fieldName,
+    private <S> ResObject(String fieldName,
                       Function<? super T,? extends S> func,
                       MateFunction<S, String> mateFunc) {
         this.functionHashMap.put(fieldName,func);
@@ -50,10 +50,10 @@ public class ResObject<T> {
         return this;
     }
 
-    public static <S,T> Action<T> init(String fieldName,
+    public static <S,T> ResObject<T> init(String fieldName,
                                        Function<? super T, ? extends S> func,
                                        MateFunction<S, String> mateFunc) {
-        return new Action<>(fieldName, func, mateFunc);
+        return new ResObject<>(fieldName, func, mateFunc);
     }
 
 }

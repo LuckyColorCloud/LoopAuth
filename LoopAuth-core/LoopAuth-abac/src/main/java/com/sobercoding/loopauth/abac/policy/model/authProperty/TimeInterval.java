@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.abac.model.authProperty;
+package com.sobercoding.loopauth.abac.policy.model.authProperty;
 
 import java.io.Serializable;
 import java.util.Objects;

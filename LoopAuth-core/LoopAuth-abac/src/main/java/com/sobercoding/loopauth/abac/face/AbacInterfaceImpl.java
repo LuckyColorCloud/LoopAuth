@@ -1,6 +1,6 @@
 package com.sobercoding.loopauth.abac.face;
 
-import com.sobercoding.loopauth.abac.model.Policy;
+import com.sobercoding.loopauth.abac.policy.model.Policy;
 import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 import com.sobercoding.loopauth.exception.LoopAuthConfigException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
