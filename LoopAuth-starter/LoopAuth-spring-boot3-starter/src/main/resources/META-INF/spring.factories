@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.sobercoding.loopauth.springbootstarter.LoopAuthInject,\
+com.sobercoding.loopauth.springbootstarter.LoopAuthRegister

@@ -13,6 +13,8 @@
         <module>LoopAuth-spring-boot-starter</module>
         <module>LoopAuth-servlet</module>
         <module>LoopAuth-spring-boot-webflux-starter</module>
+        <module>LoopAuth-spring-boot3-starter</module>
+        <module>LoopAuth-jakarte-servlet</module>
     </modules>
     <artifactId>LoopAuth-starter</artifactId>
 
