@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.springboot3starter;
+package com.sobercoding.loopauth.springbootstarter;
 
 import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.context.LoopAuthRequest;
@@ -6,9 +6,9 @@ import com.sobercoding.loopauth.context.LoopAuthResponse;
 import com.sobercoding.loopauth.context.LoopAuthStorage;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthParamException;
-import com.sobercoding.loopauth.jakartaservlet.context.LoopAuthRequestForServlet;
-import com.sobercoding.loopauth.jakartaservlet.context.LoopAuthResponseForServlet;
-import com.sobercoding.loopauth.jakartaservlet.context.LoopAuthStorageForServlet;
+import com.sobercoding.loopauth.servlet.context.LoopAuthRequestForServlet;
+import com.sobercoding.loopauth.servlet.context.LoopAuthResponseForServlet;
+import com.sobercoding.loopauth.servlet.context.LoopAuthStorageForServlet;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

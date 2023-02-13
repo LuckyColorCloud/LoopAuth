@@ -9,13 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
+    <artifactId>LoopAuth-starter</artifactId>
+
     <modules>
         <module>LoopAuth-spring-boot-starter</module>
+        <module>LoopAuth-jakarte-servlet</module>
         <module>LoopAuth-servlet</module>
         <module>LoopAuth-spring-boot-webflux-starter</module>
         <module>LoopAuth-spring-boot3-starter</module>
-        <module>LoopAuth-jakarte-servlet</module>
     </modules>
-    <artifactId>LoopAuth-starter</artifactId>
 
 </project>

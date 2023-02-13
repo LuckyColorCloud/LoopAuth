@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.springboot3starter.interceptor;
+package com.sobercoding.loopauth.springbootstarter.interceptor;
 
 import com.sobercoding.loopauth.abac.annotation.CheckAbacAnnotation;
 import com.sobercoding.loopauth.abac.carryout.LoopAuthAbac;

@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.jakartaservlet.filter;
+package com.sobercoding.loopauth.servlet.filter;
 
 import com.sobercoding.loopauth.function.LoopAuthErrorFilter;
 import com.sobercoding.loopauth.function.LoopAuthFilterFun;

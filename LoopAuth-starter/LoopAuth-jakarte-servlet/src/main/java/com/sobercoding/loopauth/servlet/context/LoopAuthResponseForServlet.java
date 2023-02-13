@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.jakartaservlet.context;
+package com.sobercoding.loopauth.servlet.context;
 
 import com.sobercoding.loopauth.context.LoopAuthResponse;
 import jakarta.servlet.http.HttpServletResponse;

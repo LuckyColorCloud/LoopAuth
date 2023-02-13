@@ -1,8 +1,8 @@
-package com.sobercoding.loopauth.springboot3starter.interceptor;
+package com.sobercoding.loopauth.springbootstarter.interceptor;
 
-import com.sobercoding.loopauth.jakartaservlet.context.LoopAuthRequestForServlet;
-import com.sobercoding.loopauth.jakartaservlet.context.LoopAuthResponseForServlet;
-import com.sobercoding.loopauth.springboot3starter.LoopAuthRouteFunction;
+import com.sobercoding.loopauth.servlet.context.LoopAuthRequestForServlet;
+import com.sobercoding.loopauth.servlet.context.LoopAuthResponseForServlet;
+import com.sobercoding.loopauth.springbootstarter.LoopAuthRouteFunction;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;

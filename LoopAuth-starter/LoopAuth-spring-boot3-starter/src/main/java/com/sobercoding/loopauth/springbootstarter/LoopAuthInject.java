@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.springboot3starter;
+package com.sobercoding.loopauth.springbootstarter;
 
 import com.sobercoding.loopauth.abac.AbacStrategy;
 import com.sobercoding.loopauth.abac.face.AbacInterface;

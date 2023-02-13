@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.jakartaservlet.context;
+package com.sobercoding.loopauth.servlet.context;
 
 import com.sobercoding.loopauth.context.LoopAuthRequest;
 import jakarta.servlet.http.Cookie;
