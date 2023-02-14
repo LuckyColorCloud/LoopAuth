@@ -16,7 +16,6 @@ import java.util.Optional;
 
 /**
  * Spring上下文
- * @author: Sober
  */
 public class LoopAuthContextForSpring implements LoopAuthContext {
     @Override

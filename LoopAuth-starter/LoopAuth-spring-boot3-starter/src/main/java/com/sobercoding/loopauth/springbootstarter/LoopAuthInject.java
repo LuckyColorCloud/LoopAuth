@@ -14,25 +14,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
- * @author: Sober
+ * 注入
  */
 public class LoopAuthInject {
 
+    /**
+     * 注入
+     * @param loopAuthConfig 会话配置
+     */
     @Autowired(required = false)
     public void setSessionConfig(SessionConfig loopAuthConfig) {
         SessionStrategy.setSessionConfig(loopAuthConfig);
     }
 
+    /**
+     * 注入
+     * @param redisConfig redis配置
+     */
     @Autowired(required = false)
     public void setRedisConfig(RedisConfig redisConfig) {
         SessionStrategy.setRedisConfig(redisConfig);
     }
 
+    /**
+     * 注入
+     * @param cookieConfig cookie配置
+     */
     @Autowired(required = false)
     public void setLoopAuthConfig(CookieConfig cookieConfig) {
         SessionStrategy.setCookieConfig(cookieConfig);
     }
 
+    /**
+     * 注入
+     * @param loopAuthContext 上下文
+     */
     @Autowired(required = false)
     public void setLoopAuthContext(LoopAuthContext loopAuthContext){
         SessionStrategy.setLoopAuthContext(loopAuthContext);

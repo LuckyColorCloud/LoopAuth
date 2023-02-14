@@ -14,8 +14,15 @@ import java.lang.reflect.Method;
  */
 public class InterceptorBuilder {
 
+    /**
+     * 拦截器
+     */
     LoopAuthInterceptor loopAuthInterceptor = new LoopAuthInterceptor();
 
+    /**
+     * abac方式
+     * @return
+     */
     public Builder abac() {
         loopAuthInterceptor.function = (req, res, handler) -> {
             // 路由
@@ -26,6 +33,10 @@ public class InterceptorBuilder {
         return new Builder();
     }
 
+    /**
+     * 注解方式
+     * @return
+     */
     public Builder annotation() {
         loopAuthInterceptor.function = (req, res, handler) -> {
             // 获取处理method
@@ -43,6 +54,10 @@ public class InterceptorBuilder {
     }
 
     public class Builder {
+        /**
+         * 构造器
+         * @return com.sobercoding.loopauth.springbootstarter.interceptor.LoopAuthInterceptor
+         */
         public LoopAuthInterceptor builder() {
             return loopAuthInterceptor;
         }
