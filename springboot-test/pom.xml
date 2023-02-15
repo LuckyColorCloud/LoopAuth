@@ -32,7 +32,7 @@
         <!-- LoopAuth的Springboot插件 -->
         <dependency>
             <groupId>com.sobercoding</groupId>
-            <artifactId>LoopAuth-spring-boot-starter</artifactId>
+            <artifactId>LoopAuth-spring-boot3-starter</artifactId>
             <version>2.1.3</version>
         </dependency>
 
