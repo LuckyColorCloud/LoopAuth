@@ -11,7 +11,9 @@ import java.util.Set;
 /**
  * @author Sober
  */
-public class AbacInterfaceImpl implements AbacInterface<Object, Object, Object, Object> {
+public class AbacInterfaceImpl
+        extends AbacWrapper<Object, Object, Object, Object>
+        implements AbacInterface<Object, Object, Object, Object> {
 
     @Override
     public PolicyWrapper<Object, Object, Object, Object> getPolicyWrapper() {

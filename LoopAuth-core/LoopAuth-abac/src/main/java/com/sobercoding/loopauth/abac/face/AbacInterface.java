@@ -1,6 +1,7 @@
 package com.sobercoding.loopauth.abac.face;
 
 import com.sobercoding.loopauth.abac.annotation.CheckAbacAnnotation;
+import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 import com.sobercoding.loopauth.abac.policy.model.Policy;
 import com.sobercoding.loopauth.abac.policy.model.PropertyEnum;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
@@ -16,7 +17,7 @@ import java.util.function.Supplier;
  *
  * @author Sober
  */
-public interface AbacInterface<A, C, R, S> extends AbacWrapper<A, C, R, S> {
+public interface AbacInterface<A, C, R, S> {
 
 
     /**
@@ -27,6 +28,37 @@ public interface AbacInterface<A, C, R, S> extends AbacWrapper<A, C, R, S> {
      * @return 去重后的集合
      */
     Set<Policy> getPolicySet(String route, LoopAuthHttpMode loopAuthHttpMode);
+
+
+    /**
+     * 获取规则构造
+     * @return
+     */
+    PolicyWrapper<A, C, R, S> getPolicyWrapper();
+
+    /**
+     * 获取操作属性
+     * @return
+     */
+    A getAction();
+
+    /**
+     * 获取环境属性
+     * @return
+     */
+    C getContextual();
+
+    /**
+     * 获取主题属性
+     * @return
+     */
+    S getSubject();
+
+    /**
+     * 获取访问对象属性
+     * @return
+     */
+    R getResObject();
 
     /**
      * 规则匹配
