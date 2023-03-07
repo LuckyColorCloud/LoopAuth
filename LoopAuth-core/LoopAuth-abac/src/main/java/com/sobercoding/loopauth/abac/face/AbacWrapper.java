@@ -7,25 +7,25 @@ public abstract class AbacWrapper<A, C, R, S> {
     /**
      * 存储四大属性模型
      */
-    private A action;
+    protected A action;
 
-    private C contextual;
+    protected C contextual;
 
-    private S subject;
+    protected S subject;
 
-    private R resObject;
+    protected R resObject;
 
     /**
      * ABAC规则包装
      */
-    private PolicyWrapper<A, C, R, S> policyWrapper;
+    protected PolicyWrapper<A, C, R, S> policyWrapper;
 
 
     /**
      * 获取规则构造
      * @return
      */
-    PolicyWrapper<A, C, R, S> getPolicyWrapper() {
+    public PolicyWrapper<A, C, R, S> getPolicyWrapper() {
         return policyWrapper;
     }
 
