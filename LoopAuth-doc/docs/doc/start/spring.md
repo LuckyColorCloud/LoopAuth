@@ -7,12 +7,19 @@ title: SpringBoot体验一下
 ## 添加依赖
 
 - `${version}`请查看[版本历史](../preamble/version.md)，请使用最新正式版，且版本与其余拓展最好保持一致
+- SpringBoot3选择后者依赖即可
 
 ```xml
 <!-- LoopAuth的Springboot插件 -->
 <dependency>
     <groupId>com.sobercoding</groupId>
     <artifactId>LoopAuth-spring-boot-starter</artifactId>
+    <version>${version}</version>
+</dependency>
+<!-- LoopAuth的Springboot3插件 -->
+<dependency>
+    <groupId>com.sobercoding</groupId>
+    <artifactId>LoopAuth-spring-boot3-starter</artifactId>
     <version>${version}</version>
 </dependency>
 ```
