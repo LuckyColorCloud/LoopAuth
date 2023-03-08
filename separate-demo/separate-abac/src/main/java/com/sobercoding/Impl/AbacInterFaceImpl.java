@@ -1,7 +1,7 @@
 package com.sobercoding.Impl;
 
 import com.sobercoding.loopauth.abac.face.AbacInterface;
-import com.sobercoding.loopauth.abac.policy.model.Policy;
+import com.sobercoding.loopauth.abac.model.Policy;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 
 import java.util.HashSet;

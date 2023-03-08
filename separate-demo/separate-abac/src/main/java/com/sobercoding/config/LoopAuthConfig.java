@@ -3,7 +3,7 @@ package com.sobercoding.config;
 import com.sobercoding.Impl.AbacInterFaceImpl;
 import com.sobercoding.loopauth.abac.AbacStrategy;
 import com.sobercoding.loopauth.abac.model.AbacPoAndSu;
-import com.sobercoding.loopauth.abac.policy.AbacPolicyFunBuilder;
+import com.sobercoding.loopauth.abac.model.builder.AbacPolicyFunBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
