@@ -4,7 +4,6 @@ import com.sobercoding.loopauth.abac.carryout.LoopAuthAbac;
 import com.sobercoding.loopauth.jedis.JedisDaoImpl;
 import com.sobercoding.loopauth.model.LoopAuthHttpMode;
 import com.sobercoding.loopauth.model.Result;
-import com.sobercoding.loopauth.session.annotation.CheckLogin;
 import com.sobercoding.loopauth.session.annotation.CheckSessionAnnotation;
 import com.sobercoding.loopauth.session.dao.LoopAuthDao;
 import com.sobercoding.loopauth.springbootwebfluxstarter.filter.LoopAuthWebFluxFilter;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
-import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 
@@ -39,8 +37,8 @@ public class MyLoopAuthConfig {
                 .addInclude("/**")
                 .addExclude("/test/login", LoopAuthHttpMode.GET)
                 // 认证函数: 每次请求执行
-                .setLoopAuthFilter((isIntercept,route,exchange) -> {
-                    if (isIntercept){
+                .setLoopAuthFilter((isIntercept, route, exchange) -> {
+                    if (isIntercept) {
 
                         // 获取请求对应的HandlerMethod
                         HandlerMethod handlerMethod = requestMappingHandlerMapping
