@@ -1,0 +1,18 @@
+{
+  "route": "/blog",
+  "doc": "博文权限限制示例",
+  "err": "您无权访问此博客 10001",
+  "id": 1,
+  "policy": [
+    {
+      "type": "general",
+      "equal": [
+        "subject.loginId 1 ERR:(作者未开放权限给您 10003)",
+        "subject.vipType 2 ERR:(本文章会员才可访问 10004)"
+      ],
+      "intLess": [
+        "contextual.nowTime 1000000000 ERR:(非法时间访问 10005)"
+      ]
+    }
+  ]
+}

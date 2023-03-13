@@ -1,10 +1,12 @@
-package com.sobercoding.loopauth.model;
+package com.sobercoding.loopauth.auth.model;
 
 import com.sobercoding.loopauth.abac.policy.model.authProperty.IntervalType;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Sober
  */
+@Component
 public class ContextualModel {
 
     private Long nowTime;
@@ -13,7 +15,4 @@ public class ContextualModel {
         return IntervalType.NONE.creation();
     }
 
-    public void setNowTime(Long nowTime) {
-        this.nowTime = nowTime;
-    }
 }

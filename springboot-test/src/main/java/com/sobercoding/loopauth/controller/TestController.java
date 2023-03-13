@@ -3,7 +3,7 @@ package com.sobercoding.loopauth.controller;
 import com.sobercoding.loopauth.abac.annotation.AbacProperty;
 import com.sobercoding.loopauth.abac.annotation.CheckAbac;
 import com.sobercoding.loopauth.abac.policy.model.PropertyEnum;
-import com.sobercoding.loopauth.impl.AbacInterFaceImpl;
+import com.sobercoding.loopauth.auth.AbacInterFaceImpl;
 import com.sobercoding.loopauth.rbac.annotation.CheckPermission;
 import com.sobercoding.loopauth.rbac.annotation.CheckRole;
 import com.sobercoding.loopauth.rbac.carryout.LoopAuthRbac;

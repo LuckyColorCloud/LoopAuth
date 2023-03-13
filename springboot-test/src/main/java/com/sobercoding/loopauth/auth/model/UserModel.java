@@ -1,8 +1,11 @@
-package com.sobercoding.loopauth.model;
+package com.sobercoding.loopauth.auth.model;
+
+import org.springframework.stereotype.Component;
 
 /**
  * @author Sober
  */
+@Component
 public class UserModel {
 
     private String id;
@@ -13,15 +16,8 @@ public class UserModel {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

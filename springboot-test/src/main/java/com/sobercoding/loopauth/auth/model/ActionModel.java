@@ -1,8 +1,12 @@
-package com.sobercoding.loopauth.model;
+package com.sobercoding.loopauth.auth.model;
+
+import com.sobercoding.loopauth.model.LoopAuthHttpMode;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Sober
  */
+@Component
 public class ActionModel {
 
     /**
@@ -19,15 +23,8 @@ public class ActionModel {
         return doc;
     }
 
-    public void setDoc(String doc) {
-        this.doc = doc;
-    }
-
     public LoopAuthHttpMode getLoopAuthHttpMode() {
         return loopAuthHttpMode;
     }
 
-    public void setLoopAuthHttpMode(LoopAuthHttpMode loopAuthHttpMode) {
-        this.loopAuthHttpMode = loopAuthHttpMode;
-    }
 }
