@@ -1,5 +1,6 @@
 package com.sobercoding.loopauth.abac;
 
+import com.sobercoding.loopauth.abac.conig.AbacConfig;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.face.AbacInterfaceImpl;
 
@@ -31,4 +32,23 @@ public class AbacStrategy {
         return AbacStrategy.abacInterface;
     }
 
+    /**
+     * ABAC配置类加载
+     */
+    private volatile static AbacConfig abacConfig;
+
+    public static void setAbacConfig(AbacConfig abacConfig) {
+        AbacStrategy.abacConfig = abacConfig;
+    }
+
+    public static AbacConfig getAbacConfig() {
+        if (AbacStrategy.abacConfig == null){
+            synchronized (AbacStrategy.class){
+                if (AbacStrategy.abacConfig == null){
+                    AbacStrategy.setAbacConfig(new AbacConfig());
+                }
+            }
+        }
+        return AbacStrategy.abacConfig;
+    }
 }
