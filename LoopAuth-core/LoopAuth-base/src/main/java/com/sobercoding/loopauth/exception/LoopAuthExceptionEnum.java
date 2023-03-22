@@ -2,6 +2,7 @@ package com.sobercoding.loopauth.exception;
 
 /**
  * 异常统一枚举
+ *
  * @author: Sober
  */
 public enum LoopAuthExceptionEnum {

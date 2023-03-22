@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 注入
+ * @author Yun
  */
 public class LoopAuthInject {
 

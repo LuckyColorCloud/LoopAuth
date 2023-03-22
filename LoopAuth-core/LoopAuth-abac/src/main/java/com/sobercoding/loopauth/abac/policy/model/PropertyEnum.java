@@ -1,6 +1,8 @@
 package com.sobercoding.loopauth.abac.policy.model;
 
-import java.util.function.Supplier;
+/**
+ * @author Yun
+ */
 
 public enum PropertyEnum {
     ACTION,

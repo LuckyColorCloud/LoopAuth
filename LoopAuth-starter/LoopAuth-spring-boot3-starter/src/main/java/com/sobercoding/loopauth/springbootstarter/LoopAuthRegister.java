@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * 创建
+ * @author Yun
  */
 public class LoopAuthRegister {
 

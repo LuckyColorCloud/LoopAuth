@@ -1,17 +1,16 @@
 package com.sobercoding.loopauth.springbootstarter.interceptor;
 
-import com.sobercoding.loopauth.abac.annotation.CheckAbac;
 import com.sobercoding.loopauth.abac.annotation.CheckAbacAnnotation;
 import com.sobercoding.loopauth.abac.carryout.LoopAuthAbac;
 import com.sobercoding.loopauth.rbac.annotation.CheckRbacAnnotation;
 import com.sobercoding.loopauth.session.annotation.CheckSessionAnnotation;
-import com.sobercoding.loopauth.session.carryout.LoopAuthSession;
 import org.springframework.web.method.HandlerMethod;
 
 import java.lang.reflect.Method;
 
 /**
  * 拦截器组装类
+ *
  * @author Sober
  */
 public class InterceptorBuilder {

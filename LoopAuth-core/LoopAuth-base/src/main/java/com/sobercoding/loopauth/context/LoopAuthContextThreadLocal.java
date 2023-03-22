@@ -1,9 +1,5 @@
 package com.sobercoding.loopauth.context;
 
-import com.sobercoding.loopauth.context.LoopAuthContext;
-import com.sobercoding.loopauth.context.LoopAuthRequest;
-import com.sobercoding.loopauth.context.LoopAuthResponse;
-import com.sobercoding.loopauth.context.LoopAuthStorage;
 import com.sobercoding.loopauth.exception.LoopAuthConfigException;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 
@@ -11,6 +7,7 @@ import java.util.Optional;
 
 /**
  * ThreadLocal 上下文存储器
+ *
  * @author Sober
  */
 public class LoopAuthContextThreadLocal implements LoopAuthContext {
@@ -38,37 +35,41 @@ public class LoopAuthContextThreadLocal implements LoopAuthContext {
 
     /**
      * 写入contextBoxThreadLocal
-     * @author Sober
+     *
      * @param loopAuthRequest
      * @param loopAuthResponse
      * @param loopAuthStorage
+     * @author Sober
      */
-    public static void setContext(LoopAuthRequest loopAuthRequest,LoopAuthResponse loopAuthResponse,LoopAuthStorage loopAuthStorage) {
-        ContextBox contextBox = new ContextBox(loopAuthRequest,loopAuthResponse,loopAuthStorage);
+    public static void setContext(LoopAuthRequest loopAuthRequest, LoopAuthResponse loopAuthResponse, LoopAuthStorage loopAuthStorage) {
+        ContextBox contextBox = new ContextBox(loopAuthRequest, loopAuthResponse, loopAuthStorage);
         contextBoxThreadLocal.set(contextBox);
     }
 
     /**
      * 清除 contextBoxThreadLocal
+     *
      * @author Sober
      */
-    public static void clearContextBox(){
+    public static void clearContextBox() {
         contextBoxThreadLocal.remove();
     }
 
     /**
      * 获取ContextBox
-     * @author Sober
+     *
      * @return ContextBox
+     * @author Sober
      */
     public static ContextBox getContextBox() {
         Optional<ContextBox> contextBoxOptional = Optional.ofNullable(contextBoxThreadLocal.get());
-        contextBoxOptional.orElseThrow(() -> new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED,"Context"));
+        contextBoxOptional.orElseThrow(() -> new LoopAuthConfigException(LoopAuthExceptionEnum.CONFIGURATION_UNREALIZED, "Context"));
         return contextBoxOptional.get();
     }
 
     /**
      * 上下文盒子
+     *
      * @author Sober
      */
     public static class ContextBox {

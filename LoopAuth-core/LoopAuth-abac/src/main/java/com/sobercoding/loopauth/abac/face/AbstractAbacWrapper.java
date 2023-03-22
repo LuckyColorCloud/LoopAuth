@@ -2,7 +2,10 @@ package com.sobercoding.loopauth.abac.face;
 
 import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 
-public abstract class AbacWrapper<A, C, R, S> {
+/**
+ * @author Yun
+ */
+public abstract class AbstractAbacWrapper<A, C, R, S> {
 
     /**
      * 存储四大属性模型

@@ -5,9 +5,10 @@ import java.util.Objects;
 
 /**
  * 时间区间属性类 可访问的时间区间
+ *
  * @author Sober
  */
-public class TimeInterval implements Serializable,Comparable<TimeInterval> {
+public class TimeInterval implements Serializable, Comparable<TimeInterval> {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,7 +71,7 @@ public class TimeInterval implements Serializable,Comparable<TimeInterval> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()){
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         if (this == obj) {
@@ -80,7 +81,7 @@ public class TimeInterval implements Serializable,Comparable<TimeInterval> {
         if (Objects.equals(this.judge, timeInterval.judge) &&
                 Objects.equals(this.intervalType, timeInterval.intervalType) &&
                 Objects.equals(this.start, timeInterval.start) &&
-                Objects.equals(this.end, timeInterval.end)){
+                Objects.equals(this.end, timeInterval.end)) {
             return true;
         }
         return false;
@@ -90,6 +91,7 @@ public class TimeInterval implements Serializable,Comparable<TimeInterval> {
     public int hashCode() {
         return Objects.hash(judge, intervalType, start, end);
     }
+
     @Override
     public int compareTo(TimeInterval obj) {
         return Integer.compare(this.hashCode() - obj.hashCode(), 0);
