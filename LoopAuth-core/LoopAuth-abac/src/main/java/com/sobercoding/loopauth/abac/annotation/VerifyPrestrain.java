@@ -10,12 +10,6 @@ import java.lang.annotation.Target;
  * @author Yun
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD})
 public @interface VerifyPrestrain {
-
-    /**
-     * 需要扫描的验证类路径
-     * @return
-     */
-    String[] value() default {};
 }

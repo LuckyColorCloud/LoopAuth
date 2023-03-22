@@ -1,8 +1,8 @@
 package com.sobercoding.loopauth.abac;
 
-import com.sobercoding.loopauth.abac.conig.AbacConfig;
 import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.abac.face.AbacInterfaceImpl;
+import com.sobercoding.loopauth.abac.prestrain.MethodStorage;
 
 /**
  * LoopAuth  Bean管理器
@@ -33,22 +33,22 @@ public class AbacStrategy {
     }
 
     /**
-     * ABAC配置类加载
+     * ABAC验证、属性策略 存储
      */
-    private volatile static AbacConfig abacConfig;
+    private volatile static MethodStorage methodStorage;
 
-    public static void setAbacConfig(AbacConfig abacConfig) {
-        AbacStrategy.abacConfig = abacConfig;
+    public static void setMethodStorage(MethodStorage methodStorage) {
+        AbacStrategy.methodStorage = methodStorage;
     }
 
-    public static AbacConfig getAbacConfig() {
-        if (AbacStrategy.abacConfig == null){
-            synchronized (AbacStrategy.class){
-                if (AbacStrategy.abacConfig == null){
-                    AbacStrategy.setAbacConfig(new AbacConfig());
+    public static MethodStorage getMethodStorage() {
+        if (AbacStrategy.methodStorage == null) {
+            synchronized (AbacStrategy.class) {
+                if (AbacStrategy.methodStorage == null) {
+                    AbacStrategy.setMethodStorage(new MethodStorage());
                 }
             }
         }
-        return AbacStrategy.abacConfig;
+        return AbacStrategy.methodStorage;
     }
 }

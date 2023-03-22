@@ -3,6 +3,9 @@ server:
   port: 10050
 
 loop-auth:
+  abac:
+    verifyPath:
+      - "com.sobercoding.loopauth.auth.verify"
   session:
 #    time-out: 5 # token有效时间(单位秒)  默认24小时
     #  token-name: token # token名称  默认LoopAuth

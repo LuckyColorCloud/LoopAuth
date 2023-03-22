@@ -16,7 +16,7 @@ public enum LoopAuthExceptionEnum {
     NO_PERMISSION(403, "未经许可"),
     NO_PERMISSION_F(403, "未经许可: %s"),
     //请求参数 不能为 必须有值
-    PARAM_IS_NULL(100001, "必要请求参数不存在: %s"),
+    PARAM_IS_NULL(100001, "必要参数不存在: %s"),
     // 数据异常
     DATA_EXCEPTION(200001, "持久层数据异常"),
     CACHE_FAILED(200002, "持久层操作失败"),

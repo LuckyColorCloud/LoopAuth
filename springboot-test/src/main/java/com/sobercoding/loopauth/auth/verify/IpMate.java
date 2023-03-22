@@ -1,4 +1,4 @@
-package com.sobercoding.loopauth.abac.util;
+package com.sobercoding.loopauth.auth.verify;
 
 /**
  * ip匹配
@@ -6,6 +6,7 @@ package com.sobercoding.loopauth.abac.util;
  * @author Sober
  */
 public class IpMate {
+
     /**
      * IP 匹配规则
      */

@@ -1,0 +1,30 @@
+{"groups": [
+  {
+    "name": "loop-auth.session",
+    "type": "com.sobercoding.loopauth.session.config.SessionConfig",
+    "sourceType": "com.sobercoding.loopauth.springbootstarter.LoopAuthRegister",
+    "sourceMethod": "getSessionConfig()",
+    "description": "LoopAuth的Session配置组."
+  },
+  {
+    "name": "loop-auth.session.redis",
+    "type": "com.sobercoding.loopauth.session.config.RedisConfig",
+    "sourceType": "com.sobercoding.loopauth.springbootstarter.LoopAuthRegister",
+    "sourceMethod": "getRedisConfig()",
+    "description": "Session的Redis缓存配置."
+  },
+  {
+    "name": "loop-auth.session.cookie",
+    "type": "com.sobercoding.loopauth.session.config.CookieConfig",
+    "sourceType": "com.sobercoding.loopauth.springbootstarter.LoopAuthRegister",
+    "sourceMethod": "getCookieConfig()",
+    "description": "Session的Cookie配置."
+  }
+],"properties": [
+  {
+    "name": "loop-auth.session.token-name",
+    "type": "java.lang.String",
+    "sourceType": "com.sobercoding.loopauth.session.config.SessionConfig",
+    "description": "Token的名称，用于Cookie和Header中."
+  }
+]}

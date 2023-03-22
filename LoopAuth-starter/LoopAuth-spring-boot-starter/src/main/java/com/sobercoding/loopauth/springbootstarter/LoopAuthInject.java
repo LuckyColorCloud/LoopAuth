@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LoopAuthInject {
 
     @Autowired(required = false)
-    public void setSessionConfig(SessionConfig loopAuthConfig) {
-        SessionStrategy.setSessionConfig(loopAuthConfig);
+    public void setSessionConfig(SessionConfig sessionConfig) {
+        SessionStrategy.setSessionConfig(sessionConfig);
     }
 
     @Autowired(required = false)
