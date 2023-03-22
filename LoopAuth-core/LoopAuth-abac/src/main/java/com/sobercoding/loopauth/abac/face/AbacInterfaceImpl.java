@@ -12,7 +12,7 @@ import java.util.Set;
  * @author Sober
  */
 public class AbacInterfaceImpl
-        extends AbacWrapper<Object, Object, Object, Object>
+        extends AbstractAbacWrapper<Object, Object, Object, Object>
         implements AbacInterface<Object, Object, Object, Object> {
 
     @Override
