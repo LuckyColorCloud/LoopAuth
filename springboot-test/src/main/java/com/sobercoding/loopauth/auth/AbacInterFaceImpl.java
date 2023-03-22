@@ -1,7 +1,7 @@
 package com.sobercoding.loopauth.auth;
 
 import com.sobercoding.loopauth.abac.face.AbacInterface;
-import com.sobercoding.loopauth.abac.face.AbacWrapper;
+import com.sobercoding.loopauth.abac.face.AbstractAbacWrapper;
 import com.sobercoding.loopauth.abac.policy.PolicyWrapper;
 import com.sobercoding.loopauth.abac.policy.model.Policy;
 import com.sobercoding.loopauth.abac.policy.model.Subject;
@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Component
 public class AbacInterFaceImpl
-        extends AbacWrapper<ActionModel, ContextualModel, Object, UserModel>
+        extends AbstractAbacWrapper<ActionModel, ContextualModel, Object, UserModel>
         implements AbacInterface<ActionModel, ContextualModel, Object, UserModel> {
     /**
      * 注入
