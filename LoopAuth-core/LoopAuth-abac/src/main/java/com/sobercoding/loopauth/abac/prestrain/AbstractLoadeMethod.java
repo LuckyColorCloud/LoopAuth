@@ -29,8 +29,8 @@ public class AbstractLoadeMethod {
             // 加载方法
             loadMethod(clazz);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             // TODO 异常处理
+            e.printStackTrace();
         }
     }
 
