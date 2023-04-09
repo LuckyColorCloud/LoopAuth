@@ -27,10 +27,10 @@ public class PrestrainBuild extends AbstractParsePath {
     }
 
     /**
-     * 构建
+     * 构建MethodFactory单例 并加载
      */
     public void build(){
-
+        this.paths.parallelStream().forEach(this::loadMethod);
     }
 
 }

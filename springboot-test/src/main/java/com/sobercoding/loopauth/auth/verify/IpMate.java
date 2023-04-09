@@ -1,10 +1,13 @@
 package com.sobercoding.loopauth.auth.verify;
 
+import com.sobercoding.loopauth.abac.annotation.VerifyPrestrain;
+
 /**
  * ip匹配
  *
  * @author Sober
  */
+@VerifyPrestrain
 public class IpMate {
 
     /**

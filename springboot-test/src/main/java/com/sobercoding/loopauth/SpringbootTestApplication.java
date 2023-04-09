@@ -1,10 +1,12 @@
 package com.sobercoding.loopauth;
 
-import com.sobercoding.loopauth.abac.annotation.PropertyPretrain;
-import com.sobercoding.loopauth.abac.annotation.VerifyPrestrain;
 import com.sobercoding.loopauth.springbootstarter.pretrain.LoopAuthPretrain;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 
 
 /**
@@ -14,8 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringbootTestApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SpringApplication.run(SpringbootTestApplication.class, args);
+
     }
 
 

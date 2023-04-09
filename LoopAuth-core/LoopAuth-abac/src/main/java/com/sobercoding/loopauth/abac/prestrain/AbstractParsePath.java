@@ -1,15 +1,14 @@
 package com.sobercoding.loopauth.abac.prestrain;
 
-import com.sobercoding.loopauth.abac.annotation.VerifyPrestrain;
 import com.sobercoding.loopauth.exception.LoopAuthExceptionEnum;
 import com.sobercoding.loopauth.exception.LoopAuthParamException;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -28,47 +27,66 @@ public abstract class AbstractParsePath extends AbstractLoadeMethod {
      * @param path
      */
     protected Set<String> perse(String path) {
-        verify(path);
-        return path.charAt(path.length() - 1) != '*' ? perseByCalss(path) : perseByPackage(path);
-    }
-
-    private Set<String> perseByPackage(String path) {
-        Set<String> paths = new HashSet<>();
-        int index = path.lastIndexOf(".");
-        try {
-            Enumeration<URL> resources = ClassLoader.getSystemResources(path.substring(0, index));
-            while (resources.hasMoreElements()) {
-                // 获取当前条目
-                URL url = resources.nextElement();
-                // 获取所有文件
-                String[] file = new File(url.getFile()).list();
-                Class<?>[] classes = new Class[file.length];
-                // TODO
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            // TODO
-            throw new RuntimeException(e);
-        }
-        return paths;
-    }
-
-    private Set<String> perseByCalss(String path) {
-        URL url = ClassLoader.getSystemResource(path);
-        return url != null ? new HashSet<String>(){{this.add(path);}} : new HashSet<String>();
-    }
-
-    /**
-     * 验证
-     * @param path
-     */
-    private void verify(String path) {
+        // 不为空
         LoopAuthParamException
                 .isNotEmpty(
                         path,
                         LoopAuthExceptionEnum.PARAM_IS_NULL,
                         "prestrainPath is null or empty"
                 );
+        // 包路径 class路径区分处理
+        return path.charAt(path.length() - 1) != '*' ?
+                perseByCalss(path) :
+                perseByPackage(path);
+    }
+
+    /**
+     * 处理包路径获得所有符合的class路径
+     * @param path
+     * @return
+     */
+    private Set<String> perseByPackage(String path) {
+        // 存储类路径
+        Set<String> paths = new HashSet<>();
+        // 去除.* 替换.为/
+        path = path.substring(0, path.lastIndexOf(".")).replace(".", "/");
+        try {
+            // 获取路径下所有条目
+            Enumeration<URL> resources = Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResources(path);
+            while (resources.hasMoreElements()) {
+                // 获取当前条目
+                URL url = resources.nextElement();
+                // 获取所有文件
+                String[] filePaths = Optional.ofNullable(new File(url.getFile()).list())
+                        .orElse(new String[0]);
+                for (String clazzPath : filePaths) {
+                    this.paths.addAll(perseByCalss(path + "/" + clazzPath));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // TODO 异常需要处理
+            throw new RuntimeException(e);
+        }
+        return paths;
+    }
+
+
+
+    /**
+     * 处理class路径
+     * @param path
+     * @return
+     */
+    private Set<String> perseByCalss(String path) {
+        URL url = ClassLoader.getSystemResource(path);
+        System.out.println(path);
+        // 验证类路径正确性
+        return url != null ?
+                new HashSet<String>(){{this.add(path.replaceAll("\\.class", "").replace("/", "."));}} :
+                new HashSet<String>();
     }
 
 }
