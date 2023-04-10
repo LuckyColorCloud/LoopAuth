@@ -1,6 +1,9 @@
 package com.sobercoding.loopauth.auth.verify;
 
 import com.sobercoding.loopauth.abac.annotation.VerifyPrestrain;
+import com.sobercoding.loopauth.function.VerifyFunction;
+
+import java.util.Arrays;
 
 /**
  * ip匹配
@@ -11,14 +14,25 @@ import com.sobercoding.loopauth.abac.annotation.VerifyPrestrain;
 public class IpMate {
 
     /**
-     * IP 匹配规则
+     * 字符串校验
      */
-    public static boolean equals(String ip1, String ip2) {
-        return ip1.equals(ip2);
+    public final static VerifyFunction<String, String> IP_MATE = String::equals;
+
+
+    public static void main(String[] args) {
+        Arrays.stream(IpMate.class.getFields()).forEach(func -> {
+
+            VerifyFunction<Object, Object> function = null;
+            try {
+                function = (VerifyFunction<Object, Object>) func.get(null);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(function.mate("1","1"));
+        });
     }
 
-    public static String equals1(String ip1, String ip2) {
-        return "2";
+    public static boolean equals(String s1, String s2) {
+        return s1.equals(s2);
     }
-
 }

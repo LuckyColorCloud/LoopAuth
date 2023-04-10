@@ -34,8 +34,16 @@ public class AbstractLoadeMethod {
         }
     }
 
+    private void loadFunc(Class<?> clazz) {
+        String calzzName = clazz.getSimpleName().substring(0, 1).toLowerCase() + clazz.getSimpleName().substring(1);
+        // 获取当前类的所有方法  并行遍历  载入map中
+        Arrays.stream(clazz.getFields())
+                .forEach(func -> {
+                });
+    }
+
     private void loadMethod(Class<?> clazz) {
-        String calzzName = clazz.getName().substring(0, 1).toLowerCase() + clazz.getSimpleName().substring(1);
+        String calzzName = clazz.getSimpleName().substring(0, 1).toLowerCase() + clazz.getSimpleName().substring(1);
         // 获取当前类的所有方法  并行遍历  载入map中
         Arrays.stream(clazz.getMethods())
                 .forEach(method -> {
@@ -66,4 +74,5 @@ public class AbstractLoadeMethod {
                     }
                 });
     }
+
 }

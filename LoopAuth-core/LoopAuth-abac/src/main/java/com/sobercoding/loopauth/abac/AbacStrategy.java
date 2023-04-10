@@ -37,15 +37,15 @@ public class AbacStrategy {
      */
     private volatile static MethodFactory methodFactory;
 
-    public static void setMethodStorage(MethodFactory methodFactory) {
+    public static void setMethodFactory(MethodFactory methodFactory) {
         AbacStrategy.methodFactory = methodFactory;
     }
 
-    public static MethodFactory getMethodStorage() {
+    public static MethodFactory getMethodFactory() {
         if (AbacStrategy.methodFactory == null) {
             synchronized (AbacStrategy.class) {
                 if (AbacStrategy.methodFactory == null) {
-                    AbacStrategy.setMethodStorage(new MethodFactory());
+                    AbacStrategy.setMethodFactory(new MethodFactory());
                 }
             }
         }
