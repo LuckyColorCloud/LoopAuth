@@ -1,8 +1,10 @@
 package com.sobercoding.loopauth.abac.prestrain;
 
-import java.lang.reflect.Method;
+import com.sobercoding.loopauth.function.VerifyFunction;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 /**
  * 方法工厂
@@ -13,19 +15,19 @@ public class MethodFactory {
     /**
      * 验证方法
      */
-    private final Map<String, Method> verifyMap = new ConcurrentHashMap<>();
+    private final Map<String, VerifyFunction<Object, Object>> verifyMap = new ConcurrentHashMap<>();
 
     /**
      * 属性方法
      */
-    private final Map<String, Method> propertyMap = new ConcurrentHashMap<>();
+    private final Map<String, Supplier<Object>> propertyMap = new ConcurrentHashMap<>();
 
     /**
      * 载入验证方法
      * @param key
      * @param func
      */
-    public void putVerify(String key, Method func) {
+    public void putVerify(String key, VerifyFunction<Object, Object> func) {
         verifyMap.put(key, func);
     }
 
@@ -34,7 +36,7 @@ public class MethodFactory {
      * @param key
      * @param func
      */
-    public void putProperty(String key, Method func) {
+    public void putProperty(String key, Supplier<Object> func) {
         propertyMap.put(key, func);
     }
 
@@ -42,7 +44,7 @@ public class MethodFactory {
      * get
      * @return
      */
-    public Map<String, Method> getVerifyMap() {
+    public Map<String, VerifyFunction<Object, Object>> getVerifyMap() {
         return verifyMap;
     }
 
@@ -50,7 +52,7 @@ public class MethodFactory {
      * get
      * @return
      */
-    public Map<String, Method> getPropertyMap() {
+    public Map<String, Supplier<Object>> getPropertyMap() {
         return propertyMap;
     }
 }

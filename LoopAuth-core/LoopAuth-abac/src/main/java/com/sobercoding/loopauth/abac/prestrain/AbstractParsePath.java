@@ -66,9 +66,8 @@ public abstract class AbstractParsePath extends AbstractLoadeMethod {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
             // TODO 异常需要处理
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return paths;
     }
@@ -82,7 +81,6 @@ public abstract class AbstractParsePath extends AbstractLoadeMethod {
      */
     private Set<String> perseByCalss(String path) {
         URL url = ClassLoader.getSystemResource(path);
-        System.out.println(path);
         // 验证类路径正确性
         return url != null ?
                 new HashSet<String>(){{this.add(path.replaceAll("\\.class", "").replace("/", "."));}} :
