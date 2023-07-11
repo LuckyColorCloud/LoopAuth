@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Bean;
 
 
 /**
- * @author: Sober
+ * 创建
+ * @author Sober
  */
 public class LoopAuthRegister {
-
     /**
      * 注入配置类
      * @author Sober
@@ -27,12 +27,20 @@ public class LoopAuthRegister {
         return new SessionConfig();
     }
 
+    /**
+     * 创建bean
+     * @return com.sobercoding.loopauth.session.config.RedisConfig
+     */
     @Bean
     @ConfigurationProperties(prefix = "loop-auth.session.redis")
     public RedisConfig getRedisConfig() {
         return new RedisConfig();
     }
 
+    /**
+     * 创建bean
+     * @return com.sobercoding.loopauth.session.config.CookieConfig
+     */
     @Bean
     @ConfigurationProperties(prefix = "loop-auth.session.cookie")
     public CookieConfig getCookieConfig() {
@@ -49,6 +57,9 @@ public class LoopAuthRegister {
         return new LoopAuthContextThreadLocal();
     }
 
+    /**
+     * 其他配置注入
+     */
     @Bean
     public void otherConfig(){
         RbacStrategy.getLoginId = () -> LoopAuthSession.getTokenModel().getLoginId();

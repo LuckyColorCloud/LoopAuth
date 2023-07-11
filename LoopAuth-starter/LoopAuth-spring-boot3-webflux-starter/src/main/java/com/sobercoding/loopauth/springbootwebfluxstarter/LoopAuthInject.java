@@ -1,5 +1,7 @@
 package com.sobercoding.loopauth.springbootwebfluxstarter;
 
+import com.sobercoding.loopauth.abac.AbacStrategy;
+import com.sobercoding.loopauth.abac.face.AbacInterface;
 import com.sobercoding.loopauth.context.LoopAuthContext;
 import com.sobercoding.loopauth.rbac.RbacStrategy;
 import com.sobercoding.loopauth.rbac.face.PermissionInterface;
@@ -12,25 +14,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
- * @author: Sober
+ * 注入
+ * @author Sober
  */
 public class LoopAuthInject {
 
+    /**
+     * 注入
+     * @param loopAuthConfig 会话配置
+     */
     @Autowired(required = false)
     public void setSessionConfig(SessionConfig loopAuthConfig) {
         SessionStrategy.setSessionConfig(loopAuthConfig);
     }
 
+    /**
+     * 注入
+     * @param redisConfig redis配置
+     */
     @Autowired(required = false)
     public void setRedisConfig(RedisConfig redisConfig) {
         SessionStrategy.setRedisConfig(redisConfig);
     }
 
+    /**
+     * 注入
+     * @param cookieConfig cookie配置
+     */
     @Autowired(required = false)
     public void setLoopAuthConfig(CookieConfig cookieConfig) {
         SessionStrategy.setCookieConfig(cookieConfig);
     }
 
+    /**
+     * 注入
+     * @param loopAuthContext 上下文
+     */
     @Autowired(required = false)
     public void setLoopAuthContext(LoopAuthContext loopAuthContext){
         SessionStrategy.setLoopAuthContext(loopAuthContext);

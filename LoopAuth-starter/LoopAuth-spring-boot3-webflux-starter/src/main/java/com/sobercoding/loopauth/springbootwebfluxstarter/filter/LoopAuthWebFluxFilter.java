@@ -38,7 +38,10 @@ public class LoopAuthWebFluxFilter implements WebFilter {
 
 
     /**
-     * ===================添加拦截路由=====================
+     * 添加拦截路由
+     * @param path 路由
+     * @param mode 请求方式
+     * @return LoopAuthWebFluxFilter
      */
     public LoopAuthWebFluxFilter addInclude(String path, LoopAuthHttpMode... mode) {
         if (mode.length <= 0){
@@ -49,10 +52,12 @@ public class LoopAuthWebFluxFilter implements WebFilter {
         return this;
     }
 
-    /**====================================================*/
 
     /**
-     * ===================添加放行路由=====================
+     * 添加放行路由
+     * @param path 路由
+     * @param mode 请求方式
+     * @return LoopAuthWebFluxFilter
      */
     public LoopAuthWebFluxFilter addExclude(String path, LoopAuthHttpMode... mode) {
         if (mode.length <= 0){
@@ -63,19 +68,22 @@ public class LoopAuthWebFluxFilter implements WebFilter {
         return this;
     }
 
-    /**====================================================*/
 
     /**
-     * ===================获取放行路由=====================
+     * 获取拦截路由
+     * @return java.util.concurrent.ConcurrentHashMap
      */
     public ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> getIncludeList() {
         return includeList;
     }
 
+    /**
+     * 获取放行路由
+     * @return java.util.concurrent.ConcurrentHashMap
+     */
     public ConcurrentHashMap<String, HashSet<LoopAuthHttpMode>> getExcludeList() {
         return excludeList;
     }
-    /**====================================================*/
 
     /**
      * 过滤路由
@@ -86,6 +94,7 @@ public class LoopAuthWebFluxFilter implements WebFilter {
             LoopAuthSession.isLogin();
         }
     };
+
     /**
      * 过滤异常 处理
      */
@@ -116,6 +125,12 @@ public class LoopAuthWebFluxFilter implements WebFilter {
         return this;
     }
 
+    /**
+     * 过滤器
+     * @param exchange 请求
+     * @param chain 过滤链
+     * @return reactor.core.publisher.Mono
+     */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         try {

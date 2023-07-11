@@ -67,7 +67,7 @@
         <revision>2.1.4.Bate.2</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
     </properties>
     <!-- 项目构建 -->
     <build>
