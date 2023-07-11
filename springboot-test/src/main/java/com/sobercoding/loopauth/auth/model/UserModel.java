@@ -1,23 +1,17 @@
 package com.sobercoding.loopauth.auth.model;
 
+import com.sobercoding.loopauth.abac.annotation.PropertyPretrain;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Sober
  */
+@PropertyPretrain
 @Component
 public class UserModel {
 
-    private String id;
-
-    private String name;
-
     public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+        return "12312421";
     }
 
 }

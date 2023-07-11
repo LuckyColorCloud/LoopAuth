@@ -18,13 +18,18 @@
 }
 
 
+
+
 {
   "Version": "2012-10-17", 版号
   "Statement": {  声明
     "Effect": "Allow",  作用 允许/拒绝
     "Action": "Blog:Get",  操作对象和方式
     "Policy": { 政策主体
-
+      "Resource": "arn:aws:blog:us-east-1:123456789012:blog/123456789012/*", 资源
+      "Condition": { 条件
+        "DateLessThan": {"aws:CurrentTime": "2019-12-31T12:00:00Z"}  当前时间小于
+      }
     }
   }
 }

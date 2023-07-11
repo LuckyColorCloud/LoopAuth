@@ -28,7 +28,7 @@ public class LoopAuthImportSelector implements ImportBeanDefinitionRegistrar {
                     .collect(Collectors.toList());
             // 预加载
             PrestrainBuild prestrainBuild = PrestrainBuild.Builder();
-            paths.parallelStream().forEach(prestrainBuild::add);
+            paths.forEach((prestrainBuild::add));
             prestrainBuild.build();
         }
     }

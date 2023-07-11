@@ -17,6 +17,7 @@
         <module>LoopAuth-servlet</module>
         <module>LoopAuth-spring-boot-webflux-starter</module>
         <module>LoopAuth-spring-boot3-starter</module>
+        <module>LoopAuth-spring-boot3-webflux-starter</module>
     </modules>
 
 </project>
